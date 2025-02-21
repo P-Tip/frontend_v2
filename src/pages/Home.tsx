@@ -1,4 +1,6 @@
 const Home = () => {
+  const a = 1;
+
   return <div>Home</div>;
 };
 
