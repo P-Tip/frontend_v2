@@ -1,9 +1,5 @@
 const Todo = () => {
-  return (
-    <div>
-      Todo
-    </div>
-  )
-}
+  return <div>Todo</div>;
+};
 
 export default Todo;
