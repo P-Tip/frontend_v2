@@ -1,9 +1,5 @@
 const Scholarship = () => {
-  return (
-    <div>
-      Scholarship
-    </div>
-  )
-}
+  return <div>Scholarship</div>;
+};
 
 export default Scholarship;
