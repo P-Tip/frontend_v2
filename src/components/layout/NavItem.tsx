@@ -13,7 +13,7 @@ const NavItem = ({ link, icon, label }: NavItemProps) => {
   return (
     <Link
       to={link}
-      className={`flex flex-col items-center ${isSamePath ? "text-[#009b64]" : "text-[#CDCDCD]"} hover:text-[#009b64]`}
+      className={`flex flex-col items-center ${isSamePath ? "text-ptu-green" : "text-ptu-gray"} hover:text-ptu-green`}
     >
       {icon}
       {label}
