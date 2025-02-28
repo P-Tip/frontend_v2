@@ -3,7 +3,6 @@ import axiosInstance from "./axiosInstance";
 export const getScholarships = async (id?: number) => {
   const url = id ? `/api/award?id=${id}` : `/api/award`;
   const response = await axiosInstance.get(url);
-  console.log(url);
   return response.data;
 };
 
