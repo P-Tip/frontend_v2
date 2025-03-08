@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { BsCartPlus } from "react-icons/bs";
 import { BsCartDash } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import { toast } from "sonner";
 
 interface ScholarshipCardProps {
   scholarship: IScholarship;
@@ -35,7 +36,7 @@ const ScholarshipCard = ({
       Number(localStorage.getItem("scholarshipPoint")) || 0;
 
     if (localstoragePoint + point > 700000 && !isAdd) {
-      alert("70만점을 초과할 수 없습니다.");
+      toast("70만점을 초과할 수 없습니다.");
       return;
     } else {
       setIsAdd(!isAdd);

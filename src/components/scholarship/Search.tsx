@@ -6,6 +6,7 @@ import DepartmentSearch from "./DepartmentSearch";
 import { useMutation } from "@tanstack/react-query";
 import { getSearchScholarships } from "@/services/scholarshipApi";
 import { IScholarship } from "@/types/scholarship";
+import { toast } from "sonner";
 
 interface SearchProps {
   onSearchResult: (results: IScholarship[]) => void;
@@ -22,7 +23,7 @@ const Search = ({ onSearchResult }: SearchProps) => {
       getSearchScholarships(inputValue, sliderValue, departmentValue),
     onSuccess: (data) => {
       if (data.length === 0) {
-        alert("검색 결과가 없습니다.");
+        toast("검색 결과가 없습니다.");
       } else {
         onSearchResult(data);
       }

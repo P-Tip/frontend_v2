@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import Footer from "./Footer";
 import Header from "./Header";
+import { Toaster } from "@/components/ui/sonner";
 
 interface LayoutProps {
   children: ReactNode;
@@ -11,6 +12,7 @@ const Layout = ({ children }: LayoutProps) => {
     <div className="w-full h-full shadow-lg">
       <Header />
       <div className="w-full pt-14 pb-16">{children}</div>
+      <Toaster />
       <Footer />
     </div>
   );
