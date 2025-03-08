@@ -9,11 +9,6 @@ export interface IScholarship {
   link: string;
 }
 
-export interface ScholarshipCardProps {
-  scholarship: IScholarship;
-  onCartClick: (point: number) => void;
-}
-
 export interface IDepartment {
   departmentName: string;
   internalNum: string;

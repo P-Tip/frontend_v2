@@ -1,8 +1,13 @@
-import { ScholarshipCardProps } from "@/types/scholarship";
+import { IScholarship } from "@/types/scholarship";
 import { useEffect, useState } from "react";
 import { BsCartPlus } from "react-icons/bs";
 import { BsCartDash } from "react-icons/bs";
 import { Link } from "react-router-dom";
+
+interface ScholarshipCardProps {
+  scholarship: IScholarship;
+  onCartClick: (point: number) => void;
+}
 
 const ScholarshipCard = ({
   scholarship,
