@@ -1,3 +1,4 @@
+import { removeUndefined } from "@/utils/removeUndefined";
 import axiosInstance from "./axiosInstance";
 
 export const getScholarships = async (id?: number) => {
@@ -11,10 +12,7 @@ export const getSearchScholarships = async (
   point?: number,
   department?: string,
 ) => {
-  const params: any = {};
-  if (name) params.name = name;
-  if (point) params.point = point;
-  if (department) params.department = department;
+  const params = removeUndefined({ name, point, department });
 
   const response = await axiosInstance.get("/api/award/search", { params });
   return response.data;

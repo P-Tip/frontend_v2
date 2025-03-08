@@ -1,5 +1,6 @@
 import { getFilterScholarships } from "@/services/scholarshipApi";
 import { IDepartment } from "@/types/scholarship";
+import { consonant } from "@/utils/constant";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
@@ -10,22 +11,6 @@ interface DepartmentSearchProps {
 const DepartmentSearch = ({ onSelectDepartment }: DepartmentSearchProps) => {
   const [selectConsonant, setSelectConsonant] = useState("");
   const [selectDepartment, setSelectDepartment] = useState<string | null>(null);
-  const consonant = [
-    "ㄱ",
-    "ㄴ",
-    "ㄷ",
-    "ㄹ",
-    "ㅁ",
-    "ㅂ",
-    "ㅅ",
-    "ㅇ",
-    "ㅈ",
-    "ㅊ",
-    "ㅋ",
-    "ㅌ",
-    "ㅍ",
-    "ㅎ",
-  ];
 
   const { data: departments = [] } = useQuery({
     queryKey: ["departments", selectConsonant],
@@ -53,11 +38,9 @@ const DepartmentSearch = ({ onSelectDepartment }: DepartmentSearchProps) => {
       <div className="flex p-1">
         <select
           className="border border-ptu-gray rounded-lg p-2"
+          value={selectConsonant}
           onChange={(e) => setSelectConsonant(e.target.value)}
         >
-          <option value={""} disabled selected>
-            부서 검색
-          </option>
           <option value={""}>전체</option>
           {consonant.map((char) => (
             <option key={char} value={char}>
