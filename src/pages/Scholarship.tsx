@@ -1,9 +1,8 @@
 import ScholarshipCard from "@/components/scholarship/ScholarshipCard";
 import Search from "@/components/scholarship/Search";
 import { Progress } from "@/components/ui/progress";
-import { getScholarships } from "@/services/scholarshipApi";
+import { useScholarships } from "@/services/queries/scholarshipQuery";
 import { IScholarship } from "@/types/scholarship";
-import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
 const Scholarship = () => {
@@ -20,14 +19,7 @@ const Scholarship = () => {
     setTotalPoint(point);
   };
 
-  const {
-    data: scholarships,
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ["scholarships"],
-    queryFn: () => getScholarships(),
-  });
+  const { data: scholarships = [], isLoading, isError } = useScholarships();
 
   if (isLoading) return <p>로딩 중...</p>;
   if (isError) return <p>데이터를 불러오는 데 실패했습니다.</p>;

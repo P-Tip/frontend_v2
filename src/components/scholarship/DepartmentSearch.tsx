@@ -1,7 +1,6 @@
-import { getFilterScholarships } from "@/services/scholarshipApi";
+import { useFilterScholarships } from "@/services/queries/scholarshipQuery";
 import { IDepartment } from "@/types/scholarship";
 import { consonant } from "@/utils/constant";
-import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
 interface DepartmentSearchProps {
@@ -12,10 +11,7 @@ const DepartmentSearch = ({ onSelectDepartment }: DepartmentSearchProps) => {
   const [selectConsonant, setSelectConsonant] = useState("");
   const [selectDepartment, setSelectDepartment] = useState<string | null>(null);
 
-  const { data: departments = [] } = useQuery({
-    queryKey: ["departments", selectConsonant],
-    queryFn: () => getFilterScholarships(selectConsonant),
-  });
+  const { data: departments = [] } = useFilterScholarships(selectConsonant);
 
   const handleDepartmentClick = (department: IDepartment) => {
     if (selectDepartment === department.departmentName) {
