@@ -1,12 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DepartmentSearch from "./DepartmentSearch";
-import { useMutation } from "@tanstack/react-query";
-import { getSearchScholarships } from "@/services/scholarshipApi";
 import { IScholarship } from "@/types/scholarship";
 import { toast } from "sonner";
+import { useSearchScholarships } from "@/services/queries/scholarshipQuery";
 
 interface SearchProps {
   onSearchResult: (results: IScholarship[]) => void;
@@ -18,30 +17,34 @@ const Search = ({ onSearchResult }: SearchProps) => {
   const [departmentValue, setDepartmentValue] = useState("");
   const [isOpen, setIsOpen] = useState(false);
 
-  const searchMutation = useMutation({
-    mutationFn: () =>
-      getSearchScholarships(inputValue, sliderValue, departmentValue),
-    onSuccess: (data) => {
-      if (data.length === 0) {
-        toast("검색 결과가 없습니다.");
-      } else {
-        onSearchResult(data);
-      }
-      setIsOpen(false);
-    },
-    onError: (error) => {
-      console.error(error);
-      setIsOpen(false);
-    },
+  const searchMutation = useSearchScholarships((data) => {
+    if (data.length === 0) {
+      toast("검색 결과가 없습니다.");
+    } else {
+      onSearchResult(data);
+    }
+    setIsOpen(false);
   });
 
   const handleSearchClick = () => {
     if (!isOpen) {
       setIsOpen(true);
     } else {
-      searchMutation.mutate();
+      searchMutation.mutate({
+        name: inputValue,
+        point: sliderValue,
+        department: departmentValue,
+      });
     }
   };
+
+  useEffect(() => {
+    if (!isOpen) {
+      setInputValue("");
+      setSliderValue(0);
+      setDepartmentValue("");
+    }
+  }, [isOpen]);
 
   return (
     <div className="relative w-full">
@@ -52,6 +55,7 @@ const Search = ({ onSearchResult }: SearchProps) => {
         <Input
           type="text"
           placeholder="검색어를 입력해주세요"
+          value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
         />
         <Button type="submit" onClick={handleSearchClick}>
@@ -69,7 +73,7 @@ const Search = ({ onSearchResult }: SearchProps) => {
               onValueChange={(value) => setSliderValue(value[0])}
             />
             <p className="text-sm text-gray-600">
-              최소 {sliderValue.toLocaleString()}점
+              {sliderValue.toLocaleString()}점
             </p>
           </div>
 
