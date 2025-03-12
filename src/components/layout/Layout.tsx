@@ -2,18 +2,24 @@ import { ReactNode } from "react";
 import Footer from "./Footer";
 import Header from "./Header";
 import { Toaster } from "@/components/ui/sonner";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
+import { RESPONSIVE_BREAKPOINT } from "@/constants";
 
 interface LayoutProps {
   children: ReactNode;
 }
 
 const Layout = ({ children }: LayoutProps) => {
+  const isDesktop = useMediaQuery(
+    `(min-width: ${RESPONSIVE_BREAKPOINT.desktop}px)`,
+  );
+
   return (
     <div className="w-full h-full shadow-lg">
       <Header />
-      <div className="w-full pt-14 pb-16">{children}</div>
+      <div className="w-full pt-24">{children}</div>
       <Toaster />
-      <Footer />
+      {!isDesktop && <Footer />}
     </div>
   );
 };
