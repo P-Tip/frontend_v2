@@ -13,3 +13,10 @@
     @apply w-full max-w-screen-lg h-screen mx-auto text-center;
   }
 }
+
+*,
+:after,
+:before {
+  box-sizing: border-box;
+  border: 0 solid #f1f3f5;
+}

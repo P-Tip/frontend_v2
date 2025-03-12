@@ -65,6 +65,9 @@ export default {
         "ptu-green-bg": "#e6f5ee", // 이전 ptu-blue-bg를 연한 녹색 배경으로 변경
         "ptu-green-bg-hover": "#c7e9d8", // 이전 ptu-blue-bg-hover를 약간 더 진한 녹색 배경으로 변경
       },
+      screens: {
+        desktop: "960px",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
