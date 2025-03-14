@@ -11,3 +11,20 @@ export const NAV_LIST = [
 export const RESPONSIVE_BREAKPOINT = {
   desktop: 960,
 };
+
+export const CONSONANT = [
+  "ㄱ",
+  "ㄴ",
+  "ㄷ",
+  "ㄹ",
+  "ㅁ",
+  "ㅂ",
+  "ㅅ",
+  "ㅇ",
+  "ㅈ",
+  "ㅊ",
+  "ㅋ",
+  "ㅌ",
+  "ㅍ",
+  "ㅎ",
+];

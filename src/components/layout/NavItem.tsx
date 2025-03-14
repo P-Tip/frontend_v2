@@ -2,20 +2,26 @@ import { Link, useLocation } from "react-router-dom";
 
 interface NavItemProps {
   link: string;
-  icon: React.ReactNode;
   label: string;
 }
 
-const NavItem = ({ link, icon, label }: NavItemProps) => {
+const NavItem = ({ link, label }: NavItemProps) => {
   const location = useLocation();
-  const isSamePath = location.pathname === link;
-  // TODO: 헤더처럼 똑같이 로직 구성하기
+  const isActive = location.pathname === link;
+
   return (
     <Link
       to={link}
-      className={`flex flex-col items-center ${isSamePath ? "text-ptu-blue" : "text-ptu-default-black"} hover:text-ptu-blue`}
+      className={`
+        text-sm py-3 px-4 rounded-xl cursor-pointer
+        transition-all duration-300 ease-in-out
+        ${
+          isActive
+            ? "text-ptu-blue bg-ptu-blue-bg hover:bg-ptu-blue-bg-hover"
+            : "text-ptu-default-black hover:bg-gray-100 hover:text-ptu-default-black"
+        } 
+      `}
     >
-      {icon}
       {label}
     </Link>
   );
