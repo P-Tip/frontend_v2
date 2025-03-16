@@ -1,6 +1,6 @@
+import { CONSONANT } from "@/constants";
 import { useFilterScholarships } from "@/services/queries/scholarshipQuery";
 import { IDepartment } from "@/types/scholarship";
-import { consonant } from "@/utils/constant";
 import { useEffect, useState } from "react";
 
 interface DepartmentSearchProps {
@@ -38,7 +38,7 @@ const DepartmentSearch = ({ onSelectDepartment }: DepartmentSearchProps) => {
           onChange={(e) => setSelectConsonant(e.target.value)}
         >
           <option value={""}>전체</option>
-          {consonant.map((char) => (
+          {CONSONANT.map((char) => (
             <option key={char} value={char}>
               {char}
             </option>
