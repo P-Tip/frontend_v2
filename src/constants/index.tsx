@@ -4,8 +4,8 @@ import { IoPersonOutline } from "react-icons/io5";
 
 export const NAV_LIST = [
   { path: "/", label: "홈", icon: <IoHomeOutline /> },
-  { path: "/scholarship", label: "장학금", icon: <IoSchoolOutline /> },
-  { path: "/mypage", label: "마이페이지", icon: <IoPersonOutline /> },
+  { path: "/scholarship", label: "솔선수범", icon: <IoSchoolOutline /> },
+  { path: "/mypage", label: "MY", icon: <IoPersonOutline /> },
 ];
 
 export const RESPONSIVE_BREAKPOINT = {

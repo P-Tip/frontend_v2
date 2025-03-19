@@ -10,9 +10,10 @@ const NavItem = ({ link, label }: NavItemProps) => {
   const isActive = location.pathname === link;
 
   return (
-    <Link
-      to={link}
-      className={`
+    <div className="relative">
+      <Link
+        to={link}
+        className={`
         text-sm py-3 px-4 rounded-xl cursor-pointer
         transition-all duration-300 ease-in-out
         ${
@@ -21,9 +22,13 @@ const NavItem = ({ link, label }: NavItemProps) => {
             : "text-ptu-default-black hover:bg-gray-100 hover:text-ptu-default-black"
         } 
       `}
-    >
-      {label}
-    </Link>
+      >
+        {label}
+      </Link>
+      <div
+        className={`w-10 h-10 absolute top-12 left-1/2 -translate-x-1/2 rounded-full bg-ptu-gray ${isActive ? "block" : "hidden"}`}
+      ></div>
+    </div>
   );
 };
 
