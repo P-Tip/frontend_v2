@@ -17,9 +17,13 @@ const Layout = ({ children }: LayoutProps) => {
   return (
     <div className="w-full h-full shadow-lg">
       <Header />
-      <div className="w-full pt-24">{children}</div>
+      <div className="w-full pt-24 h-full">
+        <main className="w-full h-full bg-ptu-gray rounded-t-3xl">
+          {children}
+        </main>
+      </div>
       <Toaster />
-      {!isDesktop && <Footer />}
+      {/* {!isDesktop && <Footer />} */}
     </div>
   );
 };
