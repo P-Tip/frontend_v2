@@ -17,6 +17,8 @@ const ScholarshipCard = ({
   onCartClick,
 }: ScholarshipCardProps) => {
   const [isAdd, setIsAdd] = useState(false);
+  const minPoint = Number(scholarship.min_point).toLocaleString();
+  const maxPoint = Number(scholarship.max_point).toLocaleString();
 
   useEffect(() => {
     const localstorageCart = JSON.parse(
@@ -93,10 +95,10 @@ const ScholarshipCard = ({
         <span className="flex flex-row items-center gap-x-0.5">
           <PiMoney />
           {scholarship.min_point === scholarship.max_point ? (
-            <p>{scholarship.min_point} 포인트</p>
+            <p>{minPoint} 포인트</p>
           ) : (
             <p>
-              {scholarship.min_point} ~ {scholarship.max_point} 포인트
+              {minPoint} ~ {maxPoint} 포인트
             </p>
           )}
         </span>
