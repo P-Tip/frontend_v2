@@ -27,7 +27,7 @@ const NavItem = ({ link, label }: NavItemProps) => {
       </Link>
       <div
         className={`
-          w-10 h-10 absolute top-12 left-1/2 -translate-x-1/2 rounded-full bg-ptu-gray 
+          w-10 h-10 absolute top-12 left-1/2 -translate-x-1/2 rounded-full bg-white
           transition-all duration-500 ease-in ${isActive ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"}
         `}
       ></div>

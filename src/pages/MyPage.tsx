@@ -62,7 +62,7 @@ const MyPage = () => {
       )}
 
       <MypagePointProgress totalPoint={totalPoint} />
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-h-[calc(63vh)] sm:max-h-[calc(65vh)] overflow-y-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-h-[calc(60vh)] sm:max-h-[calc(65vh)] overflow-y-auto">
         {likedScholarships.map((scholarship) => (
           <ScholarshipCard
             key={scholarship.id}

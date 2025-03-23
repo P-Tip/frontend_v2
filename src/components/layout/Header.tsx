@@ -4,9 +4,9 @@ import LogoIcon from "@/icons/Logo";
 
 const Header = () => {
   return (
-    <header className="fixed w-full max-w-screen-lg z-10 flex justify-between items-center py-6 px-3 bg-white">
+    <header className="fixed w-full max-w-screen-lg z-10 flex justify-between items-center py-6 px-3">
       <LogoIcon />
-      <nav className="hidden desktop:flex space-x-1.5">
+      <nav className="desktop:flex space-x-1.5">
         <ul className="flex space-x-4">
           {NAV_LIST.map((link) => {
             return (
