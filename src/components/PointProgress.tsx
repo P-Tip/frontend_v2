@@ -6,7 +6,7 @@ interface PointProgressProps {
 
 const PointProgress = ({ totalPoint }: PointProgressProps) => {
   return (
-    <div className="bg-ptu-light-green-bg rounded-2xl px-3.5 py-4">
+    <div className="bg-ptu-light-green-bg rounded-2xl px-3.5 sm:px-4 py-4 grid grid-cols-1 sm:grid-cols-2">
       <h1 className="text-2xl font-bold text-left">나의 솔선수범 장학금</h1>
       <div className="text-right">
         <p className="font-medium">{totalPoint / 10000} / 70 만점</p>
