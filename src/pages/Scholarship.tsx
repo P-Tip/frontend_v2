@@ -1,4 +1,4 @@
-import PointProgress from "@/components/PointProgress";
+import { PointProgress } from "@/components/PointProgress";
 import ScholarshipCard from "@/components/scholarship/ScholarshipCard";
 import Search from "@/components/scholarship/Search";
 import { useScholarships } from "@/services/queries/scholarshipQuery";

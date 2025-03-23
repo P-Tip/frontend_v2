@@ -6,6 +6,7 @@ import Scholarship from "./pages/Scholarship";
 import Timetable from "./pages/Timetable";
 import Todo from "./pages/Todo";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import MyPage from "./pages/MyPage";
 
 function App() {
   const queryClient = new QueryClient();
@@ -17,6 +18,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/scholarship" element={<Scholarship />} />
+            <Route path="/mypage" element={<MyPage />} />
             <Route path="/timetable" element={<Timetable />} />
             <Route path="/todo" element={<Todo />} />
           </Routes>
