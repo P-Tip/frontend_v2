@@ -62,7 +62,8 @@ const ScholarshipCard = ({
   return (
     <Link
       to={scholarship.link}
-      className="border border-ptu-grey-line rounded-2xl text-left flex flex-col gap-1 px-3.5 py-3 group"
+      className="border border-ptu-grey-line rounded-2xl text-left flex flex-col gap-1 px-3.5 py-3 group
+      transition-all duration-200 ease-in-out hover:bg-ptu-light-green-bg hover:scale-[1.025] active:scale-[0.975]"
     >
       <span className="flex justify-between items-center">
         <span className="flex items-center gap-x-2">
@@ -82,7 +83,7 @@ const ScholarshipCard = ({
           {scholarship.programName}
         </p>
       ) : (
-        <p className="text-xl font-bold group-hover:text-ptu-green-hover">
+        <p className="text-xl font-bold text-black group-hover:text-ptu-green-hover">
           {scholarship.programName}
         </p>
       )}
