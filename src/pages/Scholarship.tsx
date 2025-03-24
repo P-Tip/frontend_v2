@@ -15,6 +15,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { SORT_LIST } from "@/constants";
 
 const Scholarship = () => {
   const [totalPoint, setTotalPoint] = useState(0);
@@ -32,8 +33,9 @@ const Scholarship = () => {
     setTotalPoint(point);
   };
 
-  const handleSortChange = (selectedSort: string) => {
-    setSelectSort(selectedSort);
+  const handleSortChange = (label: string, value: string) => {
+    setSelectSort(label);
+    console.log(value);
   };
 
   const { data: scholarships = [], isLoading, isError } = useScholarships();
@@ -49,29 +51,20 @@ const Scholarship = () => {
         <Search onSearchResult={setSearchResults} />
 
         <DropdownMenu onOpenChange={setIsOpen}>
-          <DropdownMenuTrigger className="text-sm flex flex-row items-center justify-end float-right w-24 pt-2 md:pt-0 border-none focus-visible:outline-none focus-visible:border-none">
+          <DropdownMenuTrigger className="text-sm flex flex-row items-center justify-end float-right w-24 pt-2 md:pt-0 border-none focus:outline-none focus-visible:outline-none focus-visible:border-none">
             {isOpen ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}
             {selectSort}
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuLabel>장학금 정렬</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onSelect={() => handleSortChange("사전순")}>
-              사전순
-            </DropdownMenuItem>
-            <DropdownMenuItem onSelect={() => handleSortChange("마감순")}>
-              마감순
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onSelect={() => handleSortChange("낮은 포인트순")}
-            >
-              낮은 포인트순
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onSelect={() => handleSortChange("높은 포인트순")}
-            >
-              높은 포인트순
-            </DropdownMenuItem>
+            {SORT_LIST.map((sort) => (
+              <DropdownMenuItem
+                onSelect={() => handleSortChange(sort.label, sort.value)}
+              >
+                {sort.label}
+              </DropdownMenuItem>
+            ))}
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
