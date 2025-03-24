@@ -3,8 +3,7 @@ import ScholarshipCard from "@/components/scholarship/ScholarshipCard";
 import { Button } from "@/components/ui/button";
 import { useScholarships } from "@/services/queries/scholarshipQuery";
 import { useEffect, useState } from "react";
-
-import google from "@/assets/google.png";
+import GoogleIcon from "@/icons/Google";
 
 const MyPage = () => {
   const [likeId, setLikeId] = useState<number[]>([]);
@@ -53,11 +52,9 @@ const MyPage = () => {
             <br />
             나의 장학금을 확인해보세요!
           </h1>
-          <img
-            src={google}
-            className="w-11	h-11"
-            onClick={() => setLogin(!login)}
-          />
+          <span onClick={() => setLogin(!login)} className="cursor-pointer">
+            <GoogleIcon />
+          </span>
         </div>
       )}
 
