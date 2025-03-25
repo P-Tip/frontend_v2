@@ -58,12 +58,15 @@ export default {
         "ptu-default-black": "#3f4750",
         "ptu-green": "#2da87a",
         "ptu-green-hover": "#009b64",
+        "ptu-grey-text": "#8C8C8C",
+        "ptu-grey-line": "#F5F5F5",
       },
       backgroundColor: {
         "ptu-blue-bg": "#f3f6ff",
         "ptu-blue-bg-hover": "#e5eaff",
         "ptu-green-bg": "#009B64", // 이전 ptu-blue-bg를 연한 녹색 배경으로 변경
         "ptu-green-bg-hover": "#c7e9d8", // 이전 ptu-blue-bg-hover를 약간 더 진한 녹색 배경으로 변경
+        "ptu-light-green-bg": "#DDEDE2",
       },
       screens: {
         desktop: "960px",

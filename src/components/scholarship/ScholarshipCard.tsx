@@ -1,21 +1,27 @@
 import { IScholarship } from "@/types/scholarship";
 import { useEffect, useState } from "react";
-import { BsCartPlus } from "react-icons/bs";
-import { BsCartDash } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import { toast } from "sonner";
+import { Badge } from "@/components/ui/badge";
+import { IoMdHeartEmpty } from "react-icons/io";
+import { IoMdHeart } from "react-icons/io";
+import { PiBuildingApartment } from "react-icons/pi";
+import { PiMoney } from "react-icons/pi";
+import Highlighter from "react-highlight-words";
 
 interface ScholarshipCardProps {
   scholarship: IScholarship;
+  searchValue: string;
   onCartClick: (point: number) => void;
 }
 
 const ScholarshipCard = ({
   scholarship,
+  searchValue,
   onCartClick,
 }: ScholarshipCardProps) => {
-  const [isOpen, setIsOpen] = useState(false);
   const [isAdd, setIsAdd] = useState(false);
+  const minPoint = Number(scholarship.min_point).toLocaleString();
+  const maxPoint = Number(scholarship.max_point).toLocaleString();
 
   useEffect(() => {
     const localstorageCart = JSON.parse(
@@ -25,7 +31,9 @@ const ScholarshipCard = ({
     setIsAdd(isExist);
   }, []);
 
-  const handleCartClick = () => {
+  const handleHeartClick = (e: React.MouseEvent<HTMLSpanElement>) => {
+    e.preventDefault();
+
     const id = scholarship.id;
     const point = Number(scholarship.max_point);
 
@@ -35,12 +43,7 @@ const ScholarshipCard = ({
     let localstoragePoint =
       Number(localStorage.getItem("scholarshipPoint")) || 0;
 
-    if (localstoragePoint + point > 700000 && !isAdd) {
-      toast("70만점을 초과할 수 없습니다.");
-      return;
-    } else {
-      setIsAdd(!isAdd);
-    }
+    setIsAdd(!isAdd);
 
     if (isAdd) {
       const updatedCart = localstorageCart.filter(
@@ -53,55 +56,57 @@ const ScholarshipCard = ({
       localStorage.setItem("scholarshipCart", JSON.stringify(localstorageCart));
       localstoragePoint += point;
     }
-
     localStorage.setItem("scholarshipPoint", localstoragePoint.toString());
+
     onCartClick(localstoragePoint);
   };
 
-  const stringFormat = (point: string) => {
-    if (point === "미정") return point;
-    return Number(point).toLocaleString();
-  };
-
   return (
-    <div className="pb-2">
-      <div className="border border-ptu-gray rounded-xl	flex">
-        <div
-          className="text-left	w-5/6 p-2 cursor-pointer"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          <p className="font-bold">{scholarship.programName}</p>
-          <p className="text-gray-400	text-sm">{scholarship.department_name}</p>
-          {scholarship.min_point === scholarship.max_point ? (
-            <p className="font-bold">{stringFormat(scholarship.min_point)}</p>
+    <Link
+      to={scholarship.link}
+      className="border border-ptu-grey-line rounded-2xl text-left flex flex-col gap-1 px-3.5 py-3 group
+      transition-all duration-200 ease-in-out hover:bg-ptu-light-green-bg hover:scale-[1.025] active:scale-[0.975]"
+    >
+      <span className="flex justify-between items-center">
+        <span className="flex items-center gap-x-2">
+          <Badge variant="distant">미정</Badge>
+          {/*<p className="text-xs text-ptu-grey-text">(~3/21)</p>*/}
+        </span>
+        <span onClick={handleHeartClick}>
+          {isAdd ? (
+            <IoMdHeart className="text-[#FF6B6B] text-xl" />
           ) : (
-            <p className="font-bold">
-              {stringFormat(scholarship.min_point)} ~{" "}
-              {stringFormat(scholarship.max_point)}
+            <IoMdHeartEmpty className="text-ptu-grey-text text-xl" />
+          )}
+        </span>
+      </span>
+
+      <Highlighter
+        className={`text-xl font-bold text-black ${scholarship.link === "" ? "" : "group-hover:text-ptu-green-hover"}`}
+        searchWords={[searchValue]}
+        textToHighlight={scholarship.programName}
+      >
+        {scholarship.programName}
+      </Highlighter>
+
+      <p className="text-xs text-ptu-grey-text">{scholarship.contents}</p>
+      <div className="text-xs flex flex-row gap-x-2 text-black">
+        <span className="flex flex-row items-center gap-x-0.5">
+          <PiBuildingApartment />
+          <p>{scholarship.department_name}</p>
+        </span>
+        <span className="flex flex-row items-center gap-x-0.5">
+          <PiMoney />
+          {scholarship.min_point === scholarship.max_point ? (
+            <p>{minPoint} 포인트</p>
+          ) : (
+            <p>
+              {minPoint} ~ {maxPoint} 포인트
             </p>
           )}
-        </div>
-        <div
-          className="w-1/6 border-l border-l-ptu-gray flex justify-center items-center cursor-pointer"
-          onClick={handleCartClick}
-        >
-          {isAdd ? (
-            <BsCartDash className="text-3xl text-ptu-red" />
-          ) : (
-            <BsCartPlus className="text-3xl text-ptu-green" />
-          )}
-        </div>
+        </span>
       </div>
-
-      {isOpen && (
-        <div className="p-3 bg-gray-100 rounded-lg text-sm">
-          <p className="text-gray-600 pb-1">{scholarship.contents}</p>
-          <Link to={scholarship.link} className="font-bold">
-            바로가기
-          </Link>
-        </div>
-      )}
-    </div>
+    </Link>
   );
 };
 

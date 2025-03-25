@@ -1,99 +1,64 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Slider } from "@/components/ui/slider";
-import { useEffect, useState } from "react";
-import DepartmentSearch from "./DepartmentSearch";
+import { useState } from "react";
 import { IScholarship } from "@/types/scholarship";
 import { toast } from "sonner";
 import { useSearchScholarships } from "@/services/queries/scholarshipQuery";
+import { IoSearchSharp } from "react-icons/io5";
 
 interface SearchProps {
+  onSearchValue: (inputValue: string) => void;
   onSearchResult: (results: IScholarship[]) => void;
 }
 
-const Search = ({ onSearchResult }: SearchProps) => {
+const Search = ({ onSearchResult, onSearchValue }: SearchProps) => {
   const [inputValue, setInputValue] = useState("");
-  const [sliderValue, setSliderValue] = useState(0);
-  const [departmentValue, setDepartmentValue] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
 
   const searchMutation = useSearchScholarships((data) => {
     if (data.length === 0) {
       toast("검색 결과가 없습니다.");
+      onSearchResult([]);
     } else {
       onSearchResult(data);
     }
-    setIsOpen(false);
   });
 
   const handleSearchClick = () => {
-    if (!isOpen) {
-      setIsOpen(true);
-    } else {
-      searchMutation.mutate({
-        name: inputValue,
-        point: sliderValue,
-        department: departmentValue,
-      });
-    }
+    searchMutation.mutate({
+      name: inputValue,
+      point: 0,
+      department: "",
+    });
   };
 
-  useEffect(() => {
-    if (!isOpen) {
-      setInputValue("");
-      setSliderValue(0);
-      setDepartmentValue("");
-    }
-  }, [isOpen]);
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+    onSearchValue(e.target.value);
+    searchMutation.mutate({
+      name: e.target.value,
+      point: 0,
+      department: "",
+    });
+  };
 
   return (
-    <div className="relative w-full">
-      <div
-        className="flex w-full items-center space-x-2"
-        onFocus={() => setIsOpen(true)}
+    <div className="border border-ptu-green rounded-2xl flex align-center px-1 py-0.5 focus-within:border-2 transition-all duration-100 ease-in-out">
+      <Input
+        className="border-none shadow-none placeholder:text-ptu-grey-text"
+        type="text"
+        placeholder="어떤 프로그램을 찾고 있나요?"
+        value={inputValue}
+        onChange={handleInputChange}
+      />
+      <Button
+        className="[&>svg]:hover:text-ptu-green [&>svg]:focus-visible:text-ptu-green"
+        variant="search"
+        size="icon"
+        type="submit"
+        onClick={handleSearchClick}
       >
-        <Input
-          type="text"
-          placeholder="검색어를 입력해주세요"
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-        />
-        <Button type="submit" onClick={handleSearchClick}>
-          검색
-        </Button>
-      </div>
-
-      {isOpen && (
-        <div className="absolute top-full left-0 w-full bg-white mt-1 p-2 shadow-lg z-10">
-          <div className="my-2">
-            <Slider
-              defaultValue={[0]}
-              max={700000}
-              step={10000}
-              onValueChange={(value) => setSliderValue(value[0])}
-            />
-            <p className="text-sm text-gray-600">
-              {sliderValue.toLocaleString()}점
-            </p>
-          </div>
-
-          <div>
-            <DepartmentSearch
-              onSelectDepartment={(department) =>
-                setDepartmentValue(department)
-              }
-            />
-          </div>
-
-          <Button
-            className="mt-3 w-full bg-ptu-gray"
-            variant="outline"
-            onClick={() => setIsOpen(false)}
-          >
-            닫기
-          </Button>
-        </div>
-      )}
+        <IoSearchSharp />
+      </Button>
     </div>
   );
 };
