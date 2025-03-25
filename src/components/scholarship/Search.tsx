@@ -4,19 +4,20 @@ import { useState } from "react";
 import { IScholarship } from "@/types/scholarship";
 import { toast } from "sonner";
 import { useSearchScholarships } from "@/services/queries/scholarshipQuery";
-
 import { IoSearchSharp } from "react-icons/io5";
 
 interface SearchProps {
+  onSearchValue: (inputValue: string) => void;
   onSearchResult: (results: IScholarship[]) => void;
 }
 
-const Search = ({ onSearchResult }: SearchProps) => {
+const Search = ({ onSearchResult, onSearchValue }: SearchProps) => {
   const [inputValue, setInputValue] = useState("");
 
   const searchMutation = useSearchScholarships((data) => {
     if (data.length === 0) {
       toast("검색 결과가 없습니다.");
+      onSearchResult([]);
     } else {
       onSearchResult(data);
     }
@@ -30,6 +31,16 @@ const Search = ({ onSearchResult }: SearchProps) => {
     });
   };
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+    onSearchValue(e.target.value);
+    searchMutation.mutate({
+      name: e.target.value,
+      point: 0,
+      department: "",
+    });
+  };
+
   return (
     <div className="border border-ptu-green rounded-2xl flex align-center px-1 py-0.5 focus-within:border-2 transition-all duration-100 ease-in-out">
       <Input
@@ -37,7 +48,7 @@ const Search = ({ onSearchResult }: SearchProps) => {
         type="text"
         placeholder="어떤 프로그램을 찾고 있나요?"
         value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
+        onChange={handleInputChange}
       />
       <Button
         className="[&>svg]:hover:text-ptu-green [&>svg]:focus-visible:text-ptu-green"

@@ -19,6 +19,7 @@ import { SORT_LIST } from "@/constants";
 
 const Scholarship = () => {
   const [totalPoint, setTotalPoint] = useState(0);
+  const [searchValue, setSearchValue] = useState("");
   const [searchResults, setSearchResults] = useState<IScholarship[]>([]);
   const [selectSort, setSelectSort] = useState<string>("사전순");
   const [isOpen, setIsOpen] = useState(false);
@@ -48,7 +49,10 @@ const Scholarship = () => {
       <PointProgress totalPoint={totalPoint} />
 
       <div className="md:grid md:grid-cols-[1fr_auto] gap-1">
-        <Search onSearchResult={setSearchResults} />
+        <Search
+          onSearchResult={setSearchResults}
+          onSearchValue={setSearchValue}
+        />
 
         <DropdownMenu onOpenChange={setIsOpen}>
           <DropdownMenuTrigger className="text-sm flex flex-row items-center justify-end float-right w-24 pt-2 md:pt-0 border-none focus:outline-none focus-visible:outline-none focus-visible:border-none">
@@ -60,6 +64,7 @@ const Scholarship = () => {
             <DropdownMenuSeparator />
             {SORT_LIST.map((sort) => (
               <DropdownMenuItem
+                key={sort.value}
                 onSelect={() => handleSortChange(sort.label, sort.value)}
               >
                 {sort.label}
@@ -69,12 +74,13 @@ const Scholarship = () => {
         </DropdownMenu>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 h-[calc(61vh)] sm:h-[calc(72vh)] overflow-y-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-h-[calc(61vh)] max-sm:h-[calc(72vh)] overflow-y-auto">
         {(searchResults.length > 0 ? searchResults : scholarships).map(
           (scholarship: IScholarship) => (
             <ScholarshipCard
               key={scholarship.id}
               scholarship={scholarship}
+              searchValue={searchValue}
               onCartClick={(point) => handleCartClick(point)}
             />
           ),

@@ -46,6 +46,9 @@ importers:
       react-dom:
         specifier: ^19.0.0
         version: 19.0.0(react@19.0.0)
+      react-highlight-words:
+        specifier: ^0.21.0
+        version: 0.21.0(react@19.0.0)
       react-icons:
         specifier: ^5.5.0
         version: 5.5.0(react@19.0.0)
@@ -74,6 +77,9 @@ importers:
       "@types/react-dom":
         specifier: ^19.0.3
         version: 19.0.4(@types/react@19.0.10)
+      "@types/react-highlight-words":
+        specifier: ^0.20.0
+        version: 0.20.0
       "@vitejs/plugin-react":
         specifier: ^4.3.4
         version: 4.3.4(vite@6.1.1(@types/node@22.13.4)(jiti@1.21.7)(yaml@2.7.0))
@@ -1401,6 +1407,12 @@ packages:
     peerDependencies:
       "@types/react": ^19.0.0
 
+  "@types/react-highlight-words@0.20.0":
+    resolution:
+      {
+        integrity: sha512-Qm512TiOakvtNzHJ2+TNVHnLn5cJ2wLQV0+LrhuispVth6dRf5b8ydjq3Kc0thpZ7bz4s6RnG6meboAXHWRK+Q==,
+      }
+
   "@types/react@19.0.10":
     resolution:
       {
@@ -2316,6 +2328,12 @@ packages:
       }
     engines: { node: ">= 0.4" }
 
+  highlight-words-core@1.2.3:
+    resolution:
+      {
+        integrity: sha512-m1O9HW3/GNHxzSIXWw1wCNXXsgLlxrP0OI6+ycGUhiUHkikqW3OrwVHz+lxeNBe5yqLESdIcj8PowHQ2zLvUvQ==,
+      }
+
   human-signals@5.0.0:
     resolution:
       {
@@ -2586,6 +2604,12 @@ packages:
         integrity: sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==,
       }
     engines: { node: ">= 0.4" }
+
+  memoize-one@4.0.3:
+    resolution:
+      {
+        integrity: sha512-QmpUu4KqDmX0plH4u+tf0riMc1KHE1+lw95cMrLlXQAFOx/xnBtwhZ52XJxd9X2O6kwKBqX32kmhbhlobD0cuw==,
+      }
 
   merge-stream@2.0.0:
     resolution:
@@ -2978,6 +3002,14 @@ packages:
       }
     peerDependencies:
       react: ^19.0.0
+
+  react-highlight-words@0.21.0:
+    resolution:
+      {
+        integrity: sha512-SdWEeU9fIINArEPO1rO5OxPyuhdEKZQhHzZZP1ie6UeXQf+CjycT1kWaB+9bwGcVbR0NowuHK3RqgqNg6bgBDQ==,
+      }
+    peerDependencies:
+      react: ^0.14.0 || ^15.0.0 || ^16.0.0-0 || ^17.0.0-0 || ^18.0.0-0 || ^19.0.0-0
 
   react-icons@5.5.0:
     resolution:
@@ -4300,6 +4332,10 @@ snapshots:
     dependencies:
       "@types/react": 19.0.10
 
+  "@types/react-highlight-words@0.20.0":
+    dependencies:
+      "@types/react": 19.0.10
+
   "@types/react@19.0.10":
     dependencies:
       csstype: 3.1.3
@@ -4874,6 +4910,8 @@ snapshots:
     dependencies:
       function-bind: 1.1.2
 
+  highlight-words-core@1.2.3: {}
+
   human-signals@5.0.0: {}
 
   husky@9.1.7: {}
@@ -5009,6 +5047,8 @@ snapshots:
       react: 19.0.0
 
   math-intrinsics@1.1.0: {}
+
+  memoize-one@4.0.3: {}
 
   merge-stream@2.0.0: {}
 
@@ -5191,6 +5231,12 @@ snapshots:
     dependencies:
       react: 19.0.0
       scheduler: 0.25.0
+
+  react-highlight-words@0.21.0(react@19.0.0):
+    dependencies:
+      highlight-words-core: 1.2.3
+      memoize-one: 4.0.3
+      react: 19.0.0
 
   react-icons@5.5.0(react@19.0.0):
     dependencies:

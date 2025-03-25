@@ -6,14 +6,17 @@ import { IoMdHeartEmpty } from "react-icons/io";
 import { IoMdHeart } from "react-icons/io";
 import { PiBuildingApartment } from "react-icons/pi";
 import { PiMoney } from "react-icons/pi";
+import Highlighter from "react-highlight-words";
 
 interface ScholarshipCardProps {
   scholarship: IScholarship;
+  searchValue: string;
   onCartClick: (point: number) => void;
 }
 
 const ScholarshipCard = ({
   scholarship,
+  searchValue,
   onCartClick,
 }: ScholarshipCardProps) => {
   const [isAdd, setIsAdd] = useState(false);
@@ -56,7 +59,6 @@ const ScholarshipCard = ({
     localStorage.setItem("scholarshipPoint", localstoragePoint.toString());
 
     onCartClick(localstoragePoint);
-    console.log(scholarship.link === "");
   };
 
   return (
@@ -78,15 +80,15 @@ const ScholarshipCard = ({
           )}
         </span>
       </span>
-      {scholarship.link === "" ? (
-        <p className="text-xl font-bold text-black">
-          {scholarship.programName}
-        </p>
-      ) : (
-        <p className="text-xl font-bold text-black group-hover:text-ptu-green-hover">
-          {scholarship.programName}
-        </p>
-      )}
+
+      <Highlighter
+        className={`text-xl font-bold text-black ${scholarship.link === "" ? "" : "group-hover:text-ptu-green-hover"}`}
+        searchWords={[searchValue]}
+        textToHighlight={scholarship.programName}
+      >
+        {scholarship.programName}
+      </Highlighter>
+
       <p className="text-xs text-ptu-grey-text">{scholarship.contents}</p>
       <div className="text-xs flex flex-row gap-x-2 text-black">
         <span className="flex flex-row items-center gap-x-0.5">
