@@ -1,6 +1,7 @@
 import { PointProgress } from "@/components/PointProgress";
 import ScholarshipCard from "@/components/scholarship/ScholarshipCard";
 import Search from "@/components/scholarship/Search";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { useScholarships } from "@/services/queries/scholarshipQuery";
 import { IScholarship } from "@/types/scholarship";
 import { useEffect, useState } from "react";
@@ -45,7 +46,7 @@ const Scholarship = () => {
   if (isError) return <p>데이터를 불러오는 데 실패했습니다.</p>;
 
   return (
-    <div className="px-5 pt-5 pb-3 flex flex-col gap-4">
+    <div className="px-5 pt-5 flex flex-col gap-4 h-full">
       <PointProgress totalPoint={totalPoint} />
 
       <div className="md:grid md:grid-cols-[1fr_auto] gap-1">
@@ -74,18 +75,20 @@ const Scholarship = () => {
         </DropdownMenu>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-h-[calc(61vh)] max-sm:h-[calc(72vh)] overflow-y-auto">
-        {(searchResults.length > 0 ? searchResults : scholarships).map(
-          (scholarship: IScholarship) => (
-            <ScholarshipCard
-              key={scholarship.id}
-              scholarship={scholarship}
-              searchValue={searchValue}
-              onCartClick={(point) => handleCartClick(point)}
-            />
-          ),
-        )}
-      </div>
+      <ScrollArea className="h-[60vh] sm:h-[65vh]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pr-4">
+          {(searchResults.length > 0 ? searchResults : scholarships).map(
+            (scholarship: IScholarship) => (
+              <ScholarshipCard
+                key={scholarship.id}
+                scholarship={scholarship}
+                searchValue={searchValue}
+                onCartClick={(point) => handleCartClick(point)}
+              />
+            ),
+          )}
+        </div>
+      </ScrollArea>
     </div>
   );
 };

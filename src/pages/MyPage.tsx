@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useScholarships } from "@/services/queries/scholarshipQuery";
 import { useEffect, useState } from "react";
 import GoogleIcon from "@/icons/Google";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const MyPage = () => {
   const [likeId, setLikeId] = useState<number[]>([]);
@@ -59,17 +60,19 @@ const MyPage = () => {
       )}
 
       <MypagePointProgress totalPoint={totalPoint} />
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-h-[calc(60vh)] sm:max-h-[calc(65vh)] overflow-y-auto">
-        {likedScholarships.map((scholarship) => (
-          <ScholarshipCard
-            key={scholarship.id}
-            scholarship={scholarship}
-            onCartClick={(point) => handleCartClick(point)}
-            // TODO: 빌드 오류 해결 props 넘겨주기
-            searchValue={""}
-          />
-        ))}
-      </div>
+      <ScrollArea className="h-[60vh] sm:h-[65vh]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pr-4">
+          {likedScholarships.map((scholarship) => (
+            <ScholarshipCard
+              key={scholarship.id}
+              scholarship={scholarship}
+              onCartClick={(point) => handleCartClick(point)}
+              // TODO: 빌드 오류 해결 props 넘겨주기
+              searchValue={""}
+            />
+          ))}
+        </div>
+      </ScrollArea>
     </div>
   );
 };
