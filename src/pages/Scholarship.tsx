@@ -74,7 +74,7 @@ const Scholarship = () => {
         </DropdownMenu>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-h-[calc(61vh)] max-sm:h-[calc(72vh)] overflow-y-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-h-[calc(61vh)] max-sm:h-[calc(72vh)]">
         {(searchResults.length > 0 ? searchResults : scholarships).map(
           (scholarship: IScholarship) => (
             <ScholarshipCard
