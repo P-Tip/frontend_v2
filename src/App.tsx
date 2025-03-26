@@ -1,7 +1,6 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "./global.css";
 import Layout from "./components/layout/Layout";
-import Home from "./pages/Home";
 import Scholarship from "./pages/Scholarship";
 import Timetable from "./pages/Timetable";
 import Todo from "./pages/Todo";
@@ -16,8 +15,8 @@ function App() {
       <BrowserRouter>
         <Layout>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/scholarship" element={<Scholarship />} />
+            <Route path="/" element={<Navigate to="/scholarship" replace />} />
+            <Route index path="/scholarship" element={<Scholarship />} />
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/timetable" element={<Timetable />} />
             <Route path="/todo" element={<Todo />} />
