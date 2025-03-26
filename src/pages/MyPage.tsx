@@ -65,6 +65,8 @@ const MyPage = () => {
             key={scholarship.id}
             scholarship={scholarship}
             onCartClick={(point) => handleCartClick(point)}
+            // TODO: 빌드 오류 해결 props 넘겨주기
+            searchValue={""}
           />
         ))}
       </div>
