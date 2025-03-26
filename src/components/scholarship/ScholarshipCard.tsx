@@ -7,6 +7,7 @@ import { IoMdHeart } from "react-icons/io";
 import { PiBuildingApartment } from "react-icons/pi";
 import { PiMoney } from "react-icons/pi";
 import Highlighter from "react-highlight-words";
+import { toast } from "sonner";
 
 interface ScholarshipCardProps {
   scholarship: IScholarship;
@@ -64,8 +65,15 @@ const ScholarshipCard = ({
   return (
     <Link
       to={scholarship.link}
+      target="_blank"
       className="border border-ptu-grey-line rounded-2xl text-left flex flex-col gap-1 px-3.5 py-3 group
       transition-all duration-200 ease-in-out hover:bg-ptu-light-green-bg hover:scale-[1.025] active:scale-[0.975]"
+      onClick={(e) => {
+        if (scholarship.link === "") {
+          e.preventDefault();
+          toast.error("링크를 준비중입니다.");
+        }
+      }}
     >
       <span className="flex justify-between items-center">
         <span className="flex items-center gap-x-2">
