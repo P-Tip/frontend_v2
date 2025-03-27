@@ -8,6 +8,8 @@ import { PiBuildingApartment } from "react-icons/pi";
 import { PiMoney } from "react-icons/pi";
 import Highlighter from "react-highlight-words";
 import { toast } from "sonner";
+import { SCHOLARSHIP_DATA } from "@/constants";
+import { calculateTotalPoints } from "@/utils";
 
 interface ScholarshipCardProps {
   scholarship: IScholarship;
@@ -25,51 +27,51 @@ const ScholarshipCard = ({
   const maxPoint = Number(scholarship.max_point).toLocaleString();
 
   useEffect(() => {
-    const localstorageCart = JSON.parse(
-      localStorage.getItem("scholarshipCart") || "[]",
+    const scholarshipData = JSON.parse(
+      localStorage.getItem(SCHOLARSHIP_DATA) || "[]",
     );
-    const isExist = localstorageCart.includes(scholarship.id);
+    const isExist = scholarshipData.some(
+      (item: IScholarship) => item.id === scholarship.id,
+    );
     setIsAdd(isExist);
-  }, []);
+  }, [scholarship.id]);
 
   const handleHeartClick = (e: React.MouseEvent<HTMLSpanElement>) => {
     e.preventDefault();
-    // 클릭 이벤트 전파 방지하여 좋아요랑 Link 클릭 이벤트 충돌 방지
     e.stopPropagation();
 
     const id = scholarship.id;
-    const point = Number(scholarship.max_point);
 
-    const localstorageCart = JSON.parse(
-      localStorage.getItem("scholarshipCart") || "[]",
+    const scholarshipData = JSON.parse(
+      localStorage.getItem(SCHOLARSHIP_DATA) || "[]",
     );
-    let localstoragePoint =
-      Number(localStorage.getItem("scholarshipPoint")) || 0;
+
+    let currentTotalPoints = calculateTotalPoints(scholarshipData);
 
     if (isAdd) {
       // 이미 추가된 상태면 삭제 및 좋아요 비활성화
-      const updatedCart = localstorageCart.filter(
-        (itemId: number) => itemId !== id,
+      const updatedData = scholarshipData.filter(
+        (item: IScholarship) => item.id !== id,
       );
-      localStorage.setItem("scholarshipCart", JSON.stringify(updatedCart));
-      localstoragePoint -= point;
-      setIsAdd(false); // 실제 삭제 후 UI 변경
+      localStorage.setItem(SCHOLARSHIP_DATA, JSON.stringify(updatedData));
+      setIsAdd(false);
+
+      onCartClick(calculateTotalPoints(updatedData));
     } else {
-      // 아직 추가되지 않은 상태면 추가 및 좋아요 활성화
-      if (localstoragePoint + point > 700000) {
+      // 추가시 포인트 계산 후 제한 체크
+      const newTotalPoints = currentTotalPoints + Number(scholarship.max_point);
+
+      if (newTotalPoints > 700000) {
         toast.error("최대 70만점을 초과할 수 없습니다.");
         return;
       }
 
-      // 추가 성공 시에만 실행
-      localstorageCart.push(id);
-      localStorage.setItem("scholarshipCart", JSON.stringify(localstorageCart));
-      localstoragePoint += point;
-      setIsAdd(true); // 실제 추가 후 UI 변경
+      // 아직 추가되지 않은 상태면 추가 및 좋아요 활성화
+      const updatedData = [...scholarshipData, scholarship];
+      localStorage.setItem(SCHOLARSHIP_DATA, JSON.stringify(updatedData));
+      setIsAdd(true);
+      onCartClick(newTotalPoints);
     }
-
-    localStorage.setItem("scholarshipPoint", localstoragePoint.toString());
-    onCartClick(localstoragePoint);
   };
 
   return (

@@ -16,7 +16,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { SORT_LIST } from "@/constants";
+import { SCHOLARSHIP_DATA, SORT_LIST } from "@/constants";
 
 const Scholarship = () => {
   const [totalPoint, setTotalPoint] = useState(0);
@@ -25,10 +25,17 @@ const Scholarship = () => {
   const [selectSort, setSelectSort] = useState<string>("사전순");
   const [isOpen, setIsOpen] = useState(false);
 
+  // 총 포인트 계산 함수
+  const calculateTotalPoints = (data: IScholarship[]) => {
+    return data.reduce((sum, item) => sum + Number(item.max_point), 0);
+  };
+
   useEffect(() => {
-    let localstoragePoint =
-      Number(localStorage.getItem("scholarshipPoint")) || 0;
-    setTotalPoint(localstoragePoint);
+    const scholarshipData = JSON.parse(
+      localStorage.getItem(SCHOLARSHIP_DATA) || "[]",
+    );
+    // 데이터로부터 포인트 계산
+    setTotalPoint(calculateTotalPoints(scholarshipData));
   }, []);
 
   const handleCartClick = (point: number) => {

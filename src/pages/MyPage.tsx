@@ -1,38 +1,40 @@
 import { MypagePointProgress } from "@/components/PointProgress";
 import ScholarshipCard from "@/components/scholarship/ScholarshipCard";
 import { Button } from "@/components/ui/button";
-import { useScholarships } from "@/services/queries/scholarshipQuery";
+import { IScholarship } from "@/types/scholarship";
 import { useEffect, useState } from "react";
 import GoogleIcon from "@/icons/Google";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { toast } from "sonner";
+import { calculateTotalPoints } from "@/utils";
+import { SCHOLARSHIP_DATA } from "@/constants";
 
 const MyPage = () => {
-  const [likeId, setLikeId] = useState<number[]>([]);
+  const [likedScholarships, setLikedScholarships] = useState<IScholarship[]>(
+    [],
+  );
   const [totalPoint, setTotalPoint] = useState(0);
   const [login, setLogin] = useState(false);
 
-  useEffect(() => {
-    let localstorageId = JSON.parse(
-      localStorage.getItem("scholarshipCart") || "[]",
-    );
-    let localstoragePoint =
-      Number(localStorage.getItem("scholarshipPoint")) || 0;
-    setLikeId(localstorageId);
-    setTotalPoint(localstoragePoint);
-  }, []);
+  // 총 포인트 계산 함수
 
-  const { data: scholarships = [], isLoading, isError } = useScholarships();
-  const likedScholarships = scholarships.filter((scholarship) =>
-    likeId.includes(scholarship.id),
-  );
+  useEffect(() => {
+    const scholarshipData = JSON.parse(
+      localStorage.getItem(SCHOLARSHIP_DATA) || "[]",
+    );
+
+    setLikedScholarships(scholarshipData);
+    // 데이터로부터 포인트 계산
+    setTotalPoint(calculateTotalPoints(scholarshipData));
+  }, []);
 
   const handleCartClick = (point: number) => {
     setTotalPoint(point);
+    const scholarshipData = JSON.parse(
+      localStorage.getItem(SCHOLARSHIP_DATA) || "[]",
+    );
+    setLikedScholarships(scholarshipData);
   };
-
-  if (isLoading) return <p>로딩 중...</p>;
-  if (isError) return <p>데이터를 불러오는 데 실패했습니다.</p>;
 
   return (
     <div className="px-5 pt-11 pb-3 flex flex-col gap-4">
