@@ -19,7 +19,7 @@ const Layout = ({ children }: LayoutProps) => {
       <Header />
       {/* TODO: 임시 해결 방법 헤더 높이를 좀 잘 계산하면 문제없을 듯하다. */}
       <main className="w-full h-full bg-white rounded-t-3xl">{children}</main>
-      <Toaster />
+      <Toaster position="bottom-center" duration={2000} />
       {/* {!isDesktop && <Footer />} */}
     </>
   );

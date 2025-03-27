@@ -5,6 +5,7 @@ import { useScholarships } from "@/services/queries/scholarshipQuery";
 import { useEffect, useState } from "react";
 import GoogleIcon from "@/icons/Google";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { toast } from "sonner";
 
 const MyPage = () => {
   const [likeId, setLikeId] = useState<number[]>([]);
@@ -53,7 +54,12 @@ const MyPage = () => {
             <br />
             나의 장학금을 확인해보세요!
           </h1>
-          <span onClick={() => setLogin(!login)} className="cursor-pointer">
+          <span
+            onClick={() => {
+              toast.error("준비중인 기능입니다.");
+            }}
+            className="cursor-pointer"
+          >
             <GoogleIcon />
           </span>
         </div>
@@ -61,7 +67,7 @@ const MyPage = () => {
 
       <MypagePointProgress totalPoint={totalPoint} />
       <ScrollArea className="h-[60vh] sm:h-[65vh]">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pr-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
           {likedScholarships.map((scholarship) => (
             <ScholarshipCard
               key={scholarship.id}

@@ -34,6 +34,8 @@ const ScholarshipCard = ({
 
   const handleHeartClick = (e: React.MouseEvent<HTMLSpanElement>) => {
     e.preventDefault();
+    // 클릭 이벤트 전파 방지하여 좋아요랑 Link 클릭 이벤트 충돌 방지
+    e.stopPropagation();
 
     const id = scholarship.id;
     const point = Number(scholarship.max_point);
@@ -44,21 +46,29 @@ const ScholarshipCard = ({
     let localstoragePoint =
       Number(localStorage.getItem("scholarshipPoint")) || 0;
 
-    setIsAdd(!isAdd);
-
     if (isAdd) {
+      // 이미 추가된 상태면 삭제 및 좋아요 비활성화
       const updatedCart = localstorageCart.filter(
         (itemId: number) => itemId !== id,
       );
       localStorage.setItem("scholarshipCart", JSON.stringify(updatedCart));
       localstoragePoint -= point;
+      setIsAdd(false); // 실제 삭제 후 UI 변경
     } else {
+      // 아직 추가되지 않은 상태면 추가 및 좋아요 활성화
+      if (localstoragePoint + point > 700000) {
+        toast.error("최대 70만점을 초과할 수 없습니다.");
+        return;
+      }
+
+      // 추가 성공 시에만 실행
       localstorageCart.push(id);
       localStorage.setItem("scholarshipCart", JSON.stringify(localstorageCart));
       localstoragePoint += point;
+      setIsAdd(true); // 실제 추가 후 UI 변경
     }
-    localStorage.setItem("scholarshipPoint", localstoragePoint.toString());
 
+    localStorage.setItem("scholarshipPoint", localstoragePoint.toString());
     onCartClick(localstoragePoint);
   };
 
@@ -72,6 +82,7 @@ const ScholarshipCard = ({
         if (scholarship.link === "") {
           e.preventDefault();
           toast.error("링크를 준비중입니다.");
+          return;
         }
       }}
     >

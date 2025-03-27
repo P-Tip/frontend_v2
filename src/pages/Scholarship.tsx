@@ -76,7 +76,7 @@ const Scholarship = () => {
       </div>
 
       <ScrollArea className="h-[60vh] sm:h-[65vh]">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pr-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
           {(searchResults.length > 0 ? searchResults : scholarships).map(
             (scholarship: IScholarship) => (
               <ScholarshipCard
