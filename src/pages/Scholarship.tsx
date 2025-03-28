@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ORDER_LIST } from "@/constants";
 import { toast } from "sonner";
+import SearchNotFound from "@/components/scholarship/SearchNotFound";
 
 const Scholarship = () => {
   const [totalPoint, setTotalPoint] = useState(0);
@@ -29,6 +30,7 @@ const Scholarship = () => {
   const [selectOrder, setSelectOrder] = useState<string>("장학금 정렬");
   const [selectOrderValue, setSelectOrderValue] = useState<string>("");
   const [isOpen, setIsOpen] = useState(false);
+  const [isEmptyResult, setIsEmptyResult] = useState(false);
 
   useEffect(() => {
     let localstoragePoint =
@@ -66,6 +68,7 @@ const Scholarship = () => {
         <Search
           onSearchResult={setSearchResults}
           onSearchValue={setSearchValue}
+          onIsEmptyResult={setIsEmptyResult}
         />
 
         <DropdownMenu onOpenChange={setIsOpen}>
@@ -89,19 +92,23 @@ const Scholarship = () => {
       </div>
 
       <ScrollArea className="h-[60vh] sm:h-[65vh]">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pr-4">
-          {(searchResults.length > 0
-            ? searchResults
-            : orderScholarships.contents || []
-          ).map((scholarship: IScholarship) => (
-            <ScholarshipCard
-              key={scholarship.id}
-              scholarship={scholarship}
-              searchValue={searchValue}
-              onCartClick={(point) => handleCartClick(point)}
-            />
-          ))}
-        </div>
+        {isEmptyResult ? (
+          <SearchNotFound />
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pr-4">
+            {(searchResults.length > 0
+              ? searchResults
+              : orderScholarships.contents || []
+            ).map((scholarship: IScholarship) => (
+              <ScholarshipCard
+                key={scholarship.id}
+                scholarship={scholarship}
+                searchValue={searchValue}
+                onCartClick={(point) => handleCartClick(point)}
+              />
+            ))}
+          </div>
+        )}
       </ScrollArea>
     </div>
   );

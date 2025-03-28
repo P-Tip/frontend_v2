@@ -10,17 +10,23 @@ import { useDebounce } from "@/hooks/useDebounce";
 interface SearchProps {
   onSearchValue: (inputValue: string) => void;
   onSearchResult: (results: IScholarship[]) => void;
+  onIsEmptyResult: (results: boolean) => void;
 }
 
-const Search = ({ onSearchResult, onSearchValue }: SearchProps) => {
+const Search = ({
+  onSearchResult,
+  onSearchValue,
+  onIsEmptyResult,
+}: SearchProps) => {
   const [inputValue, setInputValue] = useState("");
   const debounceValue = useDebounce(inputValue);
 
   const searchMutation = useSearchScholarships((data) => {
     if (data.length === 0) {
-      toast("검색 결과가 없습니다.");
+      onIsEmptyResult(true);
       onSearchResult([]);
     } else {
+      onIsEmptyResult(false);
       onSearchResult(data);
     }
   });
@@ -46,6 +52,7 @@ const Search = ({ onSearchResult, onSearchValue }: SearchProps) => {
         department: "",
       });
     } else {
+      onIsEmptyResult(false);
       onSearchResult([]);
     }
   }, [debounceValue]);
