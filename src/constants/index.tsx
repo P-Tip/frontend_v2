@@ -35,3 +35,5 @@ export const CONSONANT = [
   "ㅍ",
   "ㅎ",
 ];
+
+export const SCHOLARSHIP_DATA = "scholarshipData";

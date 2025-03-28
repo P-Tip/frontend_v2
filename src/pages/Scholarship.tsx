@@ -19,9 +19,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ORDER_LIST } from "@/constants";
-import { toast } from "sonner";
 import SearchNotFound from "@/components/scholarship/SearchNotFound";
+import { SCHOLARSHIP_DATA, ORDER_LIST } from "@/constants";
 
 const Scholarship = () => {
   const [totalPoint, setTotalPoint] = useState(0);
@@ -32,10 +31,17 @@ const Scholarship = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isEmptyResult, setIsEmptyResult] = useState(false);
 
+  // 총 포인트 계산 함수
+  const calculateTotalPoints = (data: IScholarship[]) => {
+    return data.reduce((sum, item) => sum + Number(item.max_point), 0);
+  };
+
   useEffect(() => {
-    let localstoragePoint =
-      Number(localStorage.getItem("scholarshipPoint")) || 0;
-    setTotalPoint(localstoragePoint);
+    const scholarshipData = JSON.parse(
+      localStorage.getItem(SCHOLARSHIP_DATA) || "[]",
+    );
+    // 데이터로부터 포인트 계산
+    setTotalPoint(calculateTotalPoints(scholarshipData));
   }, []);
 
   const handleCartClick = (point: number) => {
@@ -95,7 +101,7 @@ const Scholarship = () => {
         {isEmptyResult ? (
           <SearchNotFound />
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pr-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
             {(searchResults.length > 0
               ? searchResults
               : orderScholarships.contents || []
