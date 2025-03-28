@@ -11,11 +11,12 @@ export const RESPONSIVE_BREAKPOINT = {
   desktop: 960,
 };
 
-export const SORT_LIST = [
-  { label: "사전순", value: "sort_dictionary" },
-  { label: "마감순", value: "sort_deadline" },
-  { label: "낮은 포인트순", value: "sort_lowPoint" },
-  { label: "높은 포인트순", value: "sort_highPoint" },
+export const ORDER_LIST = [
+  // { label: "사전순", value: "sort_dictionary" },
+  // { label: "마감순", value: "sort_deadline" },
+  { label: "기본", value: "" },
+  { label: "낮은 포인트순", value: "point_asc" },
+  { label: "높은 포인트순", value: "point_desc" },
 ];
 
 export const CONSONANT = [
