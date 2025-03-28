@@ -24,3 +24,13 @@ export const getFilterScholarships = async (consonant: string) => {
   );
   return response.data;
 };
+
+export const getOrderScholarships = async (
+  query?: string,
+  page?: number,
+  order?: string,
+) => {
+  const params = removeUndefined({ query, page, order });
+  const response = await axiosInstance.get("api/award/searchP", { params });
+  return response.data;
+};

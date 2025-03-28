@@ -1,24 +1,32 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IScholarship } from "@/types/scholarship";
 import { toast } from "sonner";
 import { useSearchScholarships } from "@/services/queries/scholarshipQuery";
 import { IoSearchSharp } from "react-icons/io5";
+import { useDebounce } from "@/hooks/useDebounce";
 
 interface SearchProps {
   onSearchValue: (inputValue: string) => void;
   onSearchResult: (results: IScholarship[]) => void;
+  onIsEmptyResult: (results: boolean) => void;
 }
 
-const Search = ({ onSearchResult, onSearchValue }: SearchProps) => {
+const Search = ({
+  onSearchResult,
+  onSearchValue,
+  onIsEmptyResult,
+}: SearchProps) => {
   const [inputValue, setInputValue] = useState("");
+  const debounceValue = useDebounce(inputValue);
 
   const searchMutation = useSearchScholarships((data) => {
     if (data.length === 0) {
-      toast("검색 결과가 없습니다.");
+      onIsEmptyResult(true);
       onSearchResult([]);
     } else {
+      onIsEmptyResult(false);
       onSearchResult(data);
     }
   });
@@ -34,12 +42,20 @@ const Search = ({ onSearchResult, onSearchValue }: SearchProps) => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
     onSearchValue(e.target.value);
-    searchMutation.mutate({
-      name: e.target.value,
-      point: 0,
-      department: "",
-    });
   };
+
+  useEffect(() => {
+    if (debounceValue.trim() !== "") {
+      searchMutation.mutate({
+        name: debounceValue,
+        point: 0,
+        department: "",
+      });
+    } else {
+      onIsEmptyResult(false);
+      onSearchResult([]);
+    }
+  }, [debounceValue]);
 
   return (
     <div className="border border-ptu-green rounded-2xl flex align-center px-1 py-0.5 focus-within:border-2 transition-all duration-100 ease-in-out">

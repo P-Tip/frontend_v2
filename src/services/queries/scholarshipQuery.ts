@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   getFilterScholarships,
+  getOrderScholarships,
   getScholarships,
   getSearchScholarships,
 } from "../apis/scholarshipApi";
@@ -39,5 +40,16 @@ export const useSearchScholarships = (
       console.error(error);
       toast("검색 중 문제가 발생했습니다.");
     },
+  });
+};
+
+export const useOrderScholarships = (
+  query: string,
+  page: number,
+  order: string,
+) => {
+  return useQuery({
+    queryKey: ["orderScholarships", query, page, order],
+    queryFn: () => getOrderScholarships(query, page, order),
   });
 };
