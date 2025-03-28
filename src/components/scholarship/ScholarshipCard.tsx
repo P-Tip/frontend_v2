@@ -61,11 +61,6 @@ const ScholarshipCard = ({
       // 추가시 포인트 계산 후 제한 체크
       const newTotalPoints = currentTotalPoints + Number(scholarship.max_point);
 
-      if (newTotalPoints > 700000) {
-        toast.error("최대 70만점을 초과할 수 없습니다.");
-        return;
-      }
-
       // 아직 추가되지 않은 상태면 추가 및 좋아요 활성화
       const updatedData = [...scholarshipData, scholarship];
       localStorage.setItem(SCHOLARSHIP_DATA, JSON.stringify(updatedData));
