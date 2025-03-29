@@ -9,7 +9,7 @@ import { PiMoney } from "react-icons/pi";
 import Highlighter from "react-highlight-words";
 import { toast } from "sonner";
 import { SCHOLARSHIP_DATA } from "@/constants";
-import { calculateTotalPoints } from "@/utils";
+import { calculateTotalPoints, getFormatDate } from "@/utils";
 
 interface ScholarshipCardProps {
   scholarship: IScholarship;
@@ -25,6 +25,7 @@ const ScholarshipCard = ({
   const [isAdd, setIsAdd] = useState(false);
   const minPoint = Number(scholarship.min_point).toLocaleString();
   const maxPoint = Number(scholarship.max_point).toLocaleString();
+  const date = getFormatDate(scholarship.end_date);
 
   useEffect(() => {
     const scholarshipData = JSON.parse(
@@ -85,8 +86,10 @@ const ScholarshipCard = ({
     >
       <span className="flex justify-between items-center">
         <span className="flex items-center gap-x-2">
-          <Badge variant="distant">미정</Badge>
-          {/*<p className="text-xs text-ptu-grey-text">(~3/21)</p>*/}
+          <Badge variant={date.color}>{date.label}</Badge>
+          {date.date && (
+            <p className="text-xs text-ptu-grey-text">(~{date.date})</p>
+          )}
         </span>
         <span onClick={handleHeartClick}>
           {isAdd ? (

@@ -1,7 +1,7 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useMutation, useQuery } from "@tanstack/react-query";
 import {
   getFilterScholarships,
-  getOrderScholarships,
+  getSearchPScholarships,
   getScholarships,
   getSearchScholarships,
 } from "../apis/scholarshipApi";
@@ -50,6 +50,22 @@ export const useOrderScholarships = (
 ) => {
   return useQuery({
     queryKey: ["orderScholarships", query, page, order],
-    queryFn: () => getOrderScholarships(query, page, order),
+    queryFn: () => getSearchPScholarships(query, page, order),
+  });
+};
+
+export const useInfiniteScholarships = (query: string, order: string) => {
+  return useInfiniteQuery({
+    queryKey: ["orderScholarships", query, order],
+    queryFn: ({ pageParam = 0 }) =>
+      getSearchPScholarships(query, pageParam, order),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, allPages) => {
+      if (!lastPage.last) {
+        return allPages.length;
+      }
+
+      return undefined;
+    },
   });
 };
