@@ -2,11 +2,7 @@ import { PointProgress } from "@/components/PointProgress";
 import ScholarshipCard from "@/components/scholarship/ScholarshipCard";
 import Search from "@/components/scholarship/Search";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import {
-  useInfiniteScholarships,
-  useOrderScholarships,
-  useScholarships,
-} from "@/services/queries/scholarshipQuery";
+import { useInfiniteScholarships } from "@/services/queries/scholarshipQuery";
 import { IScholarship } from "@/types/scholarship";
 import { useEffect, useRef, useState } from "react";
 import { MdKeyboardArrowUp } from "react-icons/md";
@@ -27,11 +23,9 @@ import { SCHOLARSHIP_DATA, ORDER_LIST } from "@/constants";
 const Scholarship = () => {
   const [totalPoint, setTotalPoint] = useState(0);
   const [searchValue, setSearchValue] = useState("");
-  const [searchResults, setSearchResults] = useState<IScholarship[]>([]);
   const [selectOrder, setSelectOrder] = useState<string>("장학금 정렬");
   const [selectOrderValue, setSelectOrderValue] = useState<string>("");
   const [isOpen, setIsOpen] = useState(false);
-  const [isEmptyResult, setIsEmptyResult] = useState(false);
 
   // 총 포인트 계산 함수
   const calculateTotalPoints = (data: IScholarship[]) => {
@@ -56,10 +50,7 @@ const Scholarship = () => {
   };
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteScholarships("", selectOrderValue);
-
-  console.log(data);
-
+    useInfiniteScholarships(searchValue, selectOrderValue);
   const orderScholarships = data?.pages.flatMap((page) => page.contents) || [];
 
   const observerRef = useRef<HTMLDivElement | null>(null);
@@ -79,22 +70,12 @@ const Scholarship = () => {
     return () => observer.disconnect();
   }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-  // const { data: scholarships = [], isLoading, isError } = useScholarships();
-
-  // if (isFetching) return <p>데이터를 불러오는 중...</p>;
-  // if (isError) return <p>데이터를 불러오는 데 실패했습니다.</p>;
-  // if (isLoading) return <p>로딩 중...</p>;
-
   return (
     <div className="px-5 pt-5 flex flex-col gap-4 h-full">
       <PointProgress totalPoint={totalPoint} />
 
       <div className="md:grid md:grid-cols-[1fr_auto] gap-1">
-        <Search
-          onSearchResult={setSearchResults}
-          onSearchValue={setSearchValue}
-          onIsEmptyResult={setIsEmptyResult}
-        />
+        <Search onSearchValue={setSearchValue} />
 
         <DropdownMenu onOpenChange={setIsOpen}>
           <DropdownMenuTrigger className="text-sm flex flex-row items-center justify-end float-right w-24 pt-2 md:pt-0 border-none focus:outline-none focus-visible:outline-none focus-visible:border-none">
@@ -117,20 +98,18 @@ const Scholarship = () => {
       </div>
 
       <ScrollArea className="h-[60vh] sm:h-[65vh]">
-        {isEmptyResult ? (
+        {orderScholarships.length === 0 ? (
           <SearchNotFound />
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-            {(searchResults.length > 0 ? searchResults : orderScholarships).map(
-              (scholarship: IScholarship, index) => (
-                <ScholarshipCard
-                  key={`${scholarship.id}-${index}`}
-                  scholarship={scholarship}
-                  searchValue={searchValue}
-                  onCartClick={(point) => handleCartClick(point)}
-                />
-              ),
-            )}
+            {orderScholarships.map((scholarship: IScholarship, index) => (
+              <ScholarshipCard
+                key={`${scholarship.id}-${index}`}
+                scholarship={scholarship}
+                searchValue={searchValue}
+                onCartClick={(point) => handleCartClick(point)}
+              />
+            ))}
 
             {hasNextPage && (
               <div ref={observerRef}>
