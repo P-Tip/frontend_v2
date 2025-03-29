@@ -7,6 +7,7 @@ export interface IScholarship {
   department_name: string;
   internalNum: string;
   link: string;
+  end_date: string;
 }
 
 export interface IDepartment {

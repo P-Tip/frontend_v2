@@ -24,7 +24,7 @@ const Scholarship = () => {
   const [totalPoint, setTotalPoint] = useState(0);
   const [searchValue, setSearchValue] = useState("");
   const [selectOrder, setSelectOrder] = useState<string>("장학금 정렬");
-  const [selectOrderValue, setSelectOrderValue] = useState<string>("");
+  const [selectOrderValue, setSelectOrderValue] = useState<string>("end_date");
   const [isOpen, setIsOpen] = useState(false);
 
   // 총 포인트 계산 함수
