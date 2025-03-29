@@ -110,12 +110,12 @@ const Scholarship = () => {
                 onCartClick={(point) => handleCartClick(point)}
               />
             ))}
+          </div>
+        )}
 
-            {hasNextPage && (
-              <div ref={observerRef}>
-                <AiOutlineEllipsis className="text-2xl mx-auto" />
-              </div>
-            )}
+        {hasNextPage && (
+          <div ref={observerRef}>
+            <AiOutlineEllipsis className="text-2xl mx-auto" />
           </div>
         )}
       </ScrollArea>
