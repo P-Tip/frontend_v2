@@ -3,13 +3,15 @@ import ScholarshipCard from "@/components/scholarship/ScholarshipCard";
 import Search from "@/components/scholarship/Search";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
+  useInfiniteScholarships,
   useOrderScholarships,
   useScholarships,
 } from "@/services/queries/scholarshipQuery";
 import { IScholarship } from "@/types/scholarship";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { MdKeyboardArrowUp } from "react-icons/md";
 import { MdKeyboardArrowDown } from "react-icons/md";
+import { AiOutlineEllipsis } from "react-icons/ai";
 
 import {
   DropdownMenu,
@@ -53,17 +55,34 @@ const Scholarship = () => {
     setSelectOrderValue(value);
   };
 
-  const {
-    data: orderScholarships = [],
-    isFetching,
-    isError,
-  } = useOrderScholarships("", 0, selectOrderValue);
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteScholarships("", selectOrderValue);
+
+  console.log(data);
+
+  const orderScholarships = data?.pages.flatMap((page) => page.contents) || [];
+
+  const observerRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    if (!observerRef.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
+          fetchNextPage();
+        }
+      },
+      { threshold: 0.5 },
+    );
+    observer.observe(observerRef.current);
+
+    return () => observer.disconnect();
+  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
+
   // const { data: scholarships = [], isLoading, isError } = useScholarships();
 
-  console.log(orderScholarships);
-
-  if (isFetching) return <p>데이터를 불러오는 중...</p>;
-  if (isError) return <p>데이터를 불러오는 데 실패했습니다.</p>;
+  // if (isFetching) return <p>데이터를 불러오는 중...</p>;
+  // if (isError) return <p>데이터를 불러오는 데 실패했습니다.</p>;
   // if (isLoading) return <p>로딩 중...</p>;
 
   return (
@@ -102,17 +121,22 @@ const Scholarship = () => {
           <SearchNotFound />
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-            {(searchResults.length > 0
-              ? searchResults
-              : orderScholarships.contents || []
-            ).map((scholarship: IScholarship) => (
-              <ScholarshipCard
-                key={scholarship.id}
-                scholarship={scholarship}
-                searchValue={searchValue}
-                onCartClick={(point) => handleCartClick(point)}
-              />
-            ))}
+            {(searchResults.length > 0 ? searchResults : orderScholarships).map(
+              (scholarship: IScholarship, index) => (
+                <ScholarshipCard
+                  key={`${scholarship.id}-${index}`}
+                  scholarship={scholarship}
+                  searchValue={searchValue}
+                  onCartClick={(point) => handleCartClick(point)}
+                />
+              ),
+            )}
+
+            {hasNextPage && (
+              <div ref={observerRef}>
+                <AiOutlineEllipsis className="text-2xl mx-auto" />
+              </div>
+            )}
           </div>
         )}
       </ScrollArea>
