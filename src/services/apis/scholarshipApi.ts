@@ -25,7 +25,7 @@ export const getFilterScholarships = async (consonant: string) => {
   return response.data;
 };
 
-export const getOrderScholarships = async (
+export const getSearchPScholarships = async (
   query?: string,
   page?: number,
   order?: string,
