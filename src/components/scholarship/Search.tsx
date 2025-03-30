@@ -3,21 +3,22 @@ import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
 import { IoSearchSharp } from "react-icons/io5";
 import { useDebounce } from "@/hooks/useDebounce";
+import { useKeywordStore } from "@/stores/keyword";
 
 interface SearchProps {
   onSearchValue: (inputValue: string) => void;
 }
 
 const Search = ({ onSearchValue }: SearchProps) => {
-  const [inputValue, setInputValue] = useState("");
-  const debounceValue = useDebounce(inputValue);
+  const { keyword, setKeyword } = useKeywordStore();
+  const debounceValue = useDebounce(keyword);
 
   const handleSearchClick = () => {
-    onSearchValue(inputValue);
+    onSearchValue(keyword);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
+    setKeyword(e.target.value);
   };
 
   useEffect(() => {
@@ -30,7 +31,7 @@ const Search = ({ onSearchValue }: SearchProps) => {
         className="border-none shadow-none placeholder:text-ptu-grey-text"
         type="text"
         placeholder="어떤 프로그램을 찾고 있나요?"
-        value={inputValue}
+        value={keyword}
         onChange={handleInputChange}
       />
       <Button
