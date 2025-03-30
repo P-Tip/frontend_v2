@@ -71,7 +71,7 @@ const Scholarship = () => {
   }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   return (
-    <div className="px-5 pt-5 flex flex-col gap-4 h-full">
+    <div className="px-5 pt-5 pb-3 sm:pb-5 flex flex-col gap-4">
       <PointProgress totalPoint={totalPoint} />
 
       <div className="md:grid md:grid-cols-[1fr_auto] gap-1">
@@ -97,28 +97,26 @@ const Scholarship = () => {
         </DropdownMenu>
       </div>
 
-      <ScrollArea className="h-[60dvh]">
-        {orderScholarships.length === 0 ? (
-          <SearchNotFound />
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-            {orderScholarships.map((scholarship: IScholarship, index) => (
-              <ScholarshipCard
-                key={`${scholarship.id}-${index}`}
-                scholarship={scholarship}
-                searchValue={searchValue}
-                onCartClick={(point) => handleCartClick(point)}
-              />
-            ))}
-          </div>
-        )}
+      {orderScholarships.length === 0 ? (
+        <SearchNotFound />
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-16 sm:mb-0">
+          {orderScholarships.map((scholarship: IScholarship, index) => (
+            <ScholarshipCard
+              key={`${scholarship.id}-${index}`}
+              scholarship={scholarship}
+              searchValue={searchValue}
+              onCartClick={(point) => handleCartClick(point)}
+            />
+          ))}
 
-        {hasNextPage && (
-          <div ref={observerRef}>
-            <AiOutlineEllipsis className="text-2xl mx-auto" />
-          </div>
-        )}
-      </ScrollArea>
+          {hasNextPage && (
+            <div ref={observerRef}>
+              <AiOutlineEllipsis className="text-2xl mx-auto" />
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };
