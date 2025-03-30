@@ -15,14 +15,14 @@ const Layout = ({ children }: LayoutProps) => {
     `(min-width: ${RESPONSIVE_BREAKPOINT.desktop}px)`,
   );
   const { keyword } = useKeywordStore();
-  const mainHeight = keyword ? "h-screen" : "h-full";
+  const mainHeight = keyword ? "h-[calc(100vh-100px)]" : "h-full";
 
   return (
     <>
       <Header />
       {/* TODO: 임시 해결 방법 헤더 높이를 좀 잘 계산하면 문제없을 듯하다. */}
       <main
-        className={`w-full sm:w-[99%] ${mainHeight} bg-white rounded-t-3xl z-20`}
+        className={`w-full sm:w-full ${mainHeight} bg-white rounded-t-3xl z-20`}
       >
         {children}
       </main>

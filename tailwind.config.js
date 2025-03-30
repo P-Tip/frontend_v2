@@ -50,7 +50,6 @@ export default {
           4: "hsl(var(--chart-4))",
           5: "hsl(var(--chart-5))",
         },
-        "ptu-green": "#009b64",
         "ptu-red": "#EE0031",
         "ptu-gray": "#f8f9fA",
         "ptu-blue": "#425ad5",

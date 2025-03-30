@@ -71,7 +71,7 @@ const Scholarship = () => {
   }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   return (
-    <div className="px-5 pt-5 pb-0 sm:pb-5 flex flex-col gap-4">
+    <div className="px-5 pt-5 pb-0 sm:pb-5 flex flex-col gap-4 h-full">
       <PointProgress totalPoint={totalPoint} />
 
       <div className="md:grid md:grid-cols-[1fr_auto] gap-1">

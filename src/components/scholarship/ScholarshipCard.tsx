@@ -93,9 +93,9 @@ const ScholarshipCard = ({
         </span>
         <span onClick={handleHeartClick}>
           {isAdd ? (
-            <IoMdHeart className="text-[#FF6B6B] text-xl" />
+            <IoMdHeart className="text-[#FF6B6B] text-xl w-6 h-6" />
           ) : (
-            <IoMdHeartEmpty className="text-ptu-grey-text text-xl" />
+            <IoMdHeartEmpty className="text-ptu-grey-text text-xl w-6 h-6" />
           )}
         </span>
       </span>
@@ -104,6 +104,10 @@ const ScholarshipCard = ({
         className={`text-xl font-bold text-black ${scholarship.link === "" ? "" : "group-hover:text-ptu-green-hover"}`}
         searchWords={[searchValue]}
         textToHighlight={scholarship.programName}
+        highlightStyle={{
+          backgroundColor: "#2da87a",
+          color: "#fff",
+        }}
       >
         {scholarship.programName}
       </Highlighter>
