@@ -15,8 +15,7 @@ function App() {
       <BrowserRouter>
         <Layout>
           <Routes>
-            <Route path="/" element={<Navigate to="/scholarship" replace />} />
-            <Route index path="/scholarship" element={<Scholarship />} />
+            <Route path="/" element={<Scholarship />} />
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/timetable" element={<Timetable />} />
             <Route path="/todo" element={<Todo />} />

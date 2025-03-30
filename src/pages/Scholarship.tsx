@@ -97,7 +97,7 @@ const Scholarship = () => {
         </DropdownMenu>
       </div>
 
-      <ScrollArea className="h-[60vh] sm:h-[65vh]">
+      <ScrollArea className="h-[60dvh]">
         {orderScholarships.length === 0 ? (
           <SearchNotFound />
         ) : (

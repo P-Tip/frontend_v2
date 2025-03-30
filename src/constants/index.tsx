@@ -3,7 +3,7 @@ import { IoSchoolOutline } from "react-icons/io5";
 import { IoPersonOutline } from "react-icons/io5";
 
 export const NAV_LIST = [
-  { path: "/scholarship", label: "솔선수범", icon: <IoSchoolOutline /> },
+  { path: "/", label: "솔선수범", icon: <IoSchoolOutline /> },
   { path: "/mypage", label: "MY", icon: <IoPersonOutline /> },
 ];
 
