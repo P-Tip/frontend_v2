@@ -1,5 +1,5 @@
 import { IScholarship } from "@/types/scholarship";
-
+import ReactGA from "react-ga4";
 export const calculateTotalPoints = (data: IScholarship[]) => {
   return data.reduce((sum, item) => sum + Number(item.max_point), 0);
 };
@@ -42,4 +42,11 @@ export const getFormatDate = (date: string): TDate => {
       date: formatDate,
     };
   }
+};
+
+export const clickEvent = (category: string, action: string) => {
+  ReactGA.event({
+    category, //각각 다른 하위 name
+    action, //공통(상위 name)//같은 거로 묶을때 동일하게 작성
+  });
 };

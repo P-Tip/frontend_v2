@@ -9,7 +9,7 @@ import { PiMoney } from "react-icons/pi";
 import Highlighter from "react-highlight-words";
 import { toast } from "sonner";
 import { SCHOLARSHIP_DATA } from "@/constants";
-import { calculateTotalPoints, getFormatDate } from "@/utils";
+import { calculateTotalPoints, clickEvent, getFormatDate } from "@/utils";
 
 interface ScholarshipCardProps {
   scholarship: IScholarship;
@@ -67,6 +67,8 @@ const ScholarshipCard = ({
       localStorage.setItem(SCHOLARSHIP_DATA, JSON.stringify(updatedData));
       setIsAdd(true);
       onCartClick(newTotalPoints);
+      clickEvent("좋아요 버튼", "좋아요 클릭");
+      console.log("durl");
     }
   };
 
@@ -82,6 +84,7 @@ const ScholarshipCard = ({
           toast.error("링크를 준비중입니다.");
           return;
         }
+        clickEvent("장학금 링크 카드", "링크 클릭");
       }}
     >
       <span className="flex justify-between items-center">

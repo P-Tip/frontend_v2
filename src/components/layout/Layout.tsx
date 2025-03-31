@@ -5,12 +5,16 @@ import { Toaster } from "@/components/ui/sonner";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { RESPONSIVE_BREAKPOINT } from "@/constants";
 import { useKeywordStore } from "@/stores/keyword";
+import { useLocation } from "react-router-dom";
+import useAnalytics from "@/hooks/useAnalytics";
 
 interface LayoutProps {
   children: ReactNode;
 }
 
 const Layout = ({ children }: LayoutProps) => {
+  const location = useLocation();
+  useAnalytics(location);
   const isDesktop = useMediaQuery(
     `(min-width: ${RESPONSIVE_BREAKPOINT.desktop}px)`,
   );
