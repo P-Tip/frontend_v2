@@ -19,7 +19,9 @@ const Layout = ({ children }: LayoutProps) => {
     `(min-width: ${RESPONSIVE_BREAKPOINT.desktop}px)`,
   );
   const { keyword } = useKeywordStore();
-  const mainHeight = keyword ? "h-[calc(100vh-100px)]" : "h-full";
+  const isMyPage = location.pathname === "/mypage";
+
+  const mainHeight = isMyPage || keyword ? "h-[calc(100vh-100px)]" : "h-full";
 
   return (
     <>
