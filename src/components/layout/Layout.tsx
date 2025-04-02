@@ -26,8 +26,9 @@ const Layout = ({ children }: LayoutProps) => {
     <>
       <Header />
       {/* TODO: 임시 해결 방법 헤더 높이를 좀 잘 계산하면 문제없을 듯하다. */}
+      {/* TODO: 너비 임시방편으로 해결 */}
       <main
-        className={`w-full sm:w-full min-h-[calc(100vh-96px)] h-full bg-white rounded-t-3xl z-20`}
+        className={`w-full sm:w-[99%] min-h-[calc(100vh-96px)] h-full bg-white rounded-t-3xl z-20`}
       >
         {children}
       </main>
