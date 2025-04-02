@@ -68,19 +68,17 @@ const MyPage = () => {
       )}
 
       <MypagePointProgress totalPoint={totalPoint} />
-      <ScrollArea className="h-[60vh] sm:h-[65vh]">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-          {likedScholarships.map((scholarship) => (
-            <ScholarshipCard
-              key={scholarship.id}
-              scholarship={scholarship}
-              onCartClick={(point) => handleCartClick(point)}
-              // TODO: 빌드 오류 해결 props 넘겨주기
-              searchValue={""}
-            />
-          ))}
-        </div>
-      </ScrollArea>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+        {likedScholarships.map((scholarship) => (
+          <ScholarshipCard
+            key={scholarship.id}
+            scholarship={scholarship}
+            onCartClick={(point) => handleCartClick(point)}
+            // TODO: 빌드 오류 해결 props 넘겨주기
+            searchValue={""}
+          />
+        ))}
+      </div>
     </div>
   );
 };
