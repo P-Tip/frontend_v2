@@ -18,7 +18,7 @@ const NavItem = ({ link, label }: NavItemProps) => {
         transition-all duration-300 ease-in-out
         ${
           isActive
-            ? "text-ptu-green bg-ptu-blue-bg hover:bg-ptu-green-bg-hover"
+            ? "text-ptu-green bg-ptu-blue-bg hover:bg-ptu-green-bg-hover hover:text-ptu-green"
             : "text-ptu-default-black hover:bg-gray-100 hover:text-ptu-default-black"
         } 
       `}
