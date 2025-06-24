@@ -26,16 +26,16 @@ const Search = ({ onSearchValue }: SearchProps) => {
   }, [debounceValue]);
 
   return (
-    <div className="border border-ptu-green rounded-2xl flex align-center px-1 py-0.5 focus-within:border-2 transition-all duration-100 ease-in-out">
+    <div className="border border-brand-green rounded-xl flex align-center px-1 py-0.5 focus-within:border-2 focus-within:border-brand-green-dark focus-within:shadow-sm transition-all duration-300 ease-in-out hover:shadow-sm">
       <Input
-        className="border-none shadow-none placeholder:text-ptu-grey-text"
+        className="border-none shadow-none placeholder:text-brand-text-secondary text-brand-text-primary font-medium focus:placeholder:text-brand-text-secondary/70 transition-colors duration-200"
         type="text"
         placeholder="어떤 프로그램을 찾고 있나요?"
         value={keyword}
         onChange={handleInputChange}
       />
       <Button
-        className="[&>svg]:hover:text-ptu-green [&>svg]:focus-visible:text-ptu-green"
+        className="[&>svg]:hover:text-brand-green [&>svg]:focus-visible:text-brand-green [&>svg]:text-brand-text-secondary hover:bg-green-50 transition-all duration-200"
         variant="search"
         size="icon"
         type="submit"

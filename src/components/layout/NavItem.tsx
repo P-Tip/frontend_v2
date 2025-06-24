@@ -18,19 +18,13 @@ const NavItem = ({ link, label }: NavItemProps) => {
         transition-all duration-300 ease-in-out
         ${
           isActive
-            ? "text-ptu-green bg-ptu-blue-bg hover:bg-ptu-green-bg-hover hover:text-ptu-green"
-            : "text-ptu-default-black hover:bg-gray-100 hover:text-ptu-default-black"
+            ? "text-brand-green border-b-2 border-brand-green"
+            : "text-brand-text-secondary hover:bg-gray-100 hover:text-brand-text-primary"
         } 
       `}
       >
         {label}
       </Link>
-      <div
-        className={`
-          w-10 h-5 absolute top-10 left-1/2 -translate-x-1/2 rounded-t-full bg-white
-          transition-all duration-300 ease-in ${isActive ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"}
-        `}
-      ></div>
     </div>
   );
 };

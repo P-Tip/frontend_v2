@@ -71,36 +71,53 @@ const Scholarship = () => {
   }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   return (
-    <div className="px-5 pt-5 pb-5 sm:pb-5 flex flex-col gap-4 h-full">
-      <PointProgress totalPoint={totalPoint} />
+    <div className="px-5 pt-5 pb-5 sm:pb-5 flex flex-col gap-6 h-full animate-fadeIn">
+      {/* 대시보드 영역 */}
+      <div className="bg-brand-surface rounded-3xl p-6 shadow-sm border border-brand-border hover:shadow-md transition-all duration-300">
+        <h2 className="text-xl font-bold text-brand-text-primary mb-4 leading-7">
+          장학금 현황
+        </h2>
 
-      <div className="md:grid md:grid-cols-[1fr_auto] gap-1">
-        <Search onSearchValue={setSearchValue} />
+        {/* PointProgress 컴포넌트 */}
+        <div className="mb-6">
+          <PointProgress totalPoint={totalPoint} />
+        </div>
 
-        <DropdownMenu onOpenChange={setIsOpen}>
-          <DropdownMenuTrigger className="text-sm flex flex-row items-center justify-end float-right w-24 pt-2 md:pt-0 border-none focus:outline-none focus-visible:outline-none focus-visible:border-none">
-            {isOpen ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}
-            {selectOrder}
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuLabel>장학금 정렬</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            {ORDER_LIST.map((order) => (
-              <DropdownMenuItem
-                key={order.value}
-                onSelect={() => handleOrderChange(order.label, order.value)}
-              >
-                {order.label}
-              </DropdownMenuItem>
-            ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
+        {/* 검색 및 정렬 영역 */}
+        <div className="md:grid md:grid-cols-[1fr_auto] gap-4 items-end">
+          <div className="mb-4 md:mb-0">
+            <Search onSearchValue={setSearchValue} />
+          </div>
+
+          <DropdownMenu onOpenChange={setIsOpen}>
+            <DropdownMenuTrigger className="text-sm flex flex-row items-center justify-end w-full md:w-auto pt-2 md:pt-0 border-none focus:outline-none focus-visible:outline-none focus-visible:border-none font-medium text-brand-text-secondary hover:text-brand-text-primary transition-colors duration-200">
+              {isOpen ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}
+              <span className="ml-1">{selectOrder}</span>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="animate-fadeIn">
+              <DropdownMenuLabel className="font-semibold">
+                장학금 정렬
+              </DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              {ORDER_LIST.map((order) => (
+                <DropdownMenuItem
+                  key={order.value}
+                  onSelect={() => handleOrderChange(order.label, order.value)}
+                  className="font-medium hover:bg-green-50 hover:text-brand-green transition-colors duration-200"
+                >
+                  {order.label}
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
 
+      {/* 장학금 카드 목록 */}
       {orderScholarships.length === 0 ? (
         <SearchNotFound />
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:mb-0">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {orderScholarships.map((scholarship: IScholarship, index) => (
             <ScholarshipCard
               key={`${scholarship.id}-${index}`}
@@ -111,8 +128,16 @@ const Scholarship = () => {
           ))}
 
           {hasNextPage && (
-            <div ref={observerRef}>
-              <AiOutlineEllipsis className="text-2xl mx-auto" />
+            <div
+              ref={observerRef}
+              className="col-span-full flex justify-center py-6"
+            >
+              <div className="flex items-center space-x-2 text-brand-text-secondary">
+                <AiOutlineEllipsis className="text-2xl animate-pulse" />
+                <span className="text-sm font-medium">
+                  더 많은 장학금을 불러오는 중...
+                </span>
+              </div>
             </div>
           )}
         </div>
