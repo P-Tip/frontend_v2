@@ -8,6 +8,12 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { toast } from "sonner";
 import { calculateTotalPoints } from "@/utils";
 import { SCHOLARSHIP_DATA } from "@/constants";
+import {
+  IoPersonOutline,
+  IoSettingsOutline,
+  IoNotificationsOutline,
+  IoTimeOutline,
+} from "react-icons/io5";
 
 const MyPage = () => {
   const [likedScholarships, setLikedScholarships] = useState<IScholarship[]>(
@@ -15,8 +21,9 @@ const MyPage = () => {
   );
   const [totalPoint, setTotalPoint] = useState(0);
   const [login, setLogin] = useState(false);
+  const [activeSection, setActiveSection] = useState("활동내역");
 
-  // 총 포인트 계산 함수
+  const tabItems = ["프로필", "계정관리", "활동내역", "알림설정"];
 
   useEffect(() => {
     const scholarshipData = JSON.parse(
@@ -24,7 +31,6 @@ const MyPage = () => {
     );
 
     setLikedScholarships(scholarshipData);
-    // 데이터로부터 포인트 계산
     setTotalPoint(calculateTotalPoints(scholarshipData));
   }, []);
 
@@ -36,49 +42,212 @@ const MyPage = () => {
     setLikedScholarships(scholarshipData);
   };
 
-  return (
-    <div className="px-5 pt-11 pb-3 flex flex-col gap-4">
+  const renderProfileSection = () => (
+    <div className="space-y-6 animate-fadeIn">
+      {/* 사용자 프로필 카드 */}
+      <div className="bg-brand-surface rounded-3xl p-6 shadow-sm border border-brand-border hover:shadow-md transition-all duration-300">
+        <div className="flex items-center space-x-4 mb-6">
+          <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-400 rounded-full flex items-center justify-center">
+            <IoPersonOutline className="text-2xl text-white" />
+          </div>
+          <div>
+            <h3 className="text-2xl font-bold text-brand-text-primary leading-8">
+              홍길동
+            </h3>
+            <p className="text-brand-text-secondary font-medium">
+              부산대학교 학생
+            </p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-4">
+            <div>
+              <p className="text-sm text-brand-text-secondary font-medium mb-1">
+                이메일
+              </p>
+              <p className="text-brand-text-primary font-semibold">
+                hong@example.com
+              </p>
+            </div>
+            <div>
+              <p className="text-sm text-brand-text-secondary font-medium mb-1">
+                학과
+              </p>
+              <p className="text-brand-text-primary font-semibold">
+                컴퓨터공학과
+              </p>
+            </div>
+          </div>
+          <div className="space-y-4">
+            <div>
+              <p className="text-sm text-brand-text-secondary font-medium mb-1">
+                학년
+              </p>
+              <p className="text-brand-text-primary font-semibold">3학년</p>
+            </div>
+            <div>
+              <p className="text-sm text-brand-text-secondary font-medium mb-1">
+                가입일
+              </p>
+              <p className="text-brand-text-primary font-semibold">
+                2024년 1월
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 통계 카드 */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="bg-brand-surface rounded-2xl p-6 shadow-sm border border-brand-border text-center hover:shadow-md transition-all duration-300">
+          <p className="text-3xl font-bold text-brand-green mb-2">
+            {likedScholarships.length}
+          </p>
+          <p className="text-brand-text-secondary text-sm font-medium">
+            관심 장학금
+          </p>
+        </div>
+        <div className="bg-brand-surface rounded-2xl p-6 shadow-sm border border-brand-border text-center hover:shadow-md transition-all duration-300">
+          <p className="text-3xl font-bold text-brand-green mb-2">
+            {Math.floor(totalPoint / 10000)}
+          </p>
+          <p className="text-brand-text-secondary text-sm font-medium">
+            획득 포인트 (만점)
+          </p>
+        </div>
+        <div className="bg-brand-surface rounded-2xl p-6 shadow-sm border border-brand-border text-center hover:shadow-md transition-all duration-300">
+          <p className="text-3xl font-bold text-brand-green mb-2">15</p>
+          <p className="text-brand-text-secondary text-sm font-medium">
+            활동일수
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderActivitySection = () => (
+    <div className="space-y-6 animate-fadeIn">
       {login ? (
         <div className="flex justify-between items-center">
-          <h1 className="text-3xl	font-semibold">홍길동님</h1>
+          <h2 className="text-2xl font-bold text-brand-text-primary leading-8">
+            홍길동님의 활동내역
+          </h2>
           <Button
-            variant="search"
-            className="rounded-xl bg-ptu-green hover:bg-ptu-green-hover text-white"
+            variant="outline"
+            className="rounded-lg bg-brand-green hover:bg-brand-green-dark text-white border-none font-semibold"
             onClick={() => setLogin(!login)}
           >
             로그아웃
           </Button>
         </div>
       ) : (
-        <div className="flex justify-between items-center">
-          <h1 className="text-xl font-semibold text-start">
-            지금 로그인해서 다른 기기에서도
-            <br />
-            나의 장학금을 확인해보세요!
-          </h1>
-          <span
-            onClick={() => {
-              toast.error("준비중인 기능입니다.");
-            }}
-            className="cursor-pointer"
-          >
-            <GoogleIcon />
-          </span>
+        <div className="bg-brand-surface rounded-3xl p-6 shadow-sm border border-brand-border hover:shadow-md transition-all duration-300">
+          <div className="flex justify-between items-center">
+            <div>
+              <h2 className="text-xl font-bold text-brand-text-primary mb-2 leading-7">
+                지금 로그인해서 다른 기기에서도
+              </h2>
+              <p className="text-brand-text-secondary font-medium">
+                나의 장학금을 확인해보세요!
+              </p>
+            </div>
+            <button
+              onClick={() => {
+                toast.error("준비중인 기능입니다.");
+              }}
+              className="cursor-pointer hover:scale-105 transition-transform duration-200"
+            >
+              <GoogleIcon />
+            </button>
+          </div>
         </div>
       )}
 
       <MypagePointProgress totalPoint={totalPoint} />
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-        {likedScholarships.map((scholarship) => (
-          <ScholarshipCard
-            key={scholarship.id}
-            scholarship={scholarship}
-            onCartClick={(point) => handleCartClick(point)}
-            // TODO: 빌드 오류 해결 props 넘겨주기
-            searchValue={""}
-          />
-        ))}
+
+      <div className="bg-brand-surface rounded-3xl p-6 shadow-sm border border-brand-border hover:shadow-md transition-all duration-300">
+        <h3 className="text-xl font-bold text-brand-text-primary mb-4 leading-7">
+          관심 장학금 목록
+        </h3>
+        {likedScholarships.length === 0 ? (
+          <div className="text-center py-12">
+            <p className="text-brand-text-secondary font-medium text-base mb-2">
+              아직 관심 장학금이 없습니다.
+            </p>
+            <p className="text-brand-text-secondary text-sm">
+              장학금 목록에서 하트를 눌러 추가해보세요!
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {likedScholarships.map((scholarship) => (
+              <ScholarshipCard
+                key={scholarship.id}
+                scholarship={scholarship}
+                onCartClick={(point) => handleCartClick(point)}
+                searchValue=""
+              />
+            ))}
+          </div>
+        )}
       </div>
+    </div>
+  );
+
+  const renderPlaceholderSection = (title: string, icon: React.ReactNode) => (
+    <div className="bg-brand-surface rounded-3xl p-12 shadow-sm border border-brand-border animate-fadeIn hover:shadow-md transition-all duration-300">
+      <div className="text-center">
+        <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          {icon}
+        </div>
+        <h3 className="text-xl font-bold text-brand-text-primary mb-3 leading-7">
+          {title}
+        </h3>
+        <p className="text-brand-text-secondary font-medium mb-1">
+          준비 중인 기능입니다.
+        </p>
+        <p className="text-brand-text-secondary text-sm">
+          곧 업데이트될 예정입니다!
+        </p>
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="px-5 pt-5 pb-5 flex flex-col gap-6">
+      {/* 탭 바 */}
+      <div className="bg-brand-surface rounded-3xl p-2 shadow-sm border border-brand-border animate-fadeIn hover:shadow-md transition-all duration-300">
+        <div className="flex space-x-2">
+          {tabItems.map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveSection(tab)}
+              className={`flex-1 py-3 px-4 rounded-2xl text-sm font-semibold transition-all duration-300 ${
+                activeSection === tab
+                  ? "bg-gradient-to-r from-green-500 to-emerald-400 text-white shadow-md transform scale-[1.02]"
+                  : "bg-gray-100 text-brand-text-primary hover:bg-gray-200 hover:scale-[1.01]"
+              }`}
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* 콘텐츠 영역 */}
+      {activeSection === "프로필" && renderProfileSection()}
+      {activeSection === "활동내역" && renderActivitySection()}
+      {activeSection === "계정관리"
+        && renderPlaceholderSection(
+          "계정관리",
+          <IoSettingsOutline className="text-2xl text-gray-400" />,
+        )}
+      {activeSection === "알림설정"
+        && renderPlaceholderSection(
+          "알림설정",
+          <IoNotificationsOutline className="text-2xl text-gray-400" />,
+        )}
     </div>
   );
 };

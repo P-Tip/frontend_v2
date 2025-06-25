@@ -1,24 +1,64 @@
-import { NAV_LIST } from "@/constants";
-import NavItem from "./NavItem";
-import LogoIcon from "@/icons/Logo";
-import { useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const Header = () => {
-  const navigate = useNavigate();
   return (
-    <header className="sticky top-0 w-full z-[999] flex justify-between items-center py-6 px-6 transition-all h-24 bg-[#009b64]">
-      <LogoIcon onClick={() => navigate("/")} />
-      <nav className="desktop:flex space-x-1.5">
-        <ul className="flex space-x-4">
-          {NAV_LIST.map((link) => {
-            return (
-              <li key={link.path}>
-                <NavItem link={link.path} label={link.label} />
-              </li>
-            );
-          })}
-        </ul>
-      </nav>
+    <header className="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-10 border-b border-gray-100/50 animate-fadeIn">
+      <div className="max-w-[1200px] mx-auto flex justify-between items-center px-6 py-5">
+        <h1 className="text-2xl font-bold text-brand-green">피팁</h1>
+
+        {/* 데스크톱 내비게이션 */}
+        <nav className="flex space-x-8">
+          <NavLink
+            to="/"
+            end
+            className={({ isActive }) =>
+              `px-4 py-2 text-base font-medium transition-colors duration-200 cursor-pointer ${
+                isActive
+                  ? "text-brand-green border-b-2 border-brand-green"
+                  : "text-brand-text-primary hover:text-brand-green"
+              }`
+            }
+          >
+            홈
+          </NavLink>
+          <NavLink
+            to="/scholarship"
+            className={({ isActive }) =>
+              `px-4 py-2 text-base font-medium transition-colors duration-200 cursor-pointer ${
+                isActive
+                  ? "text-brand-green border-b-2 border-brand-green"
+                  : "text-brand-text-primary hover:text-brand-green"
+              }`
+            }
+          >
+            장학 프로그램
+          </NavLink>
+          <NavLink
+            to="/program"
+            className={({ isActive }) =>
+              `px-4 py-2 text-base font-medium transition-colors duration-200 cursor-pointer ${
+                isActive
+                  ? "text-brand-green border-b-2 border-brand-green"
+                  : "text-brand-text-primary hover:text-brand-green"
+              }`
+            }
+          >
+            교내외 프로그램
+          </NavLink>
+          <NavLink
+            to="/mypage"
+            className={({ isActive }) =>
+              `px-4 py-2 text-base font-medium transition-colors duration-200 cursor-pointer ${
+                isActive
+                  ? "text-brand-green border-b-2 border-brand-green"
+                  : "text-brand-text-primary hover:text-brand-green"
+              }`
+            }
+          >
+            마이페이지
+          </NavLink>
+        </nav>
+      </div>
     </header>
   );
 };

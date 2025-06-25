@@ -72,67 +72,101 @@ const ScholarshipCard = ({
     }
   };
 
+  const handleDetailClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    // 상세정보 로직 추가 가능
+  };
+
+  const handleApplyClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (scholarship.link === "") {
+      toast.error("링크를 준비중입니다.");
+      return;
+    }
+    window.open(scholarship.link, "_blank");
+    clickEvent("장학금 신청", "신청하기 클릭");
+  };
+
   return (
-    <Link
-      to={scholarship.link}
-      target="_blank"
-      className="border border-ptu-grey-line rounded-2xl text-left flex flex-col gap-1 px-3.5 py-3 group
-      transition-all duration-200 ease-in-out hover:bg-ptu-light-green-bg hover:scale-[1.025] active:scale-[0.975]"
-      onClick={(e) => {
-        if (scholarship.link === "") {
-          e.preventDefault();
-          toast.error("링크를 준비중입니다.");
-          return;
-        }
-        clickEvent("장학금 링크 카드", "링크 클릭");
-      }}
-    >
-      <span className="flex justify-between items-center">
-        <span className="flex items-center gap-x-2">
+    <div className="rounded-3xl bg-brand-surface p-6 shadow-sm border border-brand-border hover:shadow-lg transition-all duration-300 ease-in-out animate-fadeIn group">
+      {/* 상단: Badge와 Heart 아이콘 */}
+      <div className="flex justify-between items-start mb-4">
+        <div className="flex items-center gap-x-2">
           <Badge variant={date.color}>{date.label}</Badge>
           {date.date && (
-            <p className="text-xs text-ptu-grey-text">(~{date.date})</p>
-          )}
-        </span>
-        <span onClick={handleHeartClick}>
-          {isAdd ? (
-            <IoMdHeart className="text-[#FF6B6B] text-xl w-6 h-6" />
-          ) : (
-            <IoMdHeartEmpty className="text-ptu-grey-text text-xl w-6 h-6" />
-          )}
-        </span>
-      </span>
-
-      <Highlighter
-        className={`text-xl font-bold text-black ${scholarship.link === "" ? "" : "group-hover:text-ptu-green-hover"}`}
-        searchWords={[searchValue]}
-        textToHighlight={scholarship.programName}
-        highlightStyle={{
-          backgroundColor: "#2da87a",
-          color: "#fff",
-        }}
-      >
-        {scholarship.programName}
-      </Highlighter>
-
-      <p className="text-xs text-ptu-grey-text">{scholarship.contents}</p>
-      <div className="text-xs flex flex-row gap-x-2 text-black">
-        <span className="flex flex-row items-center gap-x-0.5">
-          <PiBuildingApartment />
-          <p>{scholarship.department_name}</p>
-        </span>
-        <span className="flex flex-row items-center gap-x-0.5">
-          <PiMoney />
-          {scholarship.min_point === scholarship.max_point ? (
-            <p>{minPoint} 포인트</p>
-          ) : (
-            <p>
-              {minPoint} ~ {maxPoint} 포인트
+            <p className="text-xs text-brand-text-secondary font-medium">
+              (~{date.date})
             </p>
           )}
-        </span>
+        </div>
+        <button
+          onClick={handleHeartClick}
+          className="p-1 hover:scale-110 transition-transform duration-200"
+        >
+          {isAdd ? (
+            <IoMdHeart className="text-red-500 text-xl w-6 h-6" />
+          ) : (
+            <IoMdHeartEmpty className="text-brand-text-secondary text-xl w-6 h-6 hover:text-red-500 transition-colors duration-200" />
+          )}
+        </button>
       </div>
-    </Link>
+
+      {/* 중간: 제목과 설명 */}
+      <div className="mb-5">
+        <Highlighter
+          className="text-xl font-bold text-brand-text-primary mb-3 block leading-7 group-hover:text-brand-green transition-colors duration-300"
+          searchWords={[searchValue]}
+          textToHighlight={scholarship.programName}
+          highlightStyle={{
+            backgroundColor: "#2da87a",
+            color: "#fff",
+            padding: "2px 4px",
+            borderRadius: "4px",
+          }}
+        >
+          {scholarship.programName}
+        </Highlighter>
+        <p className="text-sm text-brand-text-secondary leading-6 line-clamp-2">
+          {scholarship.contents}
+        </p>
+      </div>
+
+      {/* 중간: 장학금 정보 (2열 그리드) */}
+      <div className="grid grid-cols-2 gap-4 mb-6">
+        <div className="flex items-center gap-2">
+          <PiBuildingApartment className="text-brand-text-secondary text-lg flex-shrink-0" />
+          <span className="text-sm text-brand-text-primary font-medium truncate">
+            {scholarship.department_name}
+          </span>
+        </div>
+        <div className="flex items-center gap-2">
+          <PiMoney className="text-brand-text-secondary text-lg flex-shrink-0" />
+          <span className="text-sm text-brand-text-primary font-medium truncate">
+            {scholarship.min_point === scholarship.max_point
+              ? `${minPoint} 포인트`
+              : `${minPoint} ~ ${maxPoint} 포인트`}
+          </span>
+        </div>
+      </div>
+
+      {/* 하단: 버튼들 */}
+      <div className="flex space-x-3">
+        <button
+          onClick={handleDetailClick}
+          className="flex-1 py-3 px-4 bg-gray-100 text-brand-text-primary text-sm font-medium rounded-lg hover:bg-gray-200 transition-all duration-200 hover:scale-[1.02]"
+        >
+          상세정보
+        </button>
+        <button
+          onClick={handleApplyClick}
+          className="flex-1 py-3 px-4 bg-gradient-to-r from-green-500 to-emerald-400 text-white text-sm font-semibold rounded-lg hover:from-green-600 hover:to-emerald-500 transition-all duration-200 hover:scale-[1.02] hover:shadow-md"
+        >
+          신청하기
+        </button>
+      </div>
+    </div>
   );
 };
 

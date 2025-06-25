@@ -11,8 +11,9 @@ import {
   Building,
 } from "lucide-react";
 import ScholarshipSidebar from "@/components/layout/Aside/left-aside";
+import ScholarshipCard from "../components/card";
 
-const Scholarship: React.FC = () => {
+const Home: React.FC = () => {
   // State management for various UI interactions
   const [showSummary, setShowSummary] = useState<{ [key: string]: boolean }>(
     {},
@@ -174,79 +175,27 @@ const Scholarship: React.FC = () => {
                 <h3 className="text-xl font-bold text-brand-text-primary">
                   추천 장학 프로그램
                 </h3>
-                <NavLink
-                  to="/scholarship"
-                  className="text-sm text-brand-green hover:text-brand-green-dark font-medium transition-colors"
-                >
-                  전체보기 →
-                </NavLink>
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              <div className="grid gap-4">
                 {scholarshipList.map((scholarship) => (
-                  <div
+                  <ScholarshipCard
                     key={scholarship.id}
-                    className="border border-gray-100 rounded-2xl p-5 hover:shadow-sm transition-all duration-200"
-                  >
-                    <div className="flex justify-between items-start mb-3">
-                      <span
-                        className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${
-                          scholarship.status === "urgent"
-                            ? "bg-tag-red-bg text-tag-red-text"
-                            : "bg-tag-blue-bg text-tag-blue-text"
-                        }`}
-                      >
-                        {scholarship.deadline}
-                      </span>
-                      <button
-                        onClick={() => toggleFavorite(scholarship.id)}
-                        className="text-2xl hover:scale-110 transition-transform"
-                      >
-                        <Heart
-                          className={
-                            favoriteScholarships[scholarship.id]
-                              ? "fill-red-500 text-red-500"
-                              : "text-gray-300"
-                          }
-                        />
-                      </button>
-                    </div>
-                    <h4 className="text-lg font-bold text-brand-text-primary mb-2">
-                      {scholarship.title}
-                    </h4>
-                    <p className="text-sm text-brand-text-secondary mb-4 leading-relaxed line-clamp-2">
-                      {scholarship.description}
-                    </p>
-                    <div className="flex items-center space-x-4 text-sm text-brand-text-secondary mb-4">
-                      <span className="flex items-center gap-1">
-                        <MapPin className="inline w-4 h-4 mr-1" />
-                        {scholarship.period}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <PiggyBank className="inline w-4 h-4 mr-1" />
-                        {scholarship.amount}
-                      </span>
-                    </div>
-                    <div className="flex space-x-2">
-                      <button
-                        onClick={() => toggleSummary(scholarship.id)}
-                        className="flex-1 py-2 px-4 bg-gray-100 text-brand-text-primary text-sm font-medium rounded-lg hover:bg-gray-200 transition-colors flex items-center gap-1"
-                      >
-                        <Bot className="inline w-4 h-4 mr-1" /> AI 요약
-                      </button>
-                      <button className="flex-1 py-2 px-4 bg-brand-green text-white text-sm font-semibold rounded-lg hover:bg-brand-green-dark transition-colors">
-                        신청하기 →
-                      </button>
-                    </div>
-                    {showSummary[scholarship.id] && (
-                      <div className="mt-3 p-3 bg-gray-50 rounded-lg animate-fadeIn">
-                        <p className="text-sm text-brand-text-secondary">
-                          {scholarship.summary}
-                        </p>
-                      </div>
-                    )}
-                  </div>
+                    id={scholarship.id}
+                    title={scholarship.title}
+                    description={scholarship.description}
+                    deadline={scholarship.deadline}
+                    status={scholarship.status}
+                    period={scholarship.period}
+                    amount={scholarship.amount}
+                    summary={scholarship.summary}
+                    isFavorite={!!favoriteScholarships[scholarship.id]}
+                    onFavorite={toggleFavorite}
+                    onSummary={toggleSummary}
+                    showSummary={!!showSummary[scholarship.id]}
+                  />
                 ))}
+                <>더 많은 장학 프로그램 보기</>
               </div>
             </div>
 
@@ -256,64 +205,11 @@ const Scholarship: React.FC = () => {
                 <h3 className="text-xl font-bold text-brand-text-primary">
                   진행중인 교내/외 활동
                 </h3>
-                <NavLink
-                  to="/program"
-                  className="text-sm text-brand-green hover:text-brand-green-dark font-medium transition-colors"
-                >
-                  전체보기 →
-                </NavLink>
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                {programList.map((program) => (
-                  <div
-                    key={program.id}
-                    className="border border-gray-100 rounded-2xl p-5 hover:shadow-sm transition-all duration-200"
-                  >
-                    <div className="flex justify-between items-start mb-3">
-                      <div className="flex items-center gap-2">
-                        <span
-                          className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${
-                            program.status === "모집중"
-                              ? "bg-tag-green-bg text-tag-green-text"
-                              : program.status === "진행중"
-                                ? "bg-yellow-100 text-yellow-600"
-                                : "bg-gray-100 text-gray-600"
-                          }`}
-                        >
-                          {program.status}
-                        </span>
-                        <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-600">
-                          {program.category}
-                        </span>
-                      </div>
-                    </div>
-                    <h4 className="text-lg font-bold text-brand-text-primary mb-2">
-                      {program.title}
-                    </h4>
-                    <p className="text-sm text-brand-text-secondary mb-4 leading-relaxed line-clamp-2">
-                      {program.description}
-                    </p>
-                    <div className="flex items-center space-x-4 text-sm text-brand-text-secondary mb-4">
-                      <span className="flex items-center gap-1">
-                        <Building className="inline w-4 h-4 mr-1" />
-                        {program.department}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <Calendar className="inline w-4 h-4 mr-1" />
-                        {program.period}
-                      </span>
-                    </div>
-                    <div className="flex space-x-2">
-                      <button className="flex-1 py-2 px-4 bg-gray-100 text-brand-text-primary text-sm font-medium rounded-lg hover:bg-gray-200 transition-colors">
-                        상세보기
-                      </button>
-                      <button className="flex-1 py-2 px-4 bg-brand-green text-white text-sm font-semibold rounded-lg hover:bg-brand-green-dark transition-colors">
-                        신청하기 →
-                      </button>
-                    </div>
-                  </div>
-                ))}
+              <div className="grid gap-4">
+                {/* 진행중인 교내/외 활동 */}
+                <>더 많은 프로그램 보기</>
               </div>
             </div>
           </div>
@@ -332,4 +228,4 @@ const Scholarship: React.FC = () => {
   );
 };
 
-export default Scholarship;
+export default Home;

@@ -1,13 +1,22 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: ["class"],
-  content: ["./index.html", "./src/**/*.{ts,tsx,js,jsx}"],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      keyframes: {
+        fadeIn: {
+          from: { opacity: "0", transform: "translateY(-10px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
+      },
+      animation: {
+        fadeIn: "fadeIn 0.3s ease-out forwards",
       },
       colors: {
         background: "hsl(var(--background))",
@@ -50,27 +59,31 @@ export default {
           4: "hsl(var(--chart-4))",
           5: "hsl(var(--chart-5))",
         },
-        "ptu-red": "#EE0031",
-        "ptu-gray": "#f8f9fA",
-        "ptu-blue": "#425ad5",
-        "ptu-blue-hover": "#425ad5",
-        "ptu-default-black": "#3f4750",
+        "brand-green": "#2da87a",
+        "brand-green-dark": "#009b64",
+        "brand-green-light": "#3bb87a",
+        "brand-bg": "#f8f9fa",
+        "brand-surface": "#ffffff",
+        "brand-text-primary": "#333333",
+        "brand-text-secondary": "#8C8C8C",
+        "brand-border": "#F5F5F5",
+        "tag-red-bg": "#FFE0E0",
+        "tag-red-text": "#FF6767",
+        "tag-green-bg": "#DDEDE2",
+        "tag-green-text": "#2da87a",
+        "tag-blue-bg": "#E0F2FF",
+        "tag-blue-text": "#0066CC",
         "ptu-green": "#2da87a",
-        "ptu-green-hover": "#009b64",
-        "ptu-grey-text": "#8C8C8C",
-        "ptu-grey-line": "#F5F5F5",
-      },
-      backgroundColor: {
-        "ptu-blue-bg": "#f3f6ff",
-        "ptu-blue-bg-hover": "#e5eaff",
-        "ptu-green-bg": "#009B64", // 이전 ptu-blue-bg를 연한 녹색 배경으로 변경
-        "ptu-green-bg-hover": "#c7e9d8", // 이전 ptu-blue-bg-hover를 약간 더 진한 녹색 배경으로 변경
-        "ptu-light-green-bg": "#DDEDE2",
+        "ptu-green-dark": "#009b64",
+        "ptu-text": "#333333",
+        "ptu-text-light": "#8C8C8C",
+        "ptu-bg": "#f8f9fa",
+        "ptu-surface": "#ffffff",
       },
       screens: {
         desktop: "960px",
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [],
 };
