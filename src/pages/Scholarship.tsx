@@ -1,5 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import {
+  PiggyBank,
+  Heart,
+  ClipboardList,
+  CheckCircle,
+  Calendar,
+  Bot,
+  MapPin,
+  Building,
+} from "lucide-react";
+import ScholarshipSidebar from "@/components/layout/Aside/left-aside";
 
 const Scholarship: React.FC = () => {
   // State management for various UI interactions
@@ -141,142 +152,19 @@ const Scholarship: React.FC = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 text-gray-800 relative">
-      {/* 사이트 공지사항 배너 */}
-      <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-b border-green-100">
-        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 py-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <span className="text-sm text-brand-text-primary font-medium">
-                📢 [공지] 5월 업데이트: 새로운 장학금 항목 기능이 추가되었습니다
-              </span>
-            </div>
-            <button className="text-sm text-brand-green hover:text-brand-green-dark transition-colors">
-              →
-            </button>
-          </div>
-        </div>
-      </div>
-
       {/* 메인 컨텐츠 */}
-      <main className="flex-1 px-4 sm:px-6 py-8 max-w-[1280px] mx-auto w-full pb-20 md:pb-8">
+      <main className="flex-1 py-8 max-w-[1200px] mx-auto w-full pb-20 md:pb-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {/* 왼쪽 사이드바 - 장학금 현황 및 공지사항 */}
-          <div className="md:col-span-1 flex flex-col gap-4">
-            {/* 장학금 진행 상태 카드 */}
-            <div className="w-full bg-white rounded-3xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-all duration-300">
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="text-xl font-bold text-brand-text-primary">
-                  장학금 현황
-                </h2>
-                <button
-                  onClick={() =>
-                    setIsScholarshipExpanded(!isScholarshipExpanded)
-                  }
-                  className="md:hidden text-brand-green hover:text-brand-green-dark transition-colors"
-                >
-                  {isScholarshipExpanded ? "접기" : "펼치기"}
-                </button>
-              </div>
-
-              <div
-                className={`space-y-4 ${isScholarshipExpanded ? "block" : "hidden md:block"}`}
-              >
-                {/* 장학금 금액 카드 */}
-                <div className="bg-green-50 rounded-2xl p-4">
-                  <div className="flex items-center space-x-2 mb-2">
-                    <span className="text-brand-green text-lg">💰</span>
-                    <span className="text-sm text-brand-text-secondary">
-                      총 장학금액
-                    </span>
-                  </div>
-                  <p className="text-2xl font-bold text-brand-green">
-                    450,000 원
-                  </p>
-                </div>
-
-                {/* 통계 카드들 */}
-                <div className="grid grid-cols-3 gap-3">
-                  <div className="text-center">
-                    <div className="text-red-500 text-2xl mb-2">❤️</div>
-                    <p className="text-xl font-bold text-brand-text-primary mb-1">
-                      5 건
-                    </p>
-                    <p className="text-xs text-brand-text-secondary">좋아요</p>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-blue-500 text-2xl mb-2">📋</div>
-                    <p className="text-xl font-bold text-brand-text-primary mb-1">
-                      1 건
-                    </p>
-                    <p className="text-xs text-brand-text-secondary">진행중</p>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-green-500 text-2xl mb-2">✅</div>
-                    <p className="text-xl font-bold text-brand-text-primary mb-1">
-                      4 건
-                    </p>
-                    <p className="text-xs text-brand-text-secondary">완료</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* 학교 공지 카드 */}
-            <div className="w-full bg-white rounded-3xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-all duration-300">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-xl font-bold text-brand-text-primary">
-                  학교 공지
-                </h3>
-                <button
-                  onClick={() => setIsNoticeExpanded(!isNoticeExpanded)}
-                  className="md:hidden text-brand-green hover:text-brand-green-dark transition-colors"
-                >
-                  {isNoticeExpanded ? "접기" : "펼치기"}
-                </button>
-              </div>
-
-              <div
-                className={`space-y-4 ${isNoticeExpanded ? "block" : "hidden md:block"}`}
-              >
-                {noticeList.map((notice, index) => (
-                  <div
-                    key={notice.id}
-                    className={`${index < noticeList.length - 1 ? "border-b border-gray-100 pb-4" : ""}`}
-                  >
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="text-xs text-brand-text-secondary">
-                        📅 {formatDate(notice.date)}
-                      </span>
-                      <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-brand-green">
-                        {notice.department}
-                      </span>
-                    </div>
-                    <h4 className="text-sm font-semibold text-brand-text-primary mb-2">
-                      {notice.title}
-                    </h4>
-                    <div className="flex gap-2">
-                      <button
-                        onClick={() => toggleSummary(notice.id)}
-                        className="text-xs text-brand-green hover:text-brand-green-dark font-medium transition-colors"
-                      >
-                        🤖 AI 요약
-                      </button>
-                      <span className="text-xs text-brand-green hover:text-brand-green-dark cursor-pointer font-medium">
-                        상세보기
-                      </span>
-                    </div>
-                    {showSummary[notice.id] && (
-                      <div className="mt-2 p-3 bg-gray-50 rounded-lg animate-fadeIn">
-                        <p className="text-xs text-brand-text-secondary">
-                          {notice.summary}
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+          <ScholarshipSidebar
+            isScholarshipExpanded={isScholarshipExpanded}
+            setIsScholarshipExpanded={setIsScholarshipExpanded}
+            isNoticeExpanded={isNoticeExpanded}
+            setIsNoticeExpanded={setIsNoticeExpanded}
+            noticeList={noticeList}
+            showSummary={showSummary}
+            toggleSummary={toggleSummary}
+            formatDate={formatDate}
+          />
 
           {/* 메인 컨텐츠 영역 - 추천 프로그램 */}
           <div className="md:col-span-2 flex flex-col gap-4">
@@ -314,7 +202,13 @@ const Scholarship: React.FC = () => {
                         onClick={() => toggleFavorite(scholarship.id)}
                         className="text-2xl hover:scale-110 transition-transform"
                       >
-                        {favoriteScholarships[scholarship.id] ? "❤️" : "🤍"}
+                        <Heart
+                          className={
+                            favoriteScholarships[scholarship.id]
+                              ? "fill-red-500 text-red-500"
+                              : "text-gray-300"
+                          }
+                        />
                       </button>
                     </div>
                     <h4 className="text-lg font-bold text-brand-text-primary mb-2">
@@ -324,15 +218,21 @@ const Scholarship: React.FC = () => {
                       {scholarship.description}
                     </p>
                     <div className="flex items-center space-x-4 text-sm text-brand-text-secondary mb-4">
-                      <span>📍 {scholarship.period}</span>
-                      <span>💰 {scholarship.amount}</span>
+                      <span className="flex items-center gap-1">
+                        <MapPin className="inline w-4 h-4 mr-1" />
+                        {scholarship.period}
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <PiggyBank className="inline w-4 h-4 mr-1" />
+                        {scholarship.amount}
+                      </span>
                     </div>
                     <div className="flex space-x-2">
                       <button
                         onClick={() => toggleSummary(scholarship.id)}
-                        className="flex-1 py-2 px-4 bg-gray-100 text-brand-text-primary text-sm font-medium rounded-lg hover:bg-gray-200 transition-colors"
+                        className="flex-1 py-2 px-4 bg-gray-100 text-brand-text-primary text-sm font-medium rounded-lg hover:bg-gray-200 transition-colors flex items-center gap-1"
                       >
-                        🤖 AI 요약
+                        <Bot className="inline w-4 h-4 mr-1" /> AI 요약
                       </button>
                       <button className="flex-1 py-2 px-4 bg-brand-green text-white text-sm font-semibold rounded-lg hover:bg-brand-green-dark transition-colors">
                         신청하기 →
@@ -395,8 +295,14 @@ const Scholarship: React.FC = () => {
                       {program.description}
                     </p>
                     <div className="flex items-center space-x-4 text-sm text-brand-text-secondary mb-4">
-                      <span>🏢 {program.department}</span>
-                      <span>📅 {program.period}</span>
+                      <span className="flex items-center gap-1">
+                        <Building className="inline w-4 h-4 mr-1" />
+                        {program.department}
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <Calendar className="inline w-4 h-4 mr-1" />
+                        {program.period}
+                      </span>
                     </div>
                     <div className="flex space-x-2">
                       <button className="flex-1 py-2 px-4 bg-gray-100 text-brand-text-primary text-sm font-medium rounded-lg hover:bg-gray-200 transition-colors">
