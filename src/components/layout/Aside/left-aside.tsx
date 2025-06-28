@@ -9,6 +9,8 @@ import {
   MapPin,
   Building,
 } from "lucide-react";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 // Sidebar component for 장학금 현황 및 공지사항
 interface ScholarshipSidebarProps {
@@ -99,33 +101,40 @@ const ScholarshipSidebar: React.FC<ScholarshipSidebarProps> = ({
       <div
         className={`space-y-4 ${isNoticeExpanded ? "block" : "hidden md:block"}`}
       >
-        {noticeList.map((notice, index) => (
-          <div
+        {noticeList.map((notice) => (
+          <Card
             key={notice.id}
-            className={`${index < noticeList.length - 1 ? "border-b border-gray-100 pb-4" : ""}`}
+            className="p-4 mb-2 border border-gray-100 bg-gray-50/60 shadow-none"
           >
-            <div className="flex items-center gap-2 mb-2">
-              <span className="text-xs text-brand-text-secondary flex items-center gap-1">
-                <Calendar className="inline w-4 h-4 mr-1" />{" "}
-                {formatDate(notice.date)}
-              </span>
-              <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-brand-green">
-                {notice.department}
-              </span>
-            </div>
-            <h4 className="text-sm font-semibold text-brand-text-primary mb-2">
+            <h4 className="text-base font-bold text-brand-text-primary mb-3">
               {notice.title}
             </h4>
-            <div className="flex gap-2">
-              <button
-                onClick={() => toggleSummary(notice.id)}
-                className="text-xs text-brand-green hover:text-brand-green-dark font-medium transition-colors flex items-center gap-1"
-              >
-                <Bot className="inline w-4 h-4 mr-1" /> AI 요약
-              </button>
-              <span className="text-xs text-brand-green hover:text-brand-green-dark cursor-pointer font-medium">
-                상세보기
-              </span>
+            <div className="flex gap-2 justify-between">
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xs text-brand-text-secondary flex items-center gap-1">
+                    <Calendar className="inline w-4 h-4 mr-1" />
+                    {formatDate(notice.date)}
+                  </span>
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  className="flex items-center gap-1 px-3 py-1 text-xs font-medium"
+                  onClick={() => toggleSummary(notice.id)}
+                >
+                  <Bot className="inline w-4 h-4 mr-1" /> AI 요약
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="px-3 py-1 text-xs font-medium border-green-200 text-brand-green bg-green-50 hover:bg-green-100"
+                >
+                  상세보기
+                </Button>
+              </div>
             </div>
             {showSummary[notice.id] && (
               <div className="mt-2 p-3 bg-gray-50 rounded-lg animate-fadeIn">
@@ -134,7 +143,7 @@ const ScholarshipSidebar: React.FC<ScholarshipSidebarProps> = ({
                 </p>
               </div>
             )}
-          </div>
+          </Card>
         ))}
       </div>
     </div>

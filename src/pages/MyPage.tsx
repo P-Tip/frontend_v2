@@ -215,7 +215,7 @@ const MyPage = () => {
   );
 
   return (
-    <div className="px-5 pt-5 pb-5 flex flex-col gap-6">
+    <div className="px-5 pt-5 pb-5 flex flex-col gap-6 max-w-[1200px] mx-auto">
       {/* 탭 바 */}
       <div className="bg-brand-surface rounded-3xl p-2 shadow-sm border border-brand-border animate-fadeIn hover:shadow-md transition-all duration-300">
         <div className="flex space-x-2">

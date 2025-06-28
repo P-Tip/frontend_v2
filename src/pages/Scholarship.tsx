@@ -1,333 +1,170 @@
-import React, { useState, useEffect } from "react";
+import React, { useRef, useEffect, useCallback } from "react";
 import { NavLink } from "react-router-dom";
-import {
-  PiggyBank,
-  Heart,
-  ClipboardList,
-  CheckCircle,
-  Calendar,
-  Bot,
-  MapPin,
-  Building,
-} from "lucide-react";
-import ScholarshipSidebar from "@/components/layout/Aside/left-aside";
+import { Star, Coins, Search, Filter } from "lucide-react";
+import { useInfiniteScholarships } from "@/services/queries/scholarshipQuery";
+import ScholarshipCard from "@/components/scholarship/ScholarshipCard";
 
 const Scholarship: React.FC = () => {
-  // State management for various UI interactions
-  const [showSummary, setShowSummary] = useState<{ [key: string]: boolean }>(
-    {},
+  // 무한 스크롤 훅 사용 (query, order는 일단 빈 문자열/기본값)
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
+    useInfiniteScholarships("", "");
+
+  // 좋아요/포인트 등은 일단 더미
+  const handleCartClick = () => {};
+
+  // Intersection Observer로 마지막 카드 감지
+  const observerRef = useRef<IntersectionObserver | null>(null);
+  const lastCardRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      if (isFetchingNextPage) return;
+      if (observerRef.current) observerRef.current.disconnect();
+      observerRef.current = new window.IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasNextPage) {
+          fetchNextPage();
+        }
+      });
+      if (node) observerRef.current.observe(node);
+    },
+    [isFetchingNextPage, hasNextPage, fetchNextPage],
   );
-  const [isScholarshipExpanded, setIsScholarshipExpanded] = useState(false);
-  const [isNoticeExpanded, setIsNoticeExpanded] = useState(false);
-  const [favoriteScholarships, setFavoriteScholarships] = useState<{
-    [key: string]: boolean;
-  }>({});
-
-  // Initialize favorites from localStorage
-  useEffect(() => {
-    const savedFavorites = localStorage.getItem("favoriteScholarships");
-    if (savedFavorites) {
-      setFavoriteScholarships(JSON.parse(savedFavorites));
-    }
-  }, []);
-
-  // Handler functions
-  const toggleFavorite = (id: string) => {
-    setFavoriteScholarships((prev) => {
-      const updated = { ...prev, [id]: !prev[id] };
-      localStorage.setItem("favoriteScholarships", JSON.stringify(updated));
-      return updated;
-    });
-  };
-
-  const toggleSummary = (id: string) => {
-    setShowSummary((prev) => ({ ...prev, [id]: !prev[id] }));
-  };
-
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date
-      .toLocaleDateString("ko-KR", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-      })
-      .replace(/\. /g, ".")
-      .replace(".", "");
-  };
-
-  // Dummy data arrays for UI structure
-  const noticeList = [
-    {
-      id: "1",
-      title: "2025학년도 1학기 장학금 신청 안내",
-      date: "2025-05-30",
-      department: "AI 학과",
-      summary:
-        "2025학년도 1학기 장학금 신청 기간 및 자격 요건에 대한 상세 안내입니다.",
-    },
-    {
-      id: "2",
-      title: "하계 인턴십 프로그램 참가자 모집",
-      date: "2025-05-28",
-      department: "AI 학과",
-      summary: "여름방학 기간 중 실시되는 인턴십 프로그램 참가자를 모집합니다.",
-    },
-    {
-      id: "3",
-      title: "2025학년도 2학기 국가장학금 신청 안내",
-      date: "2025-05-25",
-      department: "AI 학과",
-      summary: "국가장학금 유형별 신청 자격 및 지원 금액에 대한 안내입니다.",
-    },
-  ];
-
-  const scholarshipList = [
-    {
-      id: "sch1",
-      title: "학생성장 공부한 장학금",
-      description:
-        "학업 성취도 향상을 위한 학생 성장 공부한 성장하면 위한 장학금 지원 프로그램",
-      period: "2학기",
-      amount: "50,000 ~ 100,000 원/월",
-      deadline: "마감임박 (~6/10)",
-      status: "urgent",
-      summary:
-        "이 장학금은 학업 성취도가 우수한 학생들을 대상으로 하며, 성적 향상을 위한 다양한 프로그램을 제공합니다.",
-    },
-    {
-      id: "sch2",
-      title: "취업박람회 현장 방문 보고서 작성",
-      description: "취업박람회의 방문하고 방문 관련 보고서를 작성 후 제출",
-      period: "1학기",
-      amount: "50,000 원 (일시불)",
-      deadline: "마감임박 (~6/15)",
-      status: "urgent",
-      summary:
-        "취업박람회 참석 후 체험 보고서를 작성하여 제출하면 지원금을 받을 수 있는 프로그램입니다.",
-    },
-    {
-      id: "sch3",
-      title: "창업 지원 장학금",
-      description: "창업 아이디어를 가진 학생들을 위한 지원 프로그램",
-      period: "1학기",
-      amount: "최대 200,000 원",
-      deadline: "30일 전 (~7/5)",
-      status: "normal",
-      summary:
-        "창업을 준비하는 학생들에게 초기 자금을 지원하고 멘토링을 제공하는 프로그램입니다.",
-    },
-  ];
-
-  const programList = [
-    {
-      id: "prog1",
-      title: "창업동아리 운영 지원 프로그램",
-      description:
-        "창업에 관심 있는 학생들을 위한 동아리 운영 및 멘토링 프로그램",
-      category: "창업",
-      period: "2025.03 ~ 2025.12",
-      status: "모집중",
-      department: "창업지원센터",
-    },
-    {
-      id: "prog2",
-      title: "AI 프로젝트 경진대회",
-      description: "인공지능 분야 창의적 프로젝트 개발 및 발표 대회",
-      category: "학술",
-      period: "2025.06 ~ 2025.11",
-      status: "진행중",
-      department: "AI학과",
-    },
-    {
-      id: "prog3",
-      title: "해외 교환학생 프로그램",
-      description: "자매결연 대학과의 교환학생 프로그램 참가 기회 제공",
-      category: "국제",
-      period: "2025.08 ~ 2025.12",
-      status: "예정",
-      department: "국제교류원",
-    },
-  ];
 
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 text-gray-800 relative">
-      {/* 메인 컨텐츠 */}
-      <main className="flex-1 py-8 max-w-[1200px] mx-auto w-full pb-20 md:pb-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <ScholarshipSidebar
-            isScholarshipExpanded={isScholarshipExpanded}
-            setIsScholarshipExpanded={setIsScholarshipExpanded}
-            isNoticeExpanded={isNoticeExpanded}
-            setIsNoticeExpanded={setIsNoticeExpanded}
-            noticeList={noticeList}
-            showSummary={showSummary}
-            toggleSummary={toggleSummary}
-            formatDate={formatDate}
-          />
+    <div className="flex flex-col min-h-screen bg-gray-50 text-gray-800 relative">
+      <main className="flex-1 py-8 max-w-[1200px] mx-auto w-full">
+        {/* 상단 타이틀 및 안내 카드 */}
+        <div className="mb-8">
+          <div className="flex items-center justify-between mb-2">
+            <div>
+              <h1 className="text-2xl md:text-3xl font-extrabold text-brand-text-primary mb-1">
+                교내 솔선수범 장학금 프로그램
+              </h1>
+              <p className="text-base text-brand-text-secondary">
+                학생들의 자발적인 성장과 발전을 지원하는 다양한 장학 프로그램을
+                확인하세요.
+              </p>
+            </div>
+            <NavLink
+              to="/"
+              className="text-brand-green text-base font-semibold flex items-center gap-1 hover:underline"
+            >
+              ← 뒤로가기
+            </NavLink>
+          </div>
 
-          {/* 메인 컨텐츠 영역 - 추천 프로그램 */}
-          <div className="md:col-span-2 flex flex-col gap-4">
-            {/* 장학 프로그램 목록 카드 */}
-            <div className="w-full bg-white rounded-3xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-all duration-300">
-              <div className="flex justify-between items-center mb-6">
-                <h3 className="text-xl font-bold text-brand-text-primary">
-                  추천 장학 프로그램
-                </h3>
-                <NavLink
-                  to="/scholarship"
-                  className="text-sm text-brand-green hover:text-brand-green-dark font-medium transition-colors"
-                >
-                  전체보기 →
-                </NavLink>
+          {/* 안내 카드 */}
+          <div className="w-full bg-white rounded-3xl shadow-sm border border-gray-100 p-8 flex flex-col md:flex-row gap-8 items-start md:items-stretch mb-6">
+            <div className="flex-1 flex gap-4 items-start">
+              <div className="bg-green-100 rounded-full w-10 h-10 flex items-center justify-center mt-1">
+                <Star className="text-brand-green w-6 h-6" />
               </div>
-
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                {scholarshipList.map((scholarship) => (
-                  <div
-                    key={scholarship.id}
-                    className="border border-gray-100 rounded-2xl p-5 hover:shadow-sm transition-all duration-200"
-                  >
-                    <div className="flex justify-between items-start mb-3">
-                      <span
-                        className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${
-                          scholarship.status === "urgent"
-                            ? "bg-tag-red-bg text-tag-red-text"
-                            : "bg-tag-blue-bg text-tag-blue-text"
-                        }`}
-                      >
-                        {scholarship.deadline}
-                      </span>
-                      <button
-                        onClick={() => toggleFavorite(scholarship.id)}
-                        className="text-2xl hover:scale-110 transition-transform"
-                      >
-                        <Heart
-                          className={
-                            favoriteScholarships[scholarship.id]
-                              ? "fill-red-500 text-red-500"
-                              : "text-gray-300"
-                          }
-                        />
-                      </button>
-                    </div>
-                    <h4 className="text-lg font-bold text-brand-text-primary mb-2">
-                      {scholarship.title}
-                    </h4>
-                    <p className="text-sm text-brand-text-secondary mb-4 leading-relaxed line-clamp-2">
-                      {scholarship.description}
-                    </p>
-                    <div className="flex items-center space-x-4 text-sm text-brand-text-secondary mb-4">
-                      <span className="flex items-center gap-1">
-                        <MapPin className="inline w-4 h-4 mr-1" />
-                        {scholarship.period}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <PiggyBank className="inline w-4 h-4 mr-1" />
-                        {scholarship.amount}
-                      </span>
-                    </div>
-                    <div className="flex space-x-2">
-                      <button
-                        onClick={() => toggleSummary(scholarship.id)}
-                        className="flex-1 py-2 px-4 bg-gray-100 text-brand-text-primary text-sm font-medium rounded-lg hover:bg-gray-200 transition-colors flex items-center gap-1"
-                      >
-                        <Bot className="inline w-4 h-4 mr-1" /> AI 요약
-                      </button>
-                      <button className="flex-1 py-2 px-4 bg-brand-green text-white text-sm font-semibold rounded-lg hover:bg-brand-green-dark transition-colors">
-                        신청하기 →
-                      </button>
-                    </div>
-                    {showSummary[scholarship.id] && (
-                      <div className="mt-3 p-3 bg-gray-50 rounded-lg animate-fadeIn">
-                        <p className="text-sm text-brand-text-secondary">
-                          {scholarship.summary}
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                ))}
+              <div>
+                <div className="font-bold text-brand-text-primary mb-1">
+                  장학금 개요
+                </div>
+                <div className="text-sm text-brand-text-secondary">
+                  솔선수범 장학으로 인정되는 부서별 프로그램에 참여한 학생에게
+                  포인트를 부여하고 적립된 포인트를 장학금으로 지급합니다.
+                </div>
               </div>
             </div>
-
-            {/* 교내외 프로그램 카드 */}
-            <div className="w-full bg-white rounded-3xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-all duration-300">
-              <div className="flex justify-between items-center mb-6">
-                <h3 className="text-xl font-bold text-brand-text-primary">
-                  진행중인 교내/외 활동
-                </h3>
-                <NavLink
-                  to="/program"
-                  className="text-sm text-brand-green hover:text-brand-green-dark font-medium transition-colors"
-                >
-                  전체보기 →
-                </NavLink>
+            <div className="flex-1 flex gap-4 items-start">
+              <div className="bg-blue-100 rounded-full w-10 h-10 flex items-center justify-center mt-1">
+                <Coins className="text-blue-500 w-6 h-6" />
               </div>
-
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                {programList.map((program) => (
-                  <div
-                    key={program.id}
-                    className="border border-gray-100 rounded-2xl p-5 hover:shadow-sm transition-all duration-200"
-                  >
-                    <div className="flex justify-between items-start mb-3">
-                      <div className="flex items-center gap-2">
-                        <span
-                          className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${
-                            program.status === "모집중"
-                              ? "bg-tag-green-bg text-tag-green-text"
-                              : program.status === "진행중"
-                                ? "bg-yellow-100 text-yellow-600"
-                                : "bg-gray-100 text-gray-600"
-                          }`}
-                        >
-                          {program.status}
-                        </span>
-                        <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-600">
-                          {program.category}
-                        </span>
-                      </div>
-                    </div>
-                    <h4 className="text-lg font-bold text-brand-text-primary mb-2">
-                      {program.title}
-                    </h4>
-                    <p className="text-sm text-brand-text-secondary mb-4 leading-relaxed line-clamp-2">
-                      {program.description}
-                    </p>
-                    <div className="flex items-center space-x-4 text-sm text-brand-text-secondary mb-4">
-                      <span className="flex items-center gap-1">
-                        <Building className="inline w-4 h-4 mr-1" />
-                        {program.department}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <Calendar className="inline w-4 h-4 mr-1" />
-                        {program.period}
-                      </span>
-                    </div>
-                    <div className="flex space-x-2">
-                      <button className="flex-1 py-2 px-4 bg-gray-100 text-brand-text-primary text-sm font-medium rounded-lg hover:bg-gray-200 transition-colors">
-                        상세보기
-                      </button>
-                      <button className="flex-1 py-2 px-4 bg-brand-green text-white text-sm font-semibold rounded-lg hover:bg-brand-green-dark transition-colors">
-                        신청하기 →
-                      </button>
-                    </div>
-                  </div>
-                ))}
+              <div>
+                <div className="font-bold text-brand-text-primary mb-1">
+                  장학금 지급
+                </div>
+                <ul className="text-sm text-brand-text-secondary list-disc pl-4">
+                  <li>학기별 1회 지급</li>
+                  <li>최대 70만 포인트까지 인정</li>
+                  <li>5만 포인트 미만 시 장학금 지급 불가</li>
+                  <li>포인트는 장학금액과 일치</li>
+                </ul>
               </div>
             </div>
           </div>
         </div>
-      </main>
 
-      <style>{`
-        .line-clamp-2 {
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-        }
-      `}</style>
+        {/* 검색/필터 영역 */}
+        <div className="w-full bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex flex-col md:flex-row gap-4 items-center mb-8">
+          <div className="flex-1 w-full">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <input
+                type="text"
+                placeholder="프로그램명 또는 키워드 검색"
+                className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-200 bg-gray-50 text-base focus:outline-none focus:ring-2 focus:ring-brand-green"
+                disabled
+              />
+            </div>
+          </div>
+          <div className="flex gap-2 w-full md:w-auto justify-end">
+            <button
+              className="flex items-center gap-1 px-4 py-2 rounded-lg bg-gray-100 text-brand-text-primary text-sm font-medium border border-gray-200 hover:bg-gray-200 transition-colors"
+              disabled
+            >
+              <Filter className="w-4 h-4" /> 필터
+            </button>
+            <button
+              className="flex items-center gap-1 px-4 py-2 rounded-lg bg-gray-100 text-brand-text-primary text-sm font-medium border border-gray-200"
+              disabled
+            >
+              전체 카테고리
+            </button>
+            <button
+              className="flex items-center gap-1 px-4 py-2 rounded-lg bg-gray-100 text-brand-text-primary text-sm font-medium border border-gray-200"
+              disabled
+            >
+              전체 상태
+            </button>
+          </div>
+        </div>
+
+        {/* 무한 스크롤 장학금 카드 리스트 */}
+        <div className="w-full min-h-[200px] grid grid-cols-1 md:grid-cols-2 gap-6">
+          {status === "pending" && (
+            <div className="col-span-2 text-center py-10 text-gray-400">
+              로딩 중...
+            </div>
+          )}
+          {status === "error" && (
+            <div className="col-span-2 text-center py-10 text-red-400">
+              데이터를 불러오지 못했습니다.
+            </div>
+          )}
+          {data
+            && data.pages.map((page, pageIdx) =>
+              page.content.map((scholarship: any, idx: number) => {
+                const isLast =
+                  pageIdx === data.pages.length - 1
+                  && idx === page.content.length - 1;
+                return (
+                  <div
+                    key={scholarship.id}
+                    ref={isLast ? lastCardRef : undefined}
+                  >
+                    <ScholarshipCard
+                      scholarship={scholarship}
+                      searchValue={""}
+                      onCartClick={handleCartClick}
+                    />
+                  </div>
+                );
+              }),
+            )}
+        </div>
+        {isFetchingNextPage && (
+          <div className="w-full text-center py-6 text-brand-green">
+            불러오는 중...
+          </div>
+        )}
+        {!hasNextPage && status === "success" && (
+          <div className="w-full text-center py-6 text-gray-400">
+            모든 데이터를 불러왔습니다.
+          </div>
+        )}
+      </main>
     </div>
   );
 };
