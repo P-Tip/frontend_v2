@@ -27,7 +27,7 @@ const Layout = ({ children }: LayoutProps) => {
   return (
     <div className="min-h-screen bg-brand-bg">
       {/* 상단 알림 배너 */}
-      <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-b border-green-100">
+      <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-b border-green-100 w-full">
         <div className="max-w-[1200px] mx-auto px-6 py-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
