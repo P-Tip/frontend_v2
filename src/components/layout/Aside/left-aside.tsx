@@ -8,6 +8,8 @@ import {
   Bot,
   MapPin,
   Building,
+  ChevronDown,
+  ChevronUp,
 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -41,13 +43,19 @@ const ScholarshipSidebar: React.FC<ScholarshipSidebarProps> = ({
         <div className="text-xl font-bold text-brand-text-primary">
           장학금 현황
         </div>
-        <div>2025-1학기</div>
-        <button
-          onClick={() => setIsScholarshipExpanded(!isScholarshipExpanded)}
-          className="md:hidden text-brand-green hover:text-brand-green-dark transition-colors"
-        >
-          {isScholarshipExpanded ? "접기" : "펼치기"}
-        </button>
+        <div className="flex items-center gap-2">
+          <div>2025-1학기</div>
+          <button
+            onClick={() => setIsScholarshipExpanded(!isScholarshipExpanded)}
+            className="md:hidden text-brand-green hover:text-brand-green-dark transition-colors"
+          >
+            {isScholarshipExpanded ? (
+              <ChevronUp className="w-4 h-4" />
+            ) : (
+              <ChevronDown className="w-4 h-4" />
+            )}
+          </button>
+        </div>
       </div>
       <div
         className={`space-y-4 ${isScholarshipExpanded ? "block" : "hidden md:block"}`}
@@ -63,7 +71,7 @@ const ScholarshipSidebar: React.FC<ScholarshipSidebarProps> = ({
         {/* 통계 카드들 */}
         <div className="grid grid-cols-3 gap-3">
           <div className="text-center bg-red-50 rounded-xl p-3">
-            <div className="flex items-center gap-4">
+            <div className="flex items-start gap-4">
               <div>
                 <Heart className="text-red-500 w-4 h-4 mb-2 fill-red-500" />
               </div>
@@ -74,7 +82,7 @@ const ScholarshipSidebar: React.FC<ScholarshipSidebarProps> = ({
             </div>
           </div>
           <div className="text-center bg-blue-50 rounded-xl p-3">
-            <div className="flex items-center gap-4">
+            <div className="flex items-start gap-4">
               <div>
                 <ClipboardList className="text-blue-500 w-4 h-4 mb-2" />
               </div>
@@ -85,7 +93,7 @@ const ScholarshipSidebar: React.FC<ScholarshipSidebarProps> = ({
             </div>
           </div>
           <div className="text-center bg-green-50 rounded-xl p-3">
-            <div className="flex items-center gap-4">
+            <div className="flex items-start gap-4">
               <div>
                 <CheckCircle className="text-green-500 w-4 h-4 mb-2" />
               </div>
@@ -106,7 +114,11 @@ const ScholarshipSidebar: React.FC<ScholarshipSidebarProps> = ({
           onClick={() => setIsNoticeExpanded(!isNoticeExpanded)}
           className="md:hidden text-brand-green hover:text-brand-green-dark transition-colors"
         >
-          {isNoticeExpanded ? "접기" : "펼치기"}
+          {isNoticeExpanded ? (
+            <ChevronUp className="w-4 h-4" />
+          ) : (
+            <ChevronDown className="w-4 h-4" />
+          )}
         </button>
       </div>
       <div

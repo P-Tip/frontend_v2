@@ -154,7 +154,7 @@ const Home: React.FC = () => {
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 text-gray-800 relative">
       {/* 메인 컨텐츠 */}
-      <main className="flex-1 py-8 max-w-[1200px] mx-auto w-full pb-20 md:pb-8">
+      <main className="flex-1 py-8 max-w-[1200px] mx-auto w-full pb-20 md:pb-8 px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <ScholarshipSidebar
             isScholarshipExpanded={isScholarshipExpanded}

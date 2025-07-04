@@ -30,7 +30,7 @@ const Scholarship: React.FC = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50 text-gray-800 relative">
-      <main className="flex-1 py-8 max-w-[1200px] mx-auto w-full">
+      <main className="flex-1 py-8 max-w-[1200px] mx-auto w-full px-6">
         {/* 상단 타이틀 및 안내 카드 */}
         <div className="mb-8">
           <div className="flex items-center justify-between mb-2">

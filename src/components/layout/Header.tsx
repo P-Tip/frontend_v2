@@ -8,7 +8,7 @@ const Header = () => {
         <h1 className="text-2xl font-bold text-brand-green">피팁</h1>
 
         {/* 데스크톱 내비게이션 */}
-        <nav className="flex space-x-8">
+        <nav className="hidden md:flex space-x-8">
           <NavLink
             to="/"
             end
