@@ -14,6 +14,7 @@ import {
   IoNotificationsOutline,
   IoTimeOutline,
 } from "react-icons/io5";
+import { getGoogleOauth } from "@/services/apis/LoginApi";
 
 const MyPage = () => {
   const [likedScholarships, setLikedScholarships] = useState<IScholarship[]>(
@@ -123,9 +124,7 @@ const MyPage = () => {
               </p>
             </div>
             <button
-              onClick={() => {
-                toast.error("준비중인 기능입니다.");
-              }}
+              onClick={getGoogleOauth}
               className="cursor-pointer hover:scale-105 transition-transform duration-200"
             >
               <GoogleIcon />
