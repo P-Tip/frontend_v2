@@ -31,6 +31,6 @@ export const getSearchPScholarships = async (
   order?: string,
 ) => {
   const params = removeUndefined({ query, page, order });
-  const response = await axiosInstance.get("api/award/searchP", { params });
+  const response = await axiosInstance.get("/api/award/searchP", { params });
   return response.data;
 };
