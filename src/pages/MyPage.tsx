@@ -21,7 +21,7 @@ const MyPage = () => {
   );
   const [totalPoint, setTotalPoint] = useState(0);
   const [login, setLogin] = useState(false);
-  const [activeSection, setActiveSection] = useState("활동내역");
+  const [activeSection, setActiveSection] = useState("프로필");
 
   const tabItems = ["프로필", "계정관리", "활동내역", "알림설정"];
 
@@ -43,13 +43,15 @@ const MyPage = () => {
   };
 
   const renderProfileSection = () => (
-    <div className="space-y-6 animate-fadeIn">
+    <div className="animate-fadeIn flex gap-6">
       {/* 사용자 프로필 카드 */}
-      <div className="bg-brand-surface rounded-3xl p-6 shadow-sm border border-brand-border hover:shadow-md transition-all duration-300">
-        <div className="flex items-center space-x-4 mb-6">
+      <div className="flex-[3] bg-brand-surface rounded-3xl p-6 shadow-sm border border-brand-border hover:shadow-md transition-all duration-300">
+        <div className="flex items-center justify-center">
           <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-400 rounded-full flex items-center justify-center">
             <IoPersonOutline className="text-2xl text-white" />
           </div>
+        </div>
+        <div className="flex items-center justify-center">
           <div>
             <h3 className="text-2xl font-bold text-brand-text-primary leading-8">
               홍길동
@@ -59,69 +61,37 @@ const MyPage = () => {
             </p>
           </div>
         </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="space-y-4">
-            <div>
-              <p className="text-sm text-brand-text-secondary font-medium mb-1">
-                이메일
-              </p>
-              <p className="text-brand-text-primary font-semibold">
-                hong@example.com
-              </p>
+        <div className="border-t border-brand-border pt-6 flex flex-col gap-2">
+          {/* TODO: constants 처리해서 map으로 돌리기 */}
+          <div className="flex items-center justify-between w-full">
+            <div className="text-sm text-brand-text-secondary font-medium mb-1">
+              학번
             </div>
-            <div>
-              <p className="text-sm text-brand-text-secondary font-medium mb-1">
-                학과
-              </p>
-              <p className="text-brand-text-primary font-semibold">
-                컴퓨터공학과
-              </p>
+            <div className="text-brand-text-primary font-semibold">
+              2020123456
             </div>
           </div>
-          <div className="space-y-4">
-            <div>
-              <p className="text-sm text-brand-text-secondary font-medium mb-1">
-                학년
-              </p>
-              <p className="text-brand-text-primary font-semibold">3학년</p>
+          <div className="flex items-center justify-between w-full">
+            <div className="text-sm text-brand-text-secondary font-medium mb-1">
+              이메일
             </div>
-            <div>
-              <p className="text-sm text-brand-text-secondary font-medium mb-1">
-                가입일
-              </p>
-              <p className="text-brand-text-primary font-semibold">
-                2024년 1월
-              </p>
+            <div className="text-brand-text-primary font-semibold">
+              hong@example.com
+            </div>
+          </div>
+          <div className="flex items-center justify-between w-full">
+            <div className="text-sm text-brand-text-secondary font-medium mb-1">
+              가입일
+            </div>
+            <div className="text-brand-text-primary font-semibold">
+              2020-01-01
             </div>
           </div>
         </div>
       </div>
-
-      {/* 통계 카드 */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-brand-surface rounded-2xl p-6 shadow-sm border border-brand-border text-center hover:shadow-md transition-all duration-300">
-          <p className="text-3xl font-bold text-brand-green mb-2">
-            {likedScholarships.length}
-          </p>
-          <p className="text-brand-text-secondary text-sm font-medium">
-            관심 장학금
-          </p>
-        </div>
-        <div className="bg-brand-surface rounded-2xl p-6 shadow-sm border border-brand-border text-center hover:shadow-md transition-all duration-300">
-          <p className="text-3xl font-bold text-brand-green mb-2">
-            {Math.floor(totalPoint / 10000)}
-          </p>
-          <p className="text-brand-text-secondary text-sm font-medium">
-            획득 포인트 (만점)
-          </p>
-        </div>
-        <div className="bg-brand-surface rounded-2xl p-6 shadow-sm border border-brand-border text-center hover:shadow-md transition-all duration-300">
-          <p className="text-3xl font-bold text-brand-green mb-2">15</p>
-          <p className="text-brand-text-secondary text-sm font-medium">
-            활동일수
-          </p>
-        </div>
+      {/* 장학금 현황 */}
+      <div className="flex-[7] p-6 bg-brand-surface rounded-3xl">
+        <div>장학금 현황</div>
       </div>
     </div>
   );
