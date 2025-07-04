@@ -8,6 +8,8 @@ import {
   Bot,
   MapPin,
   Building,
+  ChevronDown,
+  ChevronUp,
 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -38,15 +40,22 @@ const ScholarshipSidebar: React.FC<ScholarshipSidebarProps> = ({
     {/* 장학금 진행 상태 카드 */}
     <div className="w-full bg-white rounded-3xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-all duration-300">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-bold text-brand-text-primary">
+        <div className="text-xl font-bold text-brand-text-primary">
           장학금 현황
-        </h2>
-        <button
-          onClick={() => setIsScholarshipExpanded(!isScholarshipExpanded)}
-          className="md:hidden text-brand-green hover:text-brand-green-dark transition-colors"
-        >
-          {isScholarshipExpanded ? "접기" : "펼치기"}
-        </button>
+        </div>
+        <div className="flex items-center gap-2">
+          <div>2025-1학기</div>
+          <button
+            onClick={() => setIsScholarshipExpanded(!isScholarshipExpanded)}
+            className="md:hidden text-brand-green hover:text-brand-green-dark transition-colors"
+          >
+            {isScholarshipExpanded ? (
+              <ChevronUp className="w-4 h-4" />
+            ) : (
+              <ChevronDown className="w-4 h-4" />
+            )}
+          </button>
+        </div>
       </div>
       <div
         className={`space-y-4 ${isScholarshipExpanded ? "block" : "hidden md:block"}`}
@@ -55,34 +64,44 @@ const ScholarshipSidebar: React.FC<ScholarshipSidebarProps> = ({
         <div className="bg-green-50 rounded-2xl p-4">
           <div className="flex items-center space-x-2 mb-2">
             <PiggyBank className="text-brand-green w-5 h-5" />
-            <span className="text-sm text-brand-text-secondary">
-              총 장학금액
-            </span>
+            <span className="text-sm text-brand-text-secondary">장학금</span>
           </div>
           <p className="text-2xl font-bold text-brand-green">450,000 원</p>
         </div>
         {/* 통계 카드들 */}
         <div className="grid grid-cols-3 gap-3">
-          <div className="text-center">
-            <Heart className="text-red-500 w-7 h-7 mb-2 fill-red-500" />
-            <p className="text-xl font-bold text-brand-text-primary mb-1">
+          <div className="text-center bg-red-50 rounded-xl p-3">
+            <div className="flex items-start gap-4">
+              <div>
+                <Heart className="text-red-500 w-4 h-4 mb-2 fill-red-500" />
+              </div>
+              <div className="text-xs text-brand-text-secondary">좋아요</div>
+            </div>
+            <div className="text-xl font-bold text-brand-text-primary mb-1 text-left">
               5 건
-            </p>
-            <p className="text-xs text-brand-text-secondary">좋아요</p>
+            </div>
           </div>
-          <div className="text-center">
-            <ClipboardList className="text-blue-500 w-7 h-7 mb-2" />
-            <p className="text-xl font-bold text-brand-text-primary mb-1">
+          <div className="text-center bg-blue-50 rounded-xl p-3">
+            <div className="flex items-start gap-4">
+              <div>
+                <ClipboardList className="text-blue-500 w-4 h-4 mb-2" />
+              </div>
+              <div className="text-xs text-brand-text-secondary">진행중</div>
+            </div>
+            <div className="text-xl font-bold text-brand-text-primary mb-1 text-left">
               1 건
-            </p>
-            <p className="text-xs text-brand-text-secondary">진행중</p>
+            </div>
           </div>
-          <div className="text-center">
-            <CheckCircle className="text-green-500 w-7 h-7 mb-2" />
-            <p className="text-xl font-bold text-brand-text-primary mb-1">
+          <div className="text-center bg-green-50 rounded-xl p-3">
+            <div className="flex items-start gap-4">
+              <div>
+                <CheckCircle className="text-green-500 w-4 h-4 mb-2" />
+              </div>
+              <div className="text-xs text-brand-text-secondary">완료</div>
+            </div>
+            <div className="text-xl font-bold text-brand-text-primary mb-1 text-left">
               4 건
-            </p>
-            <p className="text-xs text-brand-text-secondary">완료</p>
+            </div>
           </div>
         </div>
       </div>
@@ -95,7 +114,11 @@ const ScholarshipSidebar: React.FC<ScholarshipSidebarProps> = ({
           onClick={() => setIsNoticeExpanded(!isNoticeExpanded)}
           className="md:hidden text-brand-green hover:text-brand-green-dark transition-colors"
         >
-          {isNoticeExpanded ? "접기" : "펼치기"}
+          {isNoticeExpanded ? (
+            <ChevronUp className="w-4 h-4" />
+          ) : (
+            <ChevronDown className="w-4 h-4" />
+          )}
         </button>
       </div>
       <div
