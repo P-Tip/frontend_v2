@@ -8,7 +8,7 @@ const Scholarship: React.FC = () => {
   // 무한 스크롤 훅 사용 (query, order는 일단 빈 문자열/기본값)
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
     useInfiniteScholarships("", "");
-
+  console.log(data);
   // 좋아요/포인트 등은 일단 더미
   const handleCartClick = () => {};
 
@@ -134,11 +134,11 @@ const Scholarship: React.FC = () => {
             </div>
           )}
           {data
-            && data.pages.map((page, pageIdx) =>
-              page.content.map((scholarship: any, idx: number) => {
+            && data.pages?.map((page, pageIdx) =>
+              page.contents?.map((scholarship: any, idx: number) => {
                 const isLast =
                   pageIdx === data.pages.length - 1
-                  && idx === page.content.length - 1;
+                  && idx === page.contents.length - 1;
                 return (
                   <div
                     key={scholarship.id}
