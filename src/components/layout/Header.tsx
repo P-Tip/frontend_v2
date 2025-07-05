@@ -1,11 +1,13 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const Header = () => {
   return (
     <header className="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-10 border-b border-gray-100/50 animate-fadeIn w-full">
       {/* TODO: px-6 뺄지 말지 고민 */}
       <div className="max-w-[1200px] mx-auto flex justify-between items-center px-6 py-5">
-        <h1 className="text-2xl font-bold text-brand-green">피팁</h1>
+        <h1 className="text-2xl font-bold text-brand-green">
+          <Link to="/">피팁</Link>
+        </h1>
 
         {/* 데스크톱 내비게이션 */}
         <nav className="hidden md:flex space-x-8">

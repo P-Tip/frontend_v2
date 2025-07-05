@@ -1,11 +1,8 @@
-import { MypagePointProgress } from "@/components/PointProgress";
-import ScholarshipCard from "@/components/scholarship/ScholarshipCard";
+import { MypagePointProgress } from "@/components/common/PointProgress";
+import { ScholarshipCard } from "@/components/scholarship/ScholarshipCard";
 import { Button } from "@/components/ui/button";
 import { IScholarship } from "@/types/scholarship";
 import { useEffect, useState } from "react";
-import GoogleIcon from "@/icons/Google";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { toast } from "sonner";
 import { calculateTotalPoints } from "@/utils";
 import { SCHOLARSHIP_DATA } from "@/constants";
 import {
@@ -20,7 +17,6 @@ const MyPage = () => {
     [],
   );
   const [totalPoint, setTotalPoint] = useState(0);
-  const [login, setLogin] = useState(false);
   const [activeSection, setActiveSection] = useState("프로필");
 
   const tabItems = ["프로필", "계정관리", "활동내역", "알림설정"];
@@ -53,11 +49,11 @@ const MyPage = () => {
         </div>
         <div className="flex items-center justify-center">
           <div>
-            <h3 className="text-2xl font-bold text-brand-text-primary leading-8">
+            <h3 className="text-16 font-bold text-brand-text-primary leading-8 text-center mt-2">
               홍길동
             </h3>
             <p className="text-brand-text-secondary font-medium">
-              부산대학교 학생
+              평택대학교 학생
             </p>
           </div>
         </div>
@@ -98,42 +94,6 @@ const MyPage = () => {
 
   const renderActivitySection = () => (
     <div className="space-y-6 animate-fadeIn">
-      {login ? (
-        <div className="flex justify-between items-center">
-          <h2 className="text-2xl font-bold text-brand-text-primary leading-8">
-            홍길동님의 활동내역
-          </h2>
-          <Button
-            variant="outline"
-            className="rounded-lg bg-brand-green hover:bg-brand-green-dark text-white border-none font-semibold"
-            onClick={() => setLogin(!login)}
-          >
-            로그아웃
-          </Button>
-        </div>
-      ) : (
-        <div className="bg-brand-surface rounded-3xl p-6 shadow-sm border border-brand-border hover:shadow-md transition-all duration-300">
-          <div className="flex justify-between items-center">
-            <div>
-              <h2 className="text-xl font-bold text-brand-text-primary mb-2 leading-7">
-                지금 로그인해서 다른 기기에서도
-              </h2>
-              <p className="text-brand-text-secondary font-medium">
-                나의 장학금을 확인해보세요!
-              </p>
-            </div>
-            <button
-              onClick={() => {
-                toast.error("준비중인 기능입니다.");
-              }}
-              className="cursor-pointer hover:scale-105 transition-transform duration-200"
-            >
-              <GoogleIcon />
-            </button>
-          </div>
-        </div>
-      )}
-
       <MypagePointProgress totalPoint={totalPoint} />
 
       <div className="bg-brand-surface rounded-3xl p-6 shadow-sm border border-brand-border hover:shadow-md transition-all duration-300">
@@ -190,17 +150,14 @@ const MyPage = () => {
       <div className="bg-brand-surface rounded-3xl p-2 shadow-sm border border-brand-border animate-fadeIn hover:shadow-md transition-all duration-300">
         <div className="flex space-x-2">
           {tabItems.map((tab) => (
-            <button
+            <Button
               key={tab}
               onClick={() => setActiveSection(tab)}
-              className={`flex-1 py-3 px-4 rounded-2xl text-sm font-semibold transition-all duration-300 ${
-                activeSection === tab
-                  ? "bg-gradient-to-r from-green-500 to-emerald-400 text-white shadow-md transform scale-[1.02]"
-                  : "bg-gray-100 text-brand-text-primary hover:bg-gray-200 hover:scale-[1.01]"
-              }`}
+              variant={activeSection === tab ? "default" : "secondary"}
+              className="flex-1 py-3 px-4 rounded-2xl text-sm font-semibold transition-all duration-300"
             >
               {tab}
-            </button>
+            </Button>
           ))}
         </div>
       </div>
