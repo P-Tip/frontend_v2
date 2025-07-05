@@ -120,37 +120,6 @@ const Home: React.FC = () => {
     },
   ];
 
-  const programList = [
-    {
-      id: "prog1",
-      title: "창업동아리 운영 지원 프로그램",
-      description:
-        "창업에 관심 있는 학생들을 위한 동아리 운영 및 멘토링 프로그램",
-      category: "창업",
-      period: "2025.03 ~ 2025.12",
-      status: "모집중",
-      department: "창업지원센터",
-    },
-    {
-      id: "prog2",
-      title: "AI 프로젝트 경진대회",
-      description: "인공지능 분야 창의적 프로젝트 개발 및 발표 대회",
-      category: "학술",
-      period: "2025.06 ~ 2025.11",
-      status: "진행중",
-      department: "AI학과",
-    },
-    {
-      id: "prog3",
-      title: "해외 교환학생 프로그램",
-      description: "자매결연 대학과의 교환학생 프로그램 참가 기회 제공",
-      category: "국제",
-      period: "2025.08 ~ 2025.12",
-      status: "예정",
-      department: "국제교류원",
-    },
-  ];
-
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 text-gray-800 relative">
       {/* 메인 컨텐츠 */}
