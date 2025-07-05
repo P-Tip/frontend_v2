@@ -10,56 +10,17 @@ import {
 import { IoSearchSharp } from "react-icons/io5";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { getCategoryStyle, getStatusStyle } from "@/utils/style";
+import { CATEGORIES, PROGRAMS } from "@/constants";
 
 const Program = () => {
   const [activeCategory, setActiveCategory] = useState("전체");
   const [likedPrograms, setLikedPrograms] = useState<number[]>([]);
 
-  // 카테고리 목록
-  const categories = [
-    "전체",
-    "학술",
-    "취업",
-    "문화",
-    "봉사",
-    "국제교류",
-    "창업",
-  ];
-
-  // 더미 프로그램 데이터
-  const programs = [
-    {
-      id: 1,
-      title: "캠퍼스 축제 자원봉사",
-      description: "봄 축제 진행을 위한 자원봉사를 모집합니다",
-      category: "문화",
-      status: "마감",
-      applyPeriod: "~ 6월 5일",
-      progressPeriod: "6월 15일 ~ 6월 18일",
-      method: "오프라인",
-      location: "대학 캠퍼스 전역",
-      benefits: ["봉사활동 인증", "활동비 지급", "추석 특강 패키지"],
-      additionalInfo: ["학점 인정 가능", "우수 참여 기능"],
-    },
-    {
-      id: 2,
-      title: "학부생 연구 프로젝트",
-      description: "교수님과 함께하는 학부생 연구 프로젝트 참가자 모집",
-      category: "학술",
-      status: "마감",
-      applyPeriod: "~ 6월 10일",
-      progressPeriod: "6월 15일 ~ 8월 31일",
-      method: "오프라인",
-      location: "중앙도서관 세미나실",
-      benefits: ["연구 성과 지원", "학회 발표 기회", "우수 연구 시상"],
-      additionalInfo: ["졸업 요건 충족", "대학원 진학 가산점"],
-    },
-  ];
-
   const filteredPrograms =
     activeCategory === "전체"
-      ? programs
-      : programs.filter((program) => program.category === activeCategory);
+      ? PROGRAMS
+      : PROGRAMS.filter((program) => program.category === activeCategory);
 
   const toggleLike = (programId: number) => {
     setLikedPrograms((prev) =>
@@ -67,40 +28,6 @@ const Program = () => {
         ? prev.filter((id) => id !== programId)
         : [...prev, programId],
     );
-  };
-
-  const getStatusStyle = (status: string) => {
-    switch (status) {
-      case "모집중":
-        return "bg-tag-green-bg text-tag-green-text";
-      case "마감":
-        return "bg-tag-red-bg text-tag-red-text";
-      case "진행중":
-        return "bg-yellow-100 text-yellow-600";
-      case "예정":
-        return "bg-gray-100 text-gray-600";
-      default:
-        return "bg-gray-100 text-gray-600";
-    }
-  };
-
-  const getCategoryStyle = (category: string) => {
-    switch (category) {
-      case "학술":
-        return "bg-blue-50 text-blue-600";
-      case "문화":
-        return "bg-purple-50 text-purple-600";
-      case "취업":
-        return "bg-green-50 text-green-600";
-      case "봉사":
-        return "bg-orange-50 text-orange-600";
-      case "국제교류":
-        return "bg-indigo-50 text-indigo-600";
-      case "창업":
-        return "bg-red-50 text-red-600";
-      default:
-        return "bg-gray-50 text-gray-600";
-    }
   };
 
   return (
@@ -142,7 +69,7 @@ const Program = () => {
           </div>
           {/* 카테고리 태그 */}
           <div className="flex flex-wrap gap-2">
-            {categories.map((category) => (
+            {CATEGORIES.map((category) => (
               <Button
                 key={category}
                 variant={activeCategory === category ? "default" : "secondary"}

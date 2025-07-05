@@ -1,21 +1,7 @@
 import React from "react";
 import { Heart, MapPin, PiggyBank, Bot } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
-interface ScholarshipCardProps {
-  id: string;
-  title: string;
-  description: string;
-  deadline: string;
-  status: string;
-  period: string;
-  amount: string;
-  summary: string;
-  isFavorite: boolean;
-  onFavorite: (id: string) => void;
-  onSummary: (id: string) => void;
-  showSummary: boolean;
-}
+import { ScholarshipCardProps } from "./Card.types";
 
 const ScholarshipCard: React.FC<ScholarshipCardProps> = ({
   id,

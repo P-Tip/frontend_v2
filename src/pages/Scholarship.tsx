@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useCallback } from "react";
 import { NavLink } from "react-router-dom";
 import { Star, Coins, Search, Filter } from "lucide-react";
 import { useInfiniteScholarships } from "@/services/queries/scholarshipQuery";
-import ScholarshipCard from "@/components/scholarship/ScholarshipCard";
+import { ScholarshipCard } from "@/components/scholarship/ScholarshipCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 

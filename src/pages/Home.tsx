@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ScholarshipSidebar from "@/components/layout/Aside/left-aside";
-import ScholarshipCard from "../components/card";
+import { ScholarshipCard } from "@/components/common/Card";
 import { SCHOLARSHIP_LIST } from "@/constants";
 
 const Home: React.FC = () => {

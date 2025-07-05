@@ -1,11 +1,8 @@
-import { MypagePointProgress } from "@/components/PointProgress";
-import ScholarshipCard from "@/components/scholarship/ScholarshipCard";
+import { MypagePointProgress } from "@/components/common/PointProgress";
+import { ScholarshipCard } from "@/components/scholarship/ScholarshipCard";
 import { Button } from "@/components/ui/button";
 import { IScholarship } from "@/types/scholarship";
 import { useEffect, useState } from "react";
-import GoogleIcon from "@/icons/Google";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { toast } from "sonner";
 import { calculateTotalPoints } from "@/utils";
 import { SCHOLARSHIP_DATA } from "@/constants";
 import {
@@ -20,7 +17,6 @@ const MyPage = () => {
     [],
   );
   const [totalPoint, setTotalPoint] = useState(0);
-  const [login, setLogin] = useState(false);
   const [activeSection, setActiveSection] = useState("프로필");
 
   const tabItems = ["프로필", "계정관리", "활동내역", "알림설정"];

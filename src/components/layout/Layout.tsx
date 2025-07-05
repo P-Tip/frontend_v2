@@ -7,8 +7,6 @@ import { RESPONSIVE_BREAKPOINT } from "@/constants";
 import { useKeywordStore } from "@/stores/keyword";
 import { useLocation, NavLink } from "react-router-dom";
 import useAnalytics from "@/hooks/useAnalytics";
-import ScholarshipCard from "../scholarship/ScholarshipCard";
-import { HiOutlineSpeakerphone } from "react-icons/hi";
 import { Button } from "@/components/ui/button";
 
 interface LayoutProps {

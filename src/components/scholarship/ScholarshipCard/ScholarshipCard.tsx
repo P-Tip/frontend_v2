@@ -1,6 +1,5 @@
 import { IScholarship } from "@/types/scholarship";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { IoMdHeart } from "react-icons/io";
@@ -9,14 +8,10 @@ import { PiMoney } from "react-icons/pi";
 import Highlighter from "react-highlight-words";
 import { toast } from "sonner";
 import { SCHOLARSHIP_DATA } from "@/constants";
-import { calculateTotalPoints, clickEvent, getFormatDate } from "@/utils";
+import { calculateTotalPoints, clickEvent } from "@/utils";
+import { getFormatDate } from "@/utils/date";
 import { Button } from "@/components/ui/button";
-
-interface ScholarshipCardProps {
-  scholarship: IScholarship;
-  searchValue: string;
-  onCartClick: (point: number) => void;
-}
+import { ScholarshipCardProps } from "./ScholarshipCard.types";
 
 const ScholarshipCard = ({
   scholarship,
@@ -93,7 +88,7 @@ const ScholarshipCard = ({
   return (
     <div className="rounded-3xl bg-brand-surface p-6 shadow-sm border border-brand-border hover:shadow-lg transition-all duration-300 ease-in-out animate-fadeIn group">
       {/* 상단: Badge와 Heart 아이콘 */}
-      <div className="flex justify-between items-start mb-4">
+      <div className="flex justify-between items-start">
         <div className="flex items-center gap-x-2">
           <Badge variant={date.color}>{date.label}</Badge>
           {date.date && (

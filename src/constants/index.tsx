@@ -98,3 +98,44 @@ export const SCHOLARSHIP_LIST = [
       "창업을 준비하는 학생들에게 초기 자금을 지원하고 멘토링을 제공하는 프로그램입니다.",
   },
 ];
+
+// 카테고리 목록
+export const CATEGORIES = [
+  "전체",
+  "학술",
+  "취업",
+  "문화",
+  "봉사",
+  "국제교류",
+  "창업",
+];
+
+// 더미 프로그램 데이터
+export const PROGRAMS = [
+  {
+    id: 1,
+    title: "캠퍼스 축제 자원봉사",
+    description: "봄 축제 진행을 위한 자원봉사를 모집합니다",
+    category: "문화",
+    status: "마감",
+    applyPeriod: "~ 6월 5일",
+    progressPeriod: "6월 15일 ~ 6월 18일",
+    method: "오프라인",
+    location: "대학 캠퍼스 전역",
+    benefits: ["봉사활동 인증", "활동비 지급", "추석 특강 패키지"],
+    additionalInfo: ["학점 인정 가능", "우수 참여 기능"],
+  },
+  {
+    id: 2,
+    title: "학부생 연구 프로젝트",
+    description: "교수님과 함께하는 학부생 연구 프로젝트 참가자 모집",
+    category: "학술",
+    status: "마감",
+    applyPeriod: "~ 6월 10일",
+    progressPeriod: "6월 15일 ~ 8월 31일",
+    method: "오프라인",
+    location: "중앙도서관 세미나실",
+    benefits: ["연구 성과 지원", "학회 발표 기회", "우수 연구 시상"],
+    additionalInfo: ["졸업 요건 충족", "대학원 진학 가산점"],
+  },
+];
