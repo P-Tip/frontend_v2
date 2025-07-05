@@ -32,7 +32,7 @@ const ScholarshipCard: React.FC<ScholarshipCardProps> = ({
   showSummary,
 }) => (
   <div className="border border-gray-100 rounded-2xl p-5 hover:shadow-sm transition-all duration-200">
-    <div className="flex justify-between items-start mb-3">
+    <div className="flex justify-between items-start">
       <span
         className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${
           status === "urgent"

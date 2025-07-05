@@ -53,11 +53,11 @@ const MyPage = () => {
         </div>
         <div className="flex items-center justify-center">
           <div>
-            <h3 className="text-2xl font-bold text-brand-text-primary leading-8">
+            <h3 className="text-16 font-bold text-brand-text-primary leading-8 text-center mt-2">
               홍길동
             </h3>
             <p className="text-brand-text-secondary font-medium">
-              부산대학교 학생
+              평택대학교 학생
             </p>
           </div>
         </div>
@@ -98,43 +98,6 @@ const MyPage = () => {
 
   const renderActivitySection = () => (
     <div className="space-y-6 animate-fadeIn">
-      {login ? (
-        <div className="flex justify-between items-center">
-          <h2 className="text-2xl font-bold text-brand-text-primary leading-8">
-            홍길동님의 활동내역
-          </h2>
-          <Button
-            variant="outline"
-            className="rounded-lg bg-brand-green hover:bg-brand-green-dark text-white border-none font-semibold"
-            onClick={() => setLogin(!login)}
-          >
-            로그아웃
-          </Button>
-        </div>
-      ) : (
-        <div className="bg-brand-surface rounded-3xl p-6 shadow-sm border border-brand-border hover:shadow-md transition-all duration-300">
-          <div className="flex justify-between items-center">
-            <div>
-              <h2 className="text-xl font-bold text-brand-text-primary mb-2 leading-7">
-                지금 로그인해서 다른 기기에서도
-              </h2>
-              <p className="text-brand-text-secondary font-medium">
-                나의 장학금을 확인해보세요!
-              </p>
-            </div>
-            <Button
-              variant="ghost"
-              onClick={() => {
-                toast.error("준비중인 기능입니다.");
-              }}
-              className="cursor-pointer hover:scale-105 transition-transform duration-200"
-            >
-              <GoogleIcon />
-            </Button>
-          </div>
-        </div>
-      )}
-
       <MypagePointProgress totalPoint={totalPoint} />
 
       <div className="bg-brand-surface rounded-3xl p-6 shadow-sm border border-brand-border hover:shadow-md transition-all duration-300">

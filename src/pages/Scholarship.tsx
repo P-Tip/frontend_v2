@@ -97,20 +97,15 @@ const Scholarship: React.FC = () => {
                 type="text"
                 placeholder="프로그램명 또는 키워드 검색"
                 className="pl-10"
-                disabled
               />
             </div>
           </div>
           <div className="flex gap-2 w-full md:w-auto justify-end">
-            <Button variant="outline" disabled>
+            <Button variant="outline">
               <Filter className="w-4 h-4 mr-2" /> 필터
             </Button>
-            <Button variant="outline" disabled>
-              전체 카테고리
-            </Button>
-            <Button variant="outline" disabled>
-              전체 상태
-            </Button>
+            <Button variant="outline">전체 카테고리</Button>
+            <Button variant="outline">전체 상태</Button>
           </div>
         </div>
 
