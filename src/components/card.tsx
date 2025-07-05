@@ -1,5 +1,6 @@
 import React from "react";
 import { Heart, MapPin, PiggyBank, Bot } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface ScholarshipCardProps {
   id: string;
@@ -41,14 +42,16 @@ const ScholarshipCard: React.FC<ScholarshipCardProps> = ({
       >
         {deadline}
       </span>
-      <button
+      <Button
+        variant="ghost"
+        size="icon"
         onClick={() => onFavorite(id)}
         className="text-2xl hover:scale-110 transition-transform"
       >
         <Heart
           className={isFavorite ? "fill-red-500 text-red-500" : "text-gray-300"}
         />
-      </button>
+      </Button>
     </div>
     <h4 className="text-lg font-bold text-brand-text-primary mb-2 text-left">
       {title}
@@ -67,15 +70,14 @@ const ScholarshipCard: React.FC<ScholarshipCardProps> = ({
       </span>
     </div>
     <div className="flex space-x-2">
-      <button
+      <Button
+        variant="secondary"
         onClick={() => onSummary(id)}
-        className="flex-1 py-2 px-4 bg-gray-100 text-brand-text-primary text-sm font-medium rounded-lg hover:bg-gray-200 transition-colors flex items-center gap-1"
+        className="flex-1"
       >
         <Bot className="inline w-4 h-4 mr-1" /> AI 요약
-      </button>
-      <button className="flex-1 py-2 px-4 bg-brand-green text-white text-sm font-semibold rounded-lg hover:bg-brand-green-dark transition-colors">
-        신청하기 →
-      </button>
+      </Button>
+      <Button className="flex-1">신청하기 →</Button>
     </div>
     {showSummary && (
       <div className="mt-3 p-3 bg-gray-50 rounded-lg animate-fadeIn">

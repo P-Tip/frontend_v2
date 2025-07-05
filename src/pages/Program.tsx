@@ -8,6 +8,8 @@ import {
   HiChevronDown,
 } from "react-icons/hi2";
 import { IoSearchSharp } from "react-icons/io5";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 const Program = () => {
   const [activeCategory, setActiveCategory] = useState("전체");
@@ -117,43 +119,38 @@ const Program = () => {
         <div className="bg-white rounded-xl p-4">
           <div className="flex flex-col lg:flex-row gap-4 mb-6">
             {/* 검색바 */}
-            <div className="flex-1 border border-gray-300 rounded-xl flex items-center px-1 py-0.5 focus-within:border-2 focus-within:border-brand-green focus-within:shadow-sm transition-all duration-300">
-              <input
+            <div className="flex-1 relative">
+              <Input
                 type="text"
                 placeholder="프로그램 검색"
-                className="flex-1 border-none outline-none px-3 py-2 text-brand-text-primary placeholder:text-brand-text-secondary bg-white"
+                className="pl-10"
               />
-              <button className="p-2 hover:bg-green-50 rounded-lg transition-colors duration-200">
-                <IoSearchSharp className="text-brand-text-secondary hover:text-brand-green" />
-              </button>
+              <IoSearchSharp className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
             </div>
 
             {/* 필터 드롭다운 */}
             <div className="flex gap-3">
-              <button className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg text-brand-text-primary hover:bg-gray-50 transition-colors duration-200">
+              <Button variant="outline">
                 <span>필터</span>
-                <HiChevronDown className="w-4 h-4" />
-              </button>
-              <button className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg text-brand-text-primary hover:bg-gray-50 transition-colors duration-200">
+                <HiChevronDown className="w-4 h-4 ml-2" />
+              </Button>
+              <Button variant="outline">
                 <span>마감임박순</span>
-                <HiChevronDown className="w-4 h-4" />
-              </button>
+                <HiChevronDown className="w-4 h-4 ml-2" />
+              </Button>
             </div>
           </div>
           {/* 카테고리 태그 */}
           <div className="flex flex-wrap gap-2">
             {categories.map((category) => (
-              <button
+              <Button
                 key={category}
+                variant={activeCategory === category ? "default" : "secondary"}
                 onClick={() => setActiveCategory(category)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                  activeCategory === category
-                    ? "bg-brand-green text-white shadow-md"
-                    : "bg-gray-100 text-brand-text-primary hover:bg-gray-200"
-                }`}
+                className="rounded-full"
               >
                 {category}
-              </button>
+              </Button>
             ))}
           </div>
         </div>
@@ -180,16 +177,17 @@ const Program = () => {
                   {program.status}
                 </span>
               </div>
-              <button
+              <Button
+                variant="ghost"
+                size="icon"
                 onClick={() => toggleLike(program.id)}
-                className="p-1 hover:bg-gray-100 rounded-full transition-colors duration-200"
               >
                 {likedPrograms.includes(program.id) ? (
                   <HiHeart className="w-6 h-6 text-red-500" />
                 ) : (
-                  <HiOutlineHeart className="w-6 h-6 text-gray-400 hover:text-red-500" />
+                  <HiOutlineHeart className="w-6 h-6 text-gray-400" />
                 )}
-              </button>
+              </Button>
             </div>
 
             {/* 제목과 설명 */}
@@ -264,12 +262,10 @@ const Program = () => {
 
             {/* 버튼들 */}
             <div className="flex gap-3">
-              <button className="flex-1 py-3 px-4 bg-gray-100 text-brand-text-primary text-sm font-medium rounded-lg hover:bg-gray-200 transition-colors duration-200">
+              <Button variant="secondary" className="flex-1">
                 상세 정보
-              </button>
-              <button className="flex-1 py-3 px-4 bg-brand-green text-white text-sm font-semibold rounded-lg hover:bg-brand-green-dark transition-all duration-200 shadow-sm hover:shadow-md">
-                신청하기
-              </button>
+              </Button>
+              <Button className="flex-1">신청하기</Button>
             </div>
           </div>
         ))}

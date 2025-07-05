@@ -3,6 +3,8 @@ import { NavLink } from "react-router-dom";
 import { Star, Coins, Search, Filter } from "lucide-react";
 import { useInfiniteScholarships } from "@/services/queries/scholarshipQuery";
 import ScholarshipCard from "@/components/scholarship/ScholarshipCard";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 const Scholarship: React.FC = () => {
   // 무한 스크롤 훅 사용 (query, order는 일단 빈 문자열/기본값)
@@ -91,33 +93,24 @@ const Scholarship: React.FC = () => {
           <div className="flex-1 w-full">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
-              <input
+              <Input
                 type="text"
                 placeholder="프로그램명 또는 키워드 검색"
-                className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-200 bg-gray-50 text-base focus:outline-none focus:ring-2 focus:ring-brand-green"
+                className="pl-10"
                 disabled
               />
             </div>
           </div>
           <div className="flex gap-2 w-full md:w-auto justify-end">
-            <button
-              className="flex items-center gap-1 px-4 py-2 rounded-lg bg-gray-100 text-brand-text-primary text-sm font-medium border border-gray-200 hover:bg-gray-200 transition-colors"
-              disabled
-            >
-              <Filter className="w-4 h-4" /> 필터
-            </button>
-            <button
-              className="flex items-center gap-1 px-4 py-2 rounded-lg bg-gray-100 text-brand-text-primary text-sm font-medium border border-gray-200"
-              disabled
-            >
+            <Button variant="outline" disabled>
+              <Filter className="w-4 h-4 mr-2" /> 필터
+            </Button>
+            <Button variant="outline" disabled>
               전체 카테고리
-            </button>
-            <button
-              className="flex items-center gap-1 px-4 py-2 rounded-lg bg-gray-100 text-brand-text-primary text-sm font-medium border border-gray-200"
-              disabled
-            >
+            </Button>
+            <Button variant="outline" disabled>
               전체 상태
-            </button>
+            </Button>
           </div>
         </div>
 

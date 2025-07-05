@@ -1,4 +1,5 @@
 import React from "react";
+import { Button } from "@/components/ui/button";
 
 const ScholarshipCardLoggedOut: React.FC = () => {
   return (
@@ -33,12 +34,7 @@ const ScholarshipCardLoggedOut: React.FC = () => {
       </div>
 
       {/* 로그인 버튼 */}
-      <button
-        type="button"
-        className="w-full h-10 mt-4 bg-green-600 text-white text-sm font-semibold rounded-md hover:bg-green-700 transition-colors"
-      >
-        로그인 하러가기
-      </button>
+      <Button className="w-full mt-4">로그인 하러가기</Button>
     </div>
   );
 };

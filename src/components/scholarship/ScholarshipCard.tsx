@@ -10,6 +10,7 @@ import Highlighter from "react-highlight-words";
 import { toast } from "sonner";
 import { SCHOLARSHIP_DATA } from "@/constants";
 import { calculateTotalPoints, clickEvent, getFormatDate } from "@/utils";
+import { Button } from "@/components/ui/button";
 
 interface ScholarshipCardProps {
   scholarship: IScholarship;
@@ -37,7 +38,7 @@ const ScholarshipCard = ({
     setIsAdd(isExist);
   }, [scholarship.id]);
 
-  const handleHeartClick = (e: React.MouseEvent<HTMLSpanElement>) => {
+  const handleHeartClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     e.stopPropagation();
 
@@ -101,7 +102,9 @@ const ScholarshipCard = ({
             </p>
           )}
         </div>
-        <button
+        <Button
+          variant="ghost"
+          size="icon"
           onClick={handleHeartClick}
           className="p-1 hover:scale-110 transition-transform duration-200"
         >
@@ -110,7 +113,7 @@ const ScholarshipCard = ({
           ) : (
             <IoMdHeartEmpty className="text-brand-text-secondary text-xl w-6 h-6 hover:text-red-500 transition-colors duration-200" />
           )}
-        </button>
+        </Button>
       </div>
 
       {/* 중간: 제목과 설명 */}
@@ -153,18 +156,16 @@ const ScholarshipCard = ({
 
       {/* 하단: 버튼들 */}
       <div className="flex space-x-3">
-        <button
+        <Button
+          variant="secondary"
           onClick={handleDetailClick}
-          className="flex-1 py-3 px-4 bg-gray-100 text-brand-text-primary text-sm font-medium rounded-lg hover:bg-gray-200 transition-all duration-200 hover:scale-[1.02]"
+          className="flex-1"
         >
           상세정보
-        </button>
-        <button
-          onClick={handleApplyClick}
-          className="flex-1 py-3 px-4 bg-gradient-to-r from-green-500 to-emerald-400 text-white text-sm font-semibold rounded-lg hover:from-green-600 hover:to-emerald-500 transition-all duration-200 hover:scale-[1.02] hover:shadow-md"
-        >
+        </Button>
+        <Button onClick={handleApplyClick} className="flex-1">
           신청하기
-        </button>
+        </Button>
       </div>
     </div>
   );

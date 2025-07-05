@@ -122,14 +122,15 @@ const MyPage = () => {
                 나의 장학금을 확인해보세요!
               </p>
             </div>
-            <button
+            <Button
+              variant="ghost"
               onClick={() => {
                 toast.error("준비중인 기능입니다.");
               }}
               className="cursor-pointer hover:scale-105 transition-transform duration-200"
             >
               <GoogleIcon />
-            </button>
+            </Button>
           </div>
         </div>
       )}
@@ -190,17 +191,14 @@ const MyPage = () => {
       <div className="bg-brand-surface rounded-3xl p-2 shadow-sm border border-brand-border animate-fadeIn hover:shadow-md transition-all duration-300">
         <div className="flex space-x-2">
           {tabItems.map((tab) => (
-            <button
+            <Button
               key={tab}
               onClick={() => setActiveSection(tab)}
-              className={`flex-1 py-3 px-4 rounded-2xl text-sm font-semibold transition-all duration-300 ${
-                activeSection === tab
-                  ? "bg-gradient-to-r from-green-500 to-emerald-400 text-white shadow-md transform scale-[1.02]"
-                  : "bg-gray-100 text-brand-text-primary hover:bg-gray-200 hover:scale-[1.01]"
-              }`}
+              variant={activeSection === tab ? "default" : "secondary"}
+              className="flex-1 py-3 px-4 rounded-2xl text-sm font-semibold transition-all duration-300"
             >
               {tab}
-            </button>
+            </Button>
           ))}
         </div>
       </div>

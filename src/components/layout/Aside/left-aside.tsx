@@ -45,16 +45,18 @@ const ScholarshipSidebar: React.FC<ScholarshipSidebarProps> = ({
         </div>
         <div className="flex items-center gap-2">
           <div>2025-1학기</div>
-          <button
+          <Button
+            variant="ghost"
+            size="icon"
             onClick={() => setIsScholarshipExpanded(!isScholarshipExpanded)}
-            className="md:hidden text-brand-green hover:text-brand-green-dark transition-colors"
+            className="md:hidden"
           >
             {isScholarshipExpanded ? (
               <ChevronUp className="w-4 h-4" />
             ) : (
               <ChevronDown className="w-4 h-4" />
             )}
-          </button>
+          </Button>
         </div>
       </div>
       <div
@@ -110,16 +112,18 @@ const ScholarshipSidebar: React.FC<ScholarshipSidebarProps> = ({
     <div className="w-full bg-white rounded-3xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-all duration-300">
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-xl font-bold text-brand-text-primary">학교 공지</h3>
-        <button
+        <Button
+          variant="ghost"
+          size="icon"
           onClick={() => setIsNoticeExpanded(!isNoticeExpanded)}
-          className="md:hidden text-brand-green hover:text-brand-green-dark transition-colors"
+          className="md:hidden"
         >
           {isNoticeExpanded ? (
             <ChevronUp className="w-4 h-4" />
           ) : (
             <ChevronDown className="w-4 h-4" />
           )}
-        </button>
+        </Button>
       </div>
       <div
         className={`space-y-4 ${isNoticeExpanded ? "block" : "hidden md:block"}`}
