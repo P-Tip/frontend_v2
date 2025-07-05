@@ -1,6 +1,8 @@
 import { Calendar, Bot, ChevronDown, ChevronUp } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { formatDate } from "@/utils/date";
+import { NOTICE_LIST } from "@/constants";
 
 interface Notice {
   id: string;
@@ -12,19 +14,15 @@ interface Notice {
 interface SchoolNoticeProps {
   isExpanded: boolean;
   setIsExpanded: (v: boolean) => void;
-  noticeList: Notice[];
   showSummary: { [key: string]: boolean };
   toggleSummary: (id: string) => void;
-  formatDate: (dateString: string) => string;
 }
 
 const SchoolNotice: React.FC<SchoolNoticeProps> = ({
   isExpanded,
   setIsExpanded,
-  noticeList,
   showSummary,
   toggleSummary,
-  formatDate,
 }) => (
   <div className="w-full bg-white rounded-3xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-all duration-300">
     <div className="flex justify-between items-center mb-4">
@@ -43,7 +41,7 @@ const SchoolNotice: React.FC<SchoolNoticeProps> = ({
       </Button>
     </div>
     <div className={`space-y-4 ${isExpanded ? "block" : "hidden md:block"}`}>
-      {noticeList.map((notice) => (
+      {NOTICE_LIST.map((notice) => (
         <Card
           key={notice.id}
           className="p-4 mb-2 border border-gray-100 bg-gray-50/60 shadow-none"
@@ -52,7 +50,7 @@ const SchoolNotice: React.FC<SchoolNoticeProps> = ({
             {notice.title}
           </h4>
           <div className="flex gap-2 justify-between">
-            <div>
+            <div className="flex items-center gap-2">
               <div className="flex items-center gap-2 mb-2">
                 <span className="text-xs text-brand-text-secondary flex items-center gap-1">
                   <Calendar className="inline w-4 h-4 mr-1" />
