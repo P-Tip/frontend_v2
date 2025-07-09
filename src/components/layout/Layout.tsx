@@ -7,8 +7,7 @@ import { RESPONSIVE_BREAKPOINT } from "@/constants";
 import { useKeywordStore } from "@/stores/keyword";
 import { useLocation, NavLink } from "react-router-dom";
 import useAnalytics from "@/hooks/useAnalytics";
-import ScholarshipCard from "../scholarship/ScholarshipCard";
-import { HiOutlineSpeakerphone } from "react-icons/hi";
+import { Button } from "@/components/ui/button";
 
 interface LayoutProps {
   children: ReactNode;
@@ -35,9 +34,9 @@ const Layout = ({ children }: LayoutProps) => {
                 📢 [공지] 5월 업데이트: 새로운 장학금 항목 기능이 추가되었습니다
               </span>
             </div>
-            <button className="text-sm text-brand-green hover:text-brand-green-dark transition-colors">
+            <Button variant="ghost" size="icon">
               →
-            </button>
+            </Button>
           </div>
         </div>
       </div>

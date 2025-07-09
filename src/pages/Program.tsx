@@ -8,56 +8,19 @@ import {
   HiChevronDown,
 } from "react-icons/hi2";
 import { IoSearchSharp } from "react-icons/io5";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { getCategoryStyle, getStatusStyle } from "@/utils/style";
+import { CATEGORIES, PROGRAMS } from "@/constants";
 
 const Program = () => {
   const [activeCategory, setActiveCategory] = useState("전체");
   const [likedPrograms, setLikedPrograms] = useState<number[]>([]);
 
-  // 카테고리 목록
-  const categories = [
-    "전체",
-    "학술",
-    "취업",
-    "문화",
-    "봉사",
-    "국제교류",
-    "창업",
-  ];
-
-  // 더미 프로그램 데이터
-  const programs = [
-    {
-      id: 1,
-      title: "캠퍼스 축제 자원봉사",
-      description: "봄 축제 진행을 위한 자원봉사를 모집합니다",
-      category: "문화",
-      status: "마감",
-      applyPeriod: "~ 6월 5일",
-      progressPeriod: "6월 15일 ~ 6월 18일",
-      method: "오프라인",
-      location: "대학 캠퍼스 전역",
-      benefits: ["봉사활동 인증", "활동비 지급", "추석 특강 패키지"],
-      additionalInfo: ["학점 인정 가능", "우수 참여 기능"],
-    },
-    {
-      id: 2,
-      title: "학부생 연구 프로젝트",
-      description: "교수님과 함께하는 학부생 연구 프로젝트 참가자 모집",
-      category: "학술",
-      status: "마감",
-      applyPeriod: "~ 6월 10일",
-      progressPeriod: "6월 15일 ~ 8월 31일",
-      method: "오프라인",
-      location: "중앙도서관 세미나실",
-      benefits: ["연구 성과 지원", "학회 발표 기회", "우수 연구 시상"],
-      additionalInfo: ["졸업 요건 충족", "대학원 진학 가산점"],
-    },
-  ];
-
   const filteredPrograms =
     activeCategory === "전체"
-      ? programs
-      : programs.filter((program) => program.category === activeCategory);
+      ? PROGRAMS
+      : PROGRAMS.filter((program) => program.category === activeCategory);
 
   const toggleLike = (programId: number) => {
     setLikedPrograms((prev) =>
@@ -65,40 +28,6 @@ const Program = () => {
         ? prev.filter((id) => id !== programId)
         : [...prev, programId],
     );
-  };
-
-  const getStatusStyle = (status: string) => {
-    switch (status) {
-      case "모집중":
-        return "bg-tag-green-bg text-tag-green-text";
-      case "마감":
-        return "bg-tag-red-bg text-tag-red-text";
-      case "진행중":
-        return "bg-yellow-100 text-yellow-600";
-      case "예정":
-        return "bg-gray-100 text-gray-600";
-      default:
-        return "bg-gray-100 text-gray-600";
-    }
-  };
-
-  const getCategoryStyle = (category: string) => {
-    switch (category) {
-      case "학술":
-        return "bg-blue-50 text-blue-600";
-      case "문화":
-        return "bg-purple-50 text-purple-600";
-      case "취업":
-        return "bg-green-50 text-green-600";
-      case "봉사":
-        return "bg-orange-50 text-orange-600";
-      case "국제교류":
-        return "bg-indigo-50 text-indigo-600";
-      case "창업":
-        return "bg-red-50 text-red-600";
-      default:
-        return "bg-gray-50 text-gray-600";
-    }
   };
 
   return (
@@ -117,43 +46,38 @@ const Program = () => {
         <div className="bg-white rounded-xl p-4">
           <div className="flex flex-col lg:flex-row gap-4 mb-6">
             {/* 검색바 */}
-            <div className="flex-1 border border-gray-300 rounded-xl flex items-center px-1 py-0.5 focus-within:border-2 focus-within:border-brand-green focus-within:shadow-sm transition-all duration-300">
-              <input
+            <div className="flex-1 relative">
+              <Input
                 type="text"
                 placeholder="프로그램 검색"
-                className="flex-1 border-none outline-none px-3 py-2 text-brand-text-primary placeholder:text-brand-text-secondary bg-white"
+                className="pl-10"
               />
-              <button className="p-2 hover:bg-green-50 rounded-lg transition-colors duration-200">
-                <IoSearchSharp className="text-brand-text-secondary hover:text-brand-green" />
-              </button>
+              <IoSearchSharp className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
             </div>
 
             {/* 필터 드롭다운 */}
             <div className="flex gap-3">
-              <button className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg text-brand-text-primary hover:bg-gray-50 transition-colors duration-200">
+              <Button variant="outline">
                 <span>필터</span>
-                <HiChevronDown className="w-4 h-4" />
-              </button>
-              <button className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg text-brand-text-primary hover:bg-gray-50 transition-colors duration-200">
+                <HiChevronDown className="w-4 h-4 ml-2" />
+              </Button>
+              <Button variant="outline">
                 <span>마감임박순</span>
-                <HiChevronDown className="w-4 h-4" />
-              </button>
+                <HiChevronDown className="w-4 h-4 ml-2" />
+              </Button>
             </div>
           </div>
           {/* 카테고리 태그 */}
           <div className="flex flex-wrap gap-2">
-            {categories.map((category) => (
-              <button
+            {CATEGORIES.map((category) => (
+              <Button
                 key={category}
+                variant={activeCategory === category ? "default" : "secondary"}
                 onClick={() => setActiveCategory(category)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                  activeCategory === category
-                    ? "bg-brand-green text-white shadow-md"
-                    : "bg-gray-100 text-brand-text-primary hover:bg-gray-200"
-                }`}
+                className="rounded-full"
               >
                 {category}
-              </button>
+              </Button>
             ))}
           </div>
         </div>
@@ -180,16 +104,17 @@ const Program = () => {
                   {program.status}
                 </span>
               </div>
-              <button
+              <Button
+                variant="ghost"
+                size="icon"
                 onClick={() => toggleLike(program.id)}
-                className="p-1 hover:bg-gray-100 rounded-full transition-colors duration-200"
               >
                 {likedPrograms.includes(program.id) ? (
                   <HiHeart className="w-6 h-6 text-red-500" />
                 ) : (
-                  <HiOutlineHeart className="w-6 h-6 text-gray-400 hover:text-red-500" />
+                  <HiOutlineHeart className="w-6 h-6 text-gray-400" />
                 )}
-              </button>
+              </Button>
             </div>
 
             {/* 제목과 설명 */}
@@ -264,12 +189,10 @@ const Program = () => {
 
             {/* 버튼들 */}
             <div className="flex gap-3">
-              <button className="flex-1 py-3 px-4 bg-gray-100 text-brand-text-primary text-sm font-medium rounded-lg hover:bg-gray-200 transition-colors duration-200">
+              <Button variant="secondary" className="flex-1">
                 상세 정보
-              </button>
-              <button className="flex-1 py-3 px-4 bg-brand-green text-white text-sm font-semibold rounded-lg hover:bg-brand-green-dark transition-all duration-200 shadow-sm hover:shadow-md">
-                신청하기
-              </button>
+              </Button>
+              <Button className="flex-1">신청하기</Button>
             </div>
           </div>
         ))}

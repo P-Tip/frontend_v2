@@ -2,12 +2,9 @@ import { CONSONANT } from "@/constants";
 import { useFilterScholarships } from "@/services/queries/scholarshipQuery";
 import { IDepartment } from "@/types/scholarship";
 import { useEffect, useState } from "react";
+import { DepartmentFilterProps } from "./DepartmentFilter.types";
 
-interface DepartmentSearchProps {
-  onSelectDepartment: (department: string) => void;
-}
-
-const DepartmentSearch = ({ onSelectDepartment }: DepartmentSearchProps) => {
+const DepartmentFilter = ({ onSelectDepartment }: DepartmentFilterProps) => {
   const [selectConsonant, setSelectConsonant] = useState("");
   const [selectDepartment, setSelectDepartment] = useState<string | null>(null);
 
@@ -65,4 +62,4 @@ const DepartmentSearch = ({ onSelectDepartment }: DepartmentSearchProps) => {
   );
 };
 
-export default DepartmentSearch;
+export default DepartmentFilter;

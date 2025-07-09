@@ -4,10 +4,7 @@ import { useEffect, useState } from "react";
 import { IoSearchSharp } from "react-icons/io5";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useKeywordStore } from "@/stores/keyword";
-
-interface SearchProps {
-  onSearchValue: (inputValue: string) => void;
-}
+import { SearchProps } from "./Search.types";
 
 const Search = ({ onSearchValue }: SearchProps) => {
   const { keyword, setKeyword } = useKeywordStore();
