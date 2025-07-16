@@ -11,6 +11,7 @@ import {
   IoNotificationsOutline,
   IoTimeOutline,
 } from "react-icons/io5";
+import { getGoogleOauth } from "@/services/apis/LoginApi";
 
 const MyPage = () => {
   const [likedScholarships, setLikedScholarships] = useState<IScholarship[]>(
