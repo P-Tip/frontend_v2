@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import ScholarshipSidebar from "@/components/layout/Aside/left-aside";
 import ScholarshipCard from "../components/card";
+import LoginModal from "@/components/LoginModal";
 
 const Home: React.FC = () => {
   // State management for various UI interactions
@@ -24,11 +25,20 @@ const Home: React.FC = () => {
     [key: string]: boolean;
   }>({});
 
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [totalLikedCount, setTotalLikedCount] = useState(0);
+
   // Initialize favorites from localStorage
   useEffect(() => {
     const savedFavorites = localStorage.getItem("favoriteScholarships");
     if (savedFavorites) {
-      setFavoriteScholarships(JSON.parse(savedFavorites));
+      const parsedFavorites = JSON.parse(savedFavorites);
+      setFavoriteScholarships(parsedFavorites);
+      setTotalLikedCount(
+        Object.keys(parsedFavorites).filter((key) => parsedFavorites[key])
+          .length,
+      );
     }
   }, []);
 
@@ -37,6 +47,12 @@ const Home: React.FC = () => {
     setFavoriteScholarships((prev) => {
       const updated = { ...prev, [id]: !prev[id] };
       localStorage.setItem("favoriteScholarships", JSON.stringify(updated));
+
+      const newLikedCount = Object.keys(updated).filter(
+        (key) => updated[key],
+      ).length;
+      setTotalLikedCount(newLikedCount);
+
       return updated;
     });
   };
@@ -55,6 +71,19 @@ const Home: React.FC = () => {
       })
       .replace(/\. /g, ".")
       .replace(".", "");
+  };
+
+  const openLoginModal = () => {
+    setIsLoginModalOpen(true);
+  };
+
+  const closeLoginModal = () => {
+    setIsLoginModalOpen(false);
+  };
+
+  const handleLoginSuccess = () => {
+    setIsLoggedIn(true);
+    closeLoginModal();
   };
 
   // Dummy data arrays for UI structure
@@ -153,7 +182,6 @@ const Home: React.FC = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 text-gray-800 relative">
-      {/* 메인 컨텐츠 */}
       <main className="flex-1 py-8 max-w-[1200px] mx-auto w-full pb-20 md:pb-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <ScholarshipSidebar
@@ -165,11 +193,12 @@ const Home: React.FC = () => {
             showSummary={showSummary}
             toggleSummary={toggleSummary}
             formatDate={formatDate}
+            isLoggedIn={isLoggedIn}
+            openLoginModal={openLoginModal}
+            totalLikedCount={totalLikedCount}
           />
 
-          {/* 메인 컨텐츠 영역 - 추천 프로그램 */}
           <div className="md:col-span-2 flex flex-col gap-4">
-            {/* 장학 프로그램 목록 카드 */}
             <div className="w-full bg-white rounded-3xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-all duration-300">
               <div className="flex justify-between items-center mb-6">
                 <h3 className="text-xl font-bold text-brand-text-primary">
@@ -199,7 +228,6 @@ const Home: React.FC = () => {
               </div>
             </div>
 
-            {/* 교내외 프로그램 카드 */}
             <div className="w-full bg-white rounded-3xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-all duration-300">
               <div className="flex justify-between items-center mb-6">
                 <h3 className="text-xl font-bold text-brand-text-primary">
@@ -208,13 +236,41 @@ const Home: React.FC = () => {
               </div>
 
               <div className="grid gap-4">
-                {/* 진행중인 교내/외 활동 */}
+                {programList.map((program) => (
+                  <div
+                    key={program.id}
+                    className="bg-gray-50 p-4 rounded-lg border border-gray-100"
+                  >
+                    <h4 className="font-bold text-brand-text-primary mb-1">
+                      {program.title}
+                    </h4>
+                    <p className="text-sm text-brand-text-secondary mb-2">
+                      {program.description}
+                    </p>
+                    <div className="flex items-center gap-3 text-sm text-brand-text-secondary">
+                      <span>
+                        <Calendar className="inline-block w-4 h-4 mr-1 text-gray-500" />
+                        {program.period}
+                      </span>
+                      <span>
+                        <Building className="inline-block w-4 h-4 mr-1 text-gray-500" />
+                        {program.department}
+                      </span>
+                    </div>
+                  </div>
+                ))}
                 <>더 많은 프로그램 보기</>
               </div>
             </div>
           </div>
         </div>
       </main>
+
+      <LoginModal
+        isOpen={isLoginModalOpen}
+        onClose={closeLoginModal}
+        onLoginSuccess={handleLoginSuccess}
+      />
 
       <style>{`
         .line-clamp-2 {

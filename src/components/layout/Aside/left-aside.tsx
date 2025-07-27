@@ -22,6 +22,9 @@ interface ScholarshipSidebarProps {
   showSummary: { [key: string]: boolean };
   toggleSummary: (id: string) => void;
   formatDate: (dateString: string) => string;
+  isLoggedIn: boolean;
+  openLoginModal: () => void;
+  totalLikedCount: number;
 }
 
 const ScholarshipSidebar: React.FC<ScholarshipSidebarProps> = ({
@@ -33,6 +36,9 @@ const ScholarshipSidebar: React.FC<ScholarshipSidebarProps> = ({
   showSummary,
   toggleSummary,
   formatDate,
+  isLoggedIn,
+  openLoginModal,
+  totalLikedCount,
 }) => (
   <div className="md:col-span-1 flex flex-col gap-4">
     {/* 장학금 진행 상태 카드 */}
@@ -48,44 +54,58 @@ const ScholarshipSidebar: React.FC<ScholarshipSidebarProps> = ({
           {isScholarshipExpanded ? "접기" : "펼치기"}
         </button>
       </div>
-      <div
-        className={`space-y-4 ${isScholarshipExpanded ? "block" : "hidden md:block"}`}
-      >
-        {/* 장학금 금액 카드 */}
-        <div className="bg-green-50 rounded-2xl p-4">
-          <div className="flex items-center space-x-2 mb-2">
-            <PiggyBank className="text-brand-green w-5 h-5" />
-            <span className="text-sm text-brand-text-secondary">
-              총 장학금액
-            </span>
+      {isLoggedIn ? (
+        <div
+          className={`space-y-4 ${isScholarshipExpanded ? "block" : "hidden md:block"}`}
+        >
+          {/* 장학금 금액 카드 */}
+          <div className="bg-green-50 rounded-2xl p-4">
+            <div className="flex items-center space-x-2 mb-2">
+              <PiggyBank className="text-brand-green w-5 h-5" />
+              <span className="text-sm text-brand-text-secondary">
+                총 장학금액
+              </span>
+            </div>
+            <p className="text-2xl font-bold text-brand-green">450,000 원</p>
           </div>
-          <p className="text-2xl font-bold text-brand-green">450,000 원</p>
+          {/* 통계 카드들 */}
+          <div className="grid grid-cols-3 gap-3">
+            <div className="text-center">
+              <Heart className="text-red-500 w-7 h-7 mb-2 fill-red-500" />
+              <p className="text-xl font-bold text-brand-text-primary mb-1">
+                {totalLikedCount} 건
+              </p>
+              <p className="text-xs text-brand-text-secondary">좋아요</p>
+            </div>
+            <div className="text-center">
+              <ClipboardList className="text-blue-500 w-7 h-7 mb-2" />
+              <p className="text-xl font-bold text-brand-text-primary mb-1">
+                1 건
+              </p>
+              <p className="text-xs text-brand-text-secondary">진행중</p>
+            </div>
+            <div className="text-center">
+              <CheckCircle className="text-green-500 w-7 h-7 mb-2" />
+              <p className="text-xl font-bold text-brand-text-primary mb-1">
+                4 건
+              </p>
+              <p className="text-xs text-brand-text-secondary">완료</p>
+            </div>
+          </div>
         </div>
-        {/* 통계 카드들 */}
-        <div className="grid grid-cols-3 gap-3">
-          <div className="text-center">
-            <Heart className="text-red-500 w-7 h-7 mb-2 fill-red-500" />
-            <p className="text-xl font-bold text-brand-text-primary mb-1">
-              5 건
-            </p>
-            <p className="text-xs text-brand-text-secondary">좋아요</p>
-          </div>
-          <div className="text-center">
-            <ClipboardList className="text-blue-500 w-7 h-7 mb-2" />
-            <p className="text-xl font-bold text-brand-text-primary mb-1">
-              1 건
-            </p>
-            <p className="text-xs text-brand-text-secondary">진행중</p>
-          </div>
-          <div className="text-center">
-            <CheckCircle className="text-green-500 w-7 h-7 mb-2" />
-            <p className="text-xl font-bold text-brand-text-primary mb-1">
-              4 건
-            </p>
-            <p className="text-xs text-brand-text-secondary">완료</p>
-          </div>
+      ) : (
+        <div className="flex flex-col items-center justify-center h-40 bg-gray-50 rounded-lg border border-dashed border-gray-200 p-4 text-center">
+          <p className="text-brand-text-secondary mb-3">
+            로그인하시면 나의 장학금 현황을 확인하실 수 있습니다.
+          </p>
+          <button
+            onClick={openLoginModal}
+            className="px-5 py-2 bg-brand-green text-white rounded-lg font-semibold hover:bg-green-600 transition-colors"
+          >
+            로그인하기
+          </button>
         </div>
-      </div>
+      )}
     </div>
     {/* 학교 공지 카드 */}
     <div className="w-full bg-white rounded-3xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-all duration-300">

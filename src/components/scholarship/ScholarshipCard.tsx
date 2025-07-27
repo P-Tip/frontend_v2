@@ -15,12 +15,20 @@ interface ScholarshipCardProps {
   scholarship: IScholarship;
   searchValue: string;
   onCartClick: (point: number) => void;
+  onFavorite: (id: string) => void;
+  isFavorite: boolean;
+  onSummary: (id: string) => void;
+  showSummary: boolean;
 }
 
 const ScholarshipCard = ({
   scholarship,
   searchValue,
   onCartClick,
+  onFavorite,
+  isFavorite,
+  onSummary,
+  showSummary,
 }: ScholarshipCardProps) => {
   const [isAdd, setIsAdd] = useState(false);
   const minPoint = Number(scholarship.min_point).toLocaleString();
@@ -28,20 +36,14 @@ const ScholarshipCard = ({
   const date = getFormatDate(scholarship.end_date);
 
   useEffect(() => {
-    const scholarshipData = JSON.parse(
-      localStorage.getItem(SCHOLARSHIP_DATA) || "[]",
-    );
-    const isExist = scholarshipData.some(
-      (item: IScholarship) => item.id === scholarship.id,
-    );
-    setIsAdd(isExist);
-  }, [scholarship.id]);
+    setIsAdd(isFavorite);
+  }, [isFavorite]);
 
   const handleHeartClick = (e: React.MouseEvent<HTMLSpanElement>) => {
     e.preventDefault();
     e.stopPropagation();
 
-    const id = scholarship.id;
+    onFavorite(scholarship.id);
 
     const scholarshipData = JSON.parse(
       localStorage.getItem(SCHOLARSHIP_DATA) || "[]",
@@ -50,19 +52,14 @@ const ScholarshipCard = ({
     let currentTotalPoints = calculateTotalPoints(scholarshipData);
 
     if (isAdd) {
-      // 이미 추가된 상태면 삭제 및 좋아요 비활성화
       const updatedData = scholarshipData.filter(
-        (item: IScholarship) => item.id !== id,
+        (item: IScholarship) => item.id !== scholarship.id,
       );
       localStorage.setItem(SCHOLARSHIP_DATA, JSON.stringify(updatedData));
       setIsAdd(false);
-
       onCartClick(calculateTotalPoints(updatedData));
     } else {
-      // 추가시 포인트 계산 후 제한 체크
       const newTotalPoints = currentTotalPoints + Number(scholarship.max_point);
-
-      // 아직 추가되지 않은 상태면 추가 및 좋아요 활성화
       const updatedData = [...scholarshipData, scholarship];
       localStorage.setItem(SCHOLARSHIP_DATA, JSON.stringify(updatedData));
       setIsAdd(true);
@@ -75,7 +72,6 @@ const ScholarshipCard = ({
   const handleDetailClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     e.stopPropagation();
-    // 상세정보 로직 추가 가능
   };
 
   const handleApplyClick = (e: React.MouseEvent<HTMLButtonElement>) => {
