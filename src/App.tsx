@@ -5,7 +5,9 @@ import Scholarship from "./pages/Scholarship";
 import Timetable from "./pages/Timetable";
 import Todo from "./pages/Todo";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import MyPage from "./pages/MyPage";
+//import MyPage from "./pages/MyPage";
+import MyPage from "./components/myPage/MyPage";
+
 
 function App() {
   const queryClient = new QueryClient();
