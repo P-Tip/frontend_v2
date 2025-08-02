@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import ScholarshipSidebar from "@/components/layout/Aside/left-aside";
 import { ScholarshipCard } from "@/components/common/Card";
 import { SCHOLARSHIP_LIST } from "@/constants";
+import MyPage from "@/components/myPage/MyPage";
 
 const Home: React.FC = () => {
   // State management for various UI interactions
@@ -51,6 +52,15 @@ const Home: React.FC = () => {
 
           {/* 메인 컨텐츠 영역 - 추천 프로그램 */}
           <div className="md:col-span-2 flex flex-col gap-4">
+            {/* 장학금 현황 */}
+            <div className="w-full bg-white rounded-3xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-all duration-300">
+              <div className="flex justify-between items-center mb-6">
+                <h3 className="text-xl font-bold text-brand-text-primary">
+                  장학금 현황
+                  <MyPage />
+                </h3>
+              </div>
+            </div>
             {/* 장학 프로그램 목록 카드 */}
             <div className="w-full bg-white rounded-3xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-all duration-300">
               <div className="flex justify-between items-center mb-6">
