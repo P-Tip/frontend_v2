@@ -54,11 +54,11 @@ const Home: React.FC = () => {
           <div className="md:col-span-2 flex flex-col gap-4">
             {/* 장학금 현황 */}
             <div className="w-full bg-white rounded-3xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-all duration-300">
-              <div className="flex justify-between items-center mb-6">
-                <h3 className="text-xl font-bold text-brand-text-primary">
+              <div className="justify-between items-center mb-6">
+                <h3 className="text-xl font-bold text-brand-text-primary p-2">
                   장학금 현황
-                  <MyPage />
                 </h3>
+                <MyPage />
               </div>
             </div>
             {/* 장학 프로그램 목록 카드 */}
