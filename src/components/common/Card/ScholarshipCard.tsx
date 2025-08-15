@@ -29,10 +29,9 @@ const ScholarshipCard: React.FC<ScholarshipCardProps> = ({
         {deadline}
       </span>
       <Button
-        variant="ghost"
-        size="icon"
         onClick={() => onFavorite(id)}
-        className="text-2xl hover:scale-110 transition-transform"
+        className="hover:scale-110 transition-transform hover:bg-transparent"
+        variant="ghost"
       >
         <Heart
           className={isFavorite ? "fill-red-500 text-red-500" : "text-gray-300"}
