@@ -12,6 +12,7 @@ import {
   IoTimeOutline,
 } from "react-icons/io5";
 import { getGoogleOauth } from "@/services/apis/loginApi";
+import ScholarshipContainer from "@/components/myPage/ScholarshipContainer";
 
 const MyPage = () => {
   const [likedScholarships, setLikedScholarships] = useState<IScholarship[]>(
@@ -88,7 +89,7 @@ const MyPage = () => {
       </div>
       {/* 장학금 현황 */}
       <div className="flex-[7] p-6 bg-brand-surface rounded-3xl">
-        <div>장학금 현황</div>
+        <ScholarshipContainer />
       </div>
     </div>
   );

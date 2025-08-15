@@ -39,7 +39,7 @@ const convertToDetail = (data: ScholarshipItem[]): ScholarshipDetail[] => {
   });
 };
 
-const MyPage = () => {
+const ScholarshipContainer = () => {
   const detailData = convertToDetail(scholarshipData);
 
   //솔선수범 장학금 임시값
@@ -63,4 +63,4 @@ const MyPage = () => {
   );
 };
 
-export default MyPage;
+export default ScholarshipContainer;
