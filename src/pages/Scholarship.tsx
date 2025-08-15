@@ -136,6 +136,10 @@ const Scholarship: React.FC = () => {
                       scholarship={scholarship}
                       searchValue={""}
                       onCartClick={handleCartClick}
+                      onFavorite={() => {}}
+                      isFavorite={false}
+                      onSummary={() => {}}
+                      showSummary={false}
                     />
                   </div>
                 );

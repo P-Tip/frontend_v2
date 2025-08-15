@@ -4,6 +4,10 @@ export interface ScholarshipCardProps {
   scholarship: IScholarship;
   searchValue: string;
   onCartClick: (point: number) => void;
+  onFavorite: (id: number) => void;
+  isFavorite: boolean;
+  onSummary: (id: string) => void;
+  showSummary: boolean;
 }
 
 export interface ScholarshipCardActions {

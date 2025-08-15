@@ -119,6 +119,10 @@ const MyPage = () => {
                 scholarship={scholarship}
                 onCartClick={(point) => handleCartClick(point)}
                 searchValue=""
+                onFavorite={() => {}}
+                isFavorite={false}
+                onSummary={() => {}}
+                showSummary={false}
               />
             ))}
           </div>
