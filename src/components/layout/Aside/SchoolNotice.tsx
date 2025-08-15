@@ -29,9 +29,8 @@ const SchoolNotice: React.FC<SchoolNoticeProps> = ({
       <h3 className="text-xl font-bold text-brand-text-primary">학교 공지</h3>
       <Button
         variant="ghost"
-        size="icon"
         onClick={() => setIsExpanded(!isExpanded)}
-        className="md:hidden"
+        className="md:hidden hover:bg-transparent"
       >
         {isExpanded ? (
           <ChevronUp className="w-4 h-4" />

@@ -112,74 +112,6 @@ const Home: React.FC = () => {
     },
   ];
 
-  const scholarshipList = [
-    {
-      id: "sch1",
-      title: "학생성장 공부한 장학금",
-      description:
-        "학업 성취도 향상을 위한 학생 성장 공부한 성장하면 위한 장학금 지원 프로그램",
-      period: "2학기",
-      amount: "50,000 ~ 100,000 원/월",
-      deadline: "마감임박 (~6/10)",
-      status: "urgent",
-      summary:
-        "이 장학금은 학업 성취도가 우수한 학생들을 대상으로 하며, 성적 향상을 위한 다양한 프로그램을 제공합니다.",
-    },
-    {
-      id: "sch2",
-      title: "취업박람회 현장 방문 보고서 작성",
-      description: "취업박람회의 방문하고 방문 관련 보고서를 작성 후 제출",
-      period: "1학기",
-      amount: "50,000 원 (일시불)",
-      deadline: "마감임박 (~6/15)",
-      status: "urgent",
-      summary:
-        "취업박람회 참석 후 체험 보고서를 작성하여 제출하면 지원금을 받을 수 있는 프로그램입니다.",
-    },
-    {
-      id: "sch3",
-      title: "창업 지원 장학금",
-      description: "창업 아이디어를 가진 학생들을 위한 지원 프로그램",
-      period: "1학기",
-      amount: "최대 200,000 원",
-      deadline: "30일 전 (~7/5)",
-      status: "normal",
-      summary:
-        "창업을 준비하는 학생들에게 초기 자금을 지원하고 멘토링을 제공하는 프로그램입니다.",
-    },
-  ];
-
-  const programList = [
-    {
-      id: "prog1",
-      title: "창업동아리 운영 지원 프로그램",
-      description:
-        "창업에 관심 있는 학생들을 위한 동아리 운영 및 멘토링 프로그램",
-      category: "창업",
-      period: "2025.03 ~ 2025.12",
-      status: "모집중",
-      department: "창업지원센터",
-    },
-    {
-      id: "prog2",
-      title: "AI 프로젝트 경진대회",
-      description: "인공지능 분야 창의적 프로젝트 개발 및 발표 대회",
-      category: "학술",
-      period: "2025.06 ~ 2025.11",
-      status: "진행중",
-      department: "AI학과",
-    },
-    {
-      id: "prog3",
-      title: "해외 교환학생 프로그램",
-      description: "자매결연 대학과의 교환학생 프로그램 참가 기회 제공",
-      category: "국제",
-      period: "2025.08 ~ 2025.12",
-      status: "예정",
-      department: "국제교류원",
-    },
-  ];
-
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 text-gray-800 relative">
       <main className="flex-1 py-8 max-w-[1200px] mx-auto w-full pb-20 md:pb-8">
@@ -192,10 +124,7 @@ const Home: React.FC = () => {
             noticeList={noticeList}
             showSummary={showSummary}
             toggleSummary={toggleSummary}
-            formatDate={formatDate}
             isLoggedIn={isLoggedIn}
-            openLoginModal={openLoginModal}
-            totalLikedCount={totalLikedCount}
           />
 
           <div className="md:col-span-2 flex flex-col gap-4">
@@ -207,6 +136,7 @@ const Home: React.FC = () => {
               </div>
 
               <div className="grid gap-4">
+                {/* 추천 장학 프로그램 카드 */}
                 {SCHOLARSHIP_LIST.map((scholarship) => (
                   <ScholarshipCard
                     key={scholarship.id}
@@ -234,33 +164,7 @@ const Home: React.FC = () => {
                   진행중인 교내/외 활동
                 </h3>
               </div>
-
-              <div className="grid gap-4">
-                {programList.map((program) => (
-                  <div
-                    key={program.id}
-                    className="bg-gray-50 p-4 rounded-lg border border-gray-100"
-                  >
-                    <h4 className="font-bold text-brand-text-primary mb-1">
-                      {program.title}
-                    </h4>
-                    <p className="text-sm text-brand-text-secondary mb-2">
-                      {program.description}
-                    </p>
-                    <div className="flex items-center gap-3 text-sm text-brand-text-secondary">
-                      <span>
-                        <Calendar className="inline-block w-4 h-4 mr-1 text-gray-500" />
-                        {program.period}
-                      </span>
-                      <span>
-                        <Building className="inline-block w-4 h-4 mr-1 text-gray-500" />
-                        {program.department}
-                      </span>
-                    </div>
-                  </div>
-                ))}
-                <>더 많은 프로그램 보기</>
-              </div>
+              {/* 진행중인 교내/외 활동 카드 */}
             </div>
           </div>
         </div>
