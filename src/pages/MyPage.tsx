@@ -41,9 +41,9 @@ const MyPage = () => {
   };
 
   const renderProfileSection = () => (
-    <div className="animate-fadeIn flex gap-6">
+    <div className="animate-fadeIn flex flex-col lg:flex-row gap-6">
       {/* 사용자 프로필 카드 */}
-      <div className="flex-[3] bg-brand-surface rounded-3xl p-6 shadow-sm border border-brand-border hover:shadow-md transition-all duration-300">
+      <div className="w-full lg:flex-[3] bg-brand-surface rounded-3xl p-6 shadow-sm border border-brand-border hover:shadow-md transition-all duration-300">
         <div className="flex items-center justify-center">
           <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-400 rounded-full flex items-center justify-center">
             <IoPersonOutline className="text-2xl text-white" />
@@ -88,7 +88,7 @@ const MyPage = () => {
         </div>
       </div>
       {/* 장학금 현황 */}
-      <div className="flex-[7] p-6 bg-brand-surface rounded-3xl">
+      <div className="w-full lg:flex-[7] p-6 bg-brand-surface rounded-3xl">
         <ScholarshipContainer />
       </div>
     </div>
