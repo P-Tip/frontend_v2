@@ -1,18 +1,8 @@
 import React, { useState, useEffect } from "react";
-import ScholarshipSidebar from "@/components/layout/Aside/left-aside";
+import ScholarshipSidebar from "@/components/layout/Aside/ScholarshipSidebar";
 import { ScholarshipCard } from "@/components/common/Card";
 import { SCHOLARSHIP_LIST } from "@/constants";
 import LoginModal from "@/components/LoginModal";
-import {
-  PiggyBank,
-  Heart,
-  ClipboardList,
-  CheckCircle,
-  Calendar,
-  Bot,
-  MapPin,
-  Building,
-} from "lucide-react";
 
 const Home: React.FC = () => {
   // State management for various UI interactions
@@ -86,42 +76,15 @@ const Home: React.FC = () => {
     closeLoginModal();
   };
 
-  // Dummy data arrays for UI structure
-  const noticeList = [
-    {
-      id: "1",
-      title: "2025학년도 1학기 장학금 신청 안내",
-      date: "2025-05-30",
-      department: "AI 학과",
-      summary:
-        "2025학년도 1학기 장학금 신청 기간 및 자격 요건에 대한 상세 안내입니다.",
-    },
-    {
-      id: "2",
-      title: "하계 인턴십 프로그램 참가자 모집",
-      date: "2025-05-28",
-      department: "AI 학과",
-      summary: "여름방학 기간 중 실시되는 인턴십 프로그램 참가자를 모집합니다.",
-    },
-    {
-      id: "3",
-      title: "2025학년도 2학기 국가장학금 신청 안내",
-      date: "2025-05-25",
-      department: "AI 학과",
-      summary: "국가장학금 유형별 신청 자격 및 지원 금액에 대한 안내입니다.",
-    },
-  ];
-
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 text-gray-800 relative">
-      <main className="flex-1 py-8 max-w-[1200px] mx-auto w-full pb-20 md:pb-8">
+      <main className="flex-1 py-8 max-w-[1200px] mx-auto w-full pb-20 px-4 md:px-0 md:pb-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <ScholarshipSidebar
             isScholarshipExpanded={isScholarshipExpanded}
             setIsScholarshipExpanded={setIsScholarshipExpanded}
             isNoticeExpanded={isNoticeExpanded}
             setIsNoticeExpanded={setIsNoticeExpanded}
-            noticeList={noticeList}
             showSummary={showSummary}
             toggleSummary={toggleSummary}
             isLoggedIn={isLoggedIn}

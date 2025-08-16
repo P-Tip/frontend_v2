@@ -7,7 +7,6 @@ interface ScholarshipSidebarProps {
   setIsScholarshipExpanded: (v: boolean) => void;
   isNoticeExpanded: boolean;
   setIsNoticeExpanded: (v: boolean) => void;
-  noticeList: any[];
   showSummary: { [key: string]: boolean };
   toggleSummary: (id: string) => void;
   isLoggedIn: boolean;
