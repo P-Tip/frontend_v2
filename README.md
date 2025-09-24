@@ -16,8 +16,8 @@
 ## 👥 팀원 소개
 | `프론트` 이지원 | `프론트` 이채린 | `프론트` 이주원 | `프론트` 김희진 |
 |------|------|------|------|
-| <img style="width:250px; height:250px" src = "https://github.com/gbwlxhd97.png"> | <img style="width:250px; height:250px" src = "https://github.com/Lee-chaerin.png"> | <img style="width:250px; height:250px" src = "https://github.com/Lee-chaerin.png"> | <img style="width:250px; height:250px" src = "https://github.com/Lee-chaerin.png"> |
-| [gbwlxhd97](https://github.com/gbwlxhd97) | [Lee-chaerin](https://github.com/Lee-chaerin) | [Lee-chaerin](https://github.com/Lee-chaerin) | [Lee-chaerin](https://github.com/Lee-chaerin) 
+| <img style="width:250px; height:250px" src = "https://github.com/gbwlxhd97.png"> | <img style="width:250px; height:250px" src = "https://github.com/Lee-chaerin.png"> | <img style="width:250px; height:250px" src = "https://github.com/joowon22.png"> | <img style="width:250px; height:250px" src = "https://github.com/gc1530823.png"> |
+| [gbwlxhd97](https://github.com/gbwlxhd97) | [Lee-chaerin](https://github.com/Lee-chaerin) | [joowon22](https://github.com/joowon22) | [gc1530823](https://github.com/gc1530823) 
 
 ## 📆 개발 기간
 - 2025.02.18 ~ 진행중
